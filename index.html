@@ -2828,6 +2828,16 @@ footer .legal>span:last-child{display:flex;flex-wrap:wrap;gap:4px 8px;align-item
 .ai3d-tm{text-align:center;font-size:.7rem;color:#8790B8;margin-top:12px;position:relative;z-index:2}
 @media (max-width:600px){.ai3d{padding:22px 10px 16px;border-radius:18px}.ai3d-stage{height:560px}.ai3d-it{padding:3px 9px 3px 3px;gap:5px;font-size:.66rem}.ai3d-core{width:118px}}
 .mc-con summary{cursor:pointer;font-weight:700}.mc-con[open] summary{margin-bottom:4px}
+/* 🔒 Secure reader (Nov 2026) */
+.mlpdf2{min-height:100%;background:#E5E7EB;padding:0 0 30px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.mlpdf2-bar{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:center;gap:12px;padding:8px;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);font-size:.88rem;font-weight:700;color:var(--ink-2)}
+.mlpdf2-bar button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:1.1rem;font-weight:800;cursor:pointer}
+.mlpdf2-load{padding:60px 20px;text-align:center;color:var(--ink-2)}
+.mlpdf2-pages{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:12px;overflow-x:auto}
+.mlpdf2-pg{background:#fff;box-shadow:0 2px 10px rgba(15,23,42,.12);overflow:hidden;flex:none;margin:0 auto}
+.mlpdf2-pg canvas{display:block;pointer-events:none}
+.mlv-shield{position:absolute;top:0;right:0;width:72px;height:64px;z-index:2;background:transparent}
+@media print{html:has(#mlp:not([hidden])) body{display:none!important}}
 /* Buy Now + promo (Nov 2026) */
 .nw-tag{display:inline-block;background:linear-gradient(135deg,#F59E0B,#EA580C);color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.06em;padding:2px 7px;border-radius:999px;vertical-align:middle}
 .bb-buy{box-shadow:0 6px 18px -6px rgba(234,88,12,.6)}
@@ -6999,7 +7009,7 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
   /* ---- Login / data ---- */
   async function loadLib(){
     try{const r=await hbCall("library",{token:ML.token});
-      if(!r||!r.ok){if(r&&r.relogin){LS.del("ml_tok");ML.token="";show(false);}msg((r&&r.err)||"Library नहीं खुली",true);return false;}
+      if(!r||!r.ok){if(r&&r.relogin){LS.del("ml_tok");ML.token="";show(false);}msg(((r&&r.err)||"Library नहीं खुली")+(r&&r.relogin?" • ध्यान दें: एक खाता एक समय में सिर्फ़ 2 device (mobile/laptop) पर चलता है":""),true);return false;}
       Object.assign(ML,{name:r.name||ML.name,mobile:r.mobile||ML.mobile,items:r.items||[],pending:r.pending||[],short:r.short||[],demo:false});renderShelf();return true;}
     catch(e){msg("Server से जुड़ नहीं पाए — internet देखकर दोबारा कोशिश करें",true);return false;}}
   async function login(payload){
@@ -7054,7 +7064,7 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
   $("#mlpBack").addEventListener("click",closePlayer);
   $("#mlpList").addEventListener("click",()=>{const o=mlp.classList.toggle("side");$("#mlpList").setAttribute("aria-expanded",o);});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!mlp.hidden)closePlayer();});
-  mlp.addEventListener("contextmenu",e=>{if(e.target.closest(".mlr-page,.mla,.mlv"))e.preventDefault();});
+  mlp.addEventListener("contextmenu",e=>{if(e.target.closest(".mlr-page,.mla,.mlv,.mlpdf2"))e.preventDefault();});
   function stopMedia(){ttsStop();const a=$("#mlAu");if(a){try{a.pause();}catch(e){}}clearInterval(stopMedia._t);}
   const nextOf=(n,sameType)=>P.it.chapters.find(c=>c.n>n&&c.open&&(!sameType||c.type===P.it.chapters[n].type));
   const prevOf=(n,sameType)=>[...P.it.chapters].reverse().find(c=>c.n<n&&c.open&&(!sameType||c.type===P.it.chapters[n].type));
@@ -7128,13 +7138,54 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
 
   /* 🎬 देखें */
   function renderVideo(r,c){main.onscroll=null;const nx=nextOf(c.n,1),pv=prevOf(c.n,1);
-    main.innerHTML=`<div class="mlv"><div class="mlv-box">${r.embed?`<iframe src="${esc(r.embed)}" title="${esc(c.title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`:`<div class="mlv-ph"><div><b>🎬</b>Demo: आपकी website पर यहाँ lesson का video चलेगा<br><small>(YouTube Unlisted या Google Drive — link सिर्फ़ खरीदने वाले को मिलता है)</small></div></div>`}</div>
+    main.innerHTML=`<div class="mlv"><div class="mlv-box">${r.embed?`<iframe src="${esc(r.embed)}" title="${esc(c.title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>${/drive\.google/.test(r.embed)?'<div class="mlv-shield" aria-hidden="true"></div>':""}`:`<div class="mlv-ph"><div><b>🎬</b>Demo: आपकी website पर यहाँ lesson का video चलेगा<br><small>(YouTube Unlisted या Google Drive — link सिर्फ़ खरीदने वाले को मिलता है)</small></div></div>`}</div>
       <div class="mlv-bar"><h3>${esc(c.title)}</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn btn-ghost btn-sm" data-v="prev"${pv?"":" disabled"}>← पिछला</button><button type="button" class="btn btn-primary btn-sm" data-v="done">✓ पूरा हुआ${nx?", अगला →":""}</button></div></div>
       <p class="small muted" style="margin-top:10px">${prog(P.it.key).d[c.n]?"✓ यह lesson आप पूरा कर चुके हैं।":"Lesson देखने के बाद “पूरा हुआ” दबाएँ — आपकी progress Library में दिखेगी।"}</p></div>`;
     main.querySelector(".mlv").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;
       if(b.dataset.v==="prev"){pv&&openCh(pv.n);}else{markDone(c.n);if(nx)openCh(nx.n);else toast("🎉 सारे खुले lesson पूरे!");}});}
   /* 📄 PDF */
-  function renderPdf(r,c){main.onscroll=null;main.innerHTML=`<div class="mlpdf"><iframe src="${esc(r.embed)}" title="${esc(c.title)}" allow="autoplay"></iframe></div>`;markDone(c.n);}
+  /* 🔒 HITARTHI सुरक्षित Reader — PDF Drive से सीधे नहीं, टुकड़ों में (सिर्फ़ खरीदार को) • Download/Print नहीं • हर पन्ने पर नाम */
+  const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/",PDFC={};let pdfLib=null;
+  function pdfjs(){return pdfLib||(pdfLib=new Promise((ok,no)=>{if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";return ok(pdfjsLib);}
+    const sc=document.createElement("script");sc.src=PDFJS+"pdf.min.js";sc.onload=()=>{pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS+"pdf.worker.min.js";ok(pdfjsLib);};sc.onerror=()=>{pdfLib=null;no(new Error("pdfjs"));};document.head.appendChild(sc);}));}
+  async function pdfPart(c,i){let last;for(let k=0;k<3;k++){try{const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),90000);
+      const res=await fetch(HB_API,{method:"POST",body:JSON.stringify({action:"libpdf",token:P.mode==="own"?ML.token:"",key:P.it.key,n:c.n,part:i}),signal:ctl.signal});clearTimeout(tm);
+      const j=await res.json();if(j&&j.ok)return j;last=new Error((j&&j.err)||"नहीं खुला");if(j&&(j.relogin||j.locked))break;}catch(e){last=e;}}throw last;}
+  const b64u8=b=>{const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u;};
+  function pdfWmText(){return P.mode==="own"?((ML.name||"HITARTHI")+" • "+(ML.mobile||"")).trim():"HITARTHI • Free Sample";}
+  async function renderPdf(r,c){main.onscroll=null;
+    if(!r.pdf){main.innerHTML=`<div class="mlpdf"><iframe src="${esc(r.embed)}" title="${esc(c.title)}" allow="autoplay"></iframe></div>`;markDone(c.n);return;}
+    const n0=P.n,ck=P.it.key+"|"+c.n,still=()=>P.n===n0&&!mlp.hidden;
+    main.innerHTML=`<div class="mlpdf2"><div class="mlpdf2-bar"><button type="button" data-z="-" aria-label="छोटा करें">−</button><span id="mlPgN">🔒 HITARTHI Reader</span><button type="button" data-z="+" aria-label="बड़ा करें">+</button></div><div class="mlpdf2-load" id="mlPdfLd">🔒 सुरक्षित Reader में book खुल रही है… <b id="mlPdfPc">0%</b></div><div id="mlPdfPages" class="mlpdf2-pages"></div></div>`;
+    let doc;
+    try{const lib=await pdfjs();let data=PDFC[ck];
+      if(!data){const parts=r.pdf.parts,bufs=[];let done=0,nx=0;const wk=async()=>{while(nx<parts){const i=nx++;const j=await pdfPart(c,i);bufs[i]=b64u8(j.b64);done++;const pc=$("#mlPdfPc");if(pc)pc.textContent=Math.round(done/parts*100)+"%";}};await Promise.all([wk(),wk(),wk()].slice(0,Math.min(3,parts)));if(!still())return;
+        let len=0;bufs.forEach(b=>len+=b.length);data=new Uint8Array(len);let o=0;bufs.forEach(b=>{data.set(b,o);o+=b.length;});PDFC[ck]=data;}
+      doc=await lib.getDocument({data:data.slice()}).promise;}
+    catch(e){if(still())lockPanel(c,"Book अभी नहीं खुली — "+((e&&e.message&&!/fetch|abort|pdfjs/i.test(e.message))?e.message:"internet देखकर दोबारा खोलें"),false);return;}
+    if(!still())return;
+    const ld=$("#mlPdfLd");ld&&ld.remove();const wrap=$("#mlPdfPages"),N=doc.numPages,first=await doc.getPage(1),vp1=first.getViewport({scale:1}),ratio=vp1.height/vp1.width;
+    let zoom=+LS.get("ml_pz",1)||1;const W=()=>Math.min(900,Math.max(260,main.clientWidth-24))*zoom;
+    wrap.innerHTML=Array.from({length:N},(_,i)=>`<div class="mlpdf2-pg" data-p="${i+1}"></div>`).join("");
+    const pgs=[...wrap.children],size=()=>pgs.forEach(d=>{d.style.width=W()+"px";d.style.height=Math.round(W()*ratio)+"px";});size();
+    const wt=pdfWmText();
+    async function draw(d){if(d._busy||d._z===zoom)return;d._busy=1;try{const pg=await doc.getPage(+d.dataset.p),w=W(),dpr=Math.min(2,window.devicePixelRatio||1),vp=pg.getViewport({scale:w/pg.getViewport({scale:1}).width*dpr});
+        const cv=document.createElement("canvas");cv.width=vp.width;cv.height=vp.height;cv.style.width=w+"px";cv.style.height=Math.round(vp.height/dpr)+"px";const x=cv.getContext("2d");
+        await pg.render({canvasContext:x,viewport:vp}).promise;
+        x.save();x.globalAlpha=.08;x.fillStyle="#0B1A4A";x.font=`bold ${Math.round(18*dpr)}px sans-serif`;x.translate(vp.width/2,vp.height/2);x.rotate(-0.4);
+        for(let yy=-vp.height;yy<vp.height;yy+=150*dpr)for(let xx=-vp.width;xx<vp.width;xx+=360*dpr)x.fillText(wt,xx,yy);x.restore();
+        x.globalAlpha=.55;x.fillStyle="#334155";x.font=`${Math.round(10*dpr)}px sans-serif`;x.fillText("HITARTHI • केवल "+wt+" के लिए • copy/share करना मना है",12*dpr,vp.height-8*dpr);
+        cv.oncontextmenu=e=>e.preventDefault();d.innerHTML="";d.appendChild(cv);d.style.height="";d._z=zoom;}catch(e){}finally{d._busy=0;}}
+    const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)draw(en.target);}),{root:main,rootMargin:"900px 0px"});pgs.forEach(d=>io.observe(d));
+    const pos=prog(P.it.key).pos[c.n]||0;requestAnimationFrame(()=>{const h=main.scrollHeight-main.clientHeight;if(pos>0.02&&h>0)main.scrollTop=pos*h;});
+    let t0=0;main.onscroll=()=>{if(!main.querySelector(".mlpdf2"))return;const h=main.scrollHeight-main.clientHeight,p=h>0?main.scrollTop/h:1,el=$("#mlPgN");
+      if(el)el.textContent="पन्ना "+Math.min(N,Math.max(1,Math.round(p*(N-1))+1))+" / "+N;const now=Date.now();if(now-t0>800){t0=now;saveProg(P.it.key,x=>{x.pos[c.n]=Math.round(p*1000)/1000;});}
+      if(p>0.9&&!prog(P.it.key).d[c.n])markDone(c.n);};main.onscroll();
+    main.querySelector(".mlpdf2-bar").addEventListener("click",e=>{const b=e.target.closest("[data-z]");if(!b)return;zoom=Math.min(2.5,Math.max(0.6,Math.round((zoom+(b.dataset.z==="+"?0.2:-0.2))*10)/10));LS.set("ml_pz",zoom);
+      const keep=main.scrollTop/Math.max(1,main.scrollHeight);pgs.forEach(d=>{d.innerHTML="";d._z=0;});size();main.scrollTop=keep*main.scrollHeight;pgs.forEach(d=>{io.unobserve(d);io.observe(d);});});
+    if(N<=1)markDone(c.n);}
+  /* Reader खुला हो तो Save / Print / Copy / View-source के shortcut बंद */
+  document.addEventListener("keydown",e=>{if(mlp.hidden)return;if((e.ctrlKey||e.metaKey)&&/^[spcu]$/i.test(e.key)){e.preventDefault();toast("🔒 HITARTHI की books सिर्फ़ यहीं पढ़ी जा सकती हैं");}},true);
 
   /* ---- पहली बार page खुलने पर ---- */
   let inited=false;
