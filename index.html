@@ -2829,6 +2829,7 @@ footer .legal>span:last-child{display:flex;flex-wrap:wrap;gap:4px 8px;align-item
 @media (max-width:600px){.ai3d{padding:22px 10px 16px;border-radius:18px}.ai3d-stage{height:560px}.ai3d-it{padding:3px 9px 3px 3px;gap:5px;font-size:.66rem}.ai3d-core{width:118px}}
 .mc-con summary{cursor:pointer;font-weight:700}.mc-con[open] summary{margin-bottom:4px}
 /* 🔒 Secure reader (Nov 2026) */
+.mc-mylib{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;background:linear-gradient(90deg,#EEF4FF,#FFF7ED)}.mc-mylib h4{margin:0 0 4px}.mc-mylib p{margin:0}
 .mlpdf2{min-height:100%;background:#E5E7EB;padding:0 0 30px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .mlpdf2-bar{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:center;gap:12px;padding:8px;background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);font-size:.88rem;font-weight:700;color:var(--ink-2)}
 .mlpdf2-bar button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:1.1rem;font-weight:800;cursor:pointer}
@@ -6190,6 +6191,7 @@ function mcRender(t){HB.t=t;const d=$("#mcDash");
       <form class="mc-kyc" id="mcKyc"><div><label for="kyPan">PAN नंबर</label><input id="kyPan" maxlength="10" style="text-transform:uppercase" placeholder="ABCDE1234F" required></div><div><label for="kyAcc">Bank Account नंबर</label><input id="kyAcc" inputmode="numeric" maxlength="18" required></div><div><label for="kyIfsc">IFSC</label><input id="kyIfsc" maxlength="11" style="text-transform:uppercase" placeholder="SBIN0001234" required></div><div><label for="kyHolder">Account holder का नाम</label><input id="kyHolder" maxlength="60" required></div><div><label for="kyEmail">Email <small class="muted">(हर बिक्री का invoice + commission इस पर)</small></label><input id="kyEmail" type="email" maxlength="120" placeholder="naam@gmail.com" required></div><div><label for="kyAlt">दूसरा / WhatsApp नंबर <small class="muted">(ज़रूरी नहीं)</small></label><input id="kyAlt" type="tel" inputmode="numeric" maxlength="10" placeholder="10 अंक"></div>
       <div class="full mc-ph"><span class="pv" id="kyPv">${t.photo?`<img loading="lazy" decoding="async" src="${t.photo}" alt="">`:"👤"}</span><div><label for="kyPhoto">अपनी साफ़ photo ${t.photo?"(लगी हुई है — बदलना हो तो चुनें)":"(ज़रूरी)"}</label><input id="kyPhoto" type="file" accept="image/*" capture="user"></div></div>
       <div class="full"><button class="btn btn-primary" type="submit" id="kyGo">KYC जमा करें</button> <span class="mc-msg" id="kyMsg"></span></div></form></div>`:""}
+    <div class="mc-box mc-mylib"><div><h4>📚 मेरी खरीदी Books</h4><p class="small">आपकी ख़ुद खरीदी books / courses और Partner demo books — सब सुरक्षित Reader में यहीं खुलेंगी।</p></div><button type="button" class="btn btn-primary" id="mcLib">📚 मेरी Library खोलें</button></div>
     <div class="mc-big"><div class="mc-k k1"><span>👤 Direct कमीशन</span><b>${inr2(t.direct)}</b><small>मेरी अपनी ID से हुई बिक्री • BV ${inr2(t.pbv)}</small></div>
       <div class="mc-k k2"><span>👥 Team कमीशन</span><b>${inr2(t.team+(t.eq||0))}</b><small>मेरी team की बिक्री से • Team BV ${inr2(t.tbv)}${t.eq?` • 🤝 बराबरी Bonus ${inr2(t.eq)} शामिल`:""}</small></div>
       <div class="mc-k k3"><span>🎁 Bonus / Reward</span><b>${inr2(t.cash)}</b><small>${gifts||"नकद bonus इस महीने"}</small></div></div>
@@ -6231,6 +6233,7 @@ function mcRender(t){HB.t=t;const d=$("#mcDash");
     if(!/^\d{4,6}$/.test(a1)){m.textContent="PIN 4–6 अंक का";return;}if(a1!==a2){m.textContent="दोनों PIN एक जैसे नहीं";return;}
     if(HB.demo){m.className="mc-msg";m.textContent="नमूना: PIN बदल गया";return;}
     const b=$("#npGo");b.disabled=true;try{const r=await hbCall("pinchange",{id:HB.id,pin:HB.pin,newpin:a1});m.className="mc-msg"+(r&&r.ok?" ok":" err");m.textContent=(r&&(r.msg||r.err))||"PIN नहीं बदला";if(r&&r.ok){HB.pin=a1;npf.reset();}}catch(err){m.textContent="Server से जुड़ नहीं पाए";}finally{b.disabled=false;}});
+    {const lb=$("#mcLib");if(lb)lb.onclick=()=>{if(window.mlPartnerLogin)mlPartnerLogin(HB.id,HB.pin);else location.hash="library";};}
   const kg=$("#mcKycGo");if(kg)kg.onclick=()=>{const bx=$("#mcKycBox");if(bx){bx.scrollIntoView({behavior:"smooth",block:"center"});$("#kyPan").focus();}};
   $("#mcPhoto").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;try{const du=await photoData(f);if(HB.demo){t.photo=du;mcRender(t);toast("नमूना: photo लग गई");return;}
     const r=await hbCall("photo",{id:HB.id,pin:HB.pin,photo:du});toast(r&&r.ok?r.msg:(r&&r.err)||"Photo नहीं लगी");if(r&&r.ok){t.photo=du;t.hasPhoto=true;mcRender(t);}}catch(err){toast("Photo नहीं पढ़ पाए — दूसरी photo चुनें");}});
@@ -7028,6 +7031,8 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
     if(mobile.length!==10)return msg("10 अंकों का mobile नंबर लिखें",true);
     if(!/^(HT\d{4}-\d{4}|EN\d{9}|HS\d{4,7})$/.test(orderId)&&!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(orderId))return msg("Order ID (HT2110-4821), Student ID (HS10001) या अपना email लिखें",true);
     login({mobile,orderId});});
+  /* Partner Dashboard → "मेरी Library" (ID + PIN दोबारा नहीं डालना) */
+  window.mlPartnerLogin=function(id,pin){location.hash="library";setTimeout(()=>{try{init();}catch(e){}login({id,pin});},350);};
   /* Payment के तुरंत बाद — "Library खोलें" */
   window.mlAfterPay=function(orderId,mob){const lines=(typeof PAY!=="undefined"&&PAY.lines)||null;if(lines&&lines.length&&lines.every(l=>l.cat==="Physical"))return;
     let el=$("#payLib");if(!el){el=document.createElement("button");el.type="button";el.id="payLib";el.className="btn btn-primary btn-block";$("#payOk").after(el);}
