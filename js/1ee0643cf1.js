@@ -2977,6 +2977,20 @@ $("#menuBtn").addEventListener("click",()=>{const o=$("#nav").classList.toggle("
 (function(){const qc=new URLSearchParams(location.search).get("course");if(!qc)return;const run=()=>{go("courses");setTimeout(()=>{const b=document.createElement("button");b.dataset.cdetail=qc;b.hidden=true;document.body.appendChild(b);b.click();b.remove();},350);};document.readyState==="complete"?run():window.addEventListener("load",run);})();
 /* ---------- PWA (फ़ोन में App की तरह) ---------- */
 if("serviceWorker" in navigator&&location.protocol==="https:"){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+try{if(matchMedia("(display-mode: standalone)").matches||navigator.standalone===true)document.documentElement.classList.add("is-app");}catch(e){}
+/* 📲 "App Install करें" बटन (menu + footer) — हमेशा काम करे */
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-install]");if(!b)return;e.preventDefault();
+  const nav=document.getElementById("nav");nav&&nav.classList.remove("open");
+  const SA=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true,ua=navigator.userAgent;
+  if(SA){window.toast?toast("✓ HITARTHI App पहले से install है — आप उसी में हैं"):0;return;}
+  if(window.__hbDP){const d=window.__hbDP;d.prompt();try{const r=await d.userChoice;window.track&&track("pwa_install",{outcome:r.outcome,from:"button"});}catch(x){}window.__hbDP=null;return;}
+  const inApp=/FBAN|FBAV|Instagram|WhatsApp|; wv\)|Line\//i.test(ua),ios=/iphone|ipad|ipod/i.test(ua);
+  const msg=inApp?'यह page WhatsApp / Instagram के अंदर खुला है — वहाँ से install नहीं होता।<br>ऊपर <b>⋮</b> (तीन बिंदु) दबाएँ → <b>"Chrome में खोलें"</b> (iPhone पर Safari), फिर यही बटन दबाएँ।'
+    :ios?'iPhone पर: नीचे <b>Share ⬆️</b> बटन दबाएँ → नीचे scroll करें → <b>"Add to Home Screen"</b> → <b>Add</b>।'
+    :'Chrome में ऊपर दाएँ <b>⋮</b> (तीन बिंदु) दबाएँ → <b>"App install करें"</b> या <b>"Add to Home screen"</b> → <b>Install</b>।<br><small>Install होते ही HITARTHI का icon आपकी home screen पर आ जाएगा।</small>';
+  document.querySelectorAll(".inst-bar").forEach(x=>x.remove());const h=document.createElement("div");h.className="inst-bar on";h.setAttribute("role","dialog");
+  h.innerHTML='<img loading="lazy" decoding="async" src="img/icon-192.png" alt="" width="40" height="40"><div><b>HITARTHI App ऐसे install करें</b><small>'+msg+'</small></div><button type="button" class="inst-x" aria-label="बंद करें">✕</button>';
+  h.querySelector(".inst-x").onclick=()=>h.remove();document.body.appendChild(h);});
 /* 📲 App install (PWA) — Android: एक tap में install • iPhone: Share → Add to Home Screen */
 (function(){const SA=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;if(SA())return;
   const K="hb_inst_x";let off=false;try{off=Date.now()-(+localStorage.getItem(K)||0)<7*864e5;}catch(e){}
@@ -2989,7 +3003,7 @@ if("serviceWorker" in navigator&&location.protocol==="https:"){window.addEventLi
       else{try{localStorage.setItem(K,String(Date.now()));}catch(x){}}
       b.classList.remove("on");setTimeout(()=>b.remove(),300);});}
   const later=()=>{const go=()=>{removeEventListener("scroll",go);setTimeout(bar,1200);};addEventListener("scroll",go,{passive:true});setTimeout(bar,15000);};
-  addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;window.hbInstall=()=>{dp&&dp.prompt();};later();});
+  addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;window.__hbDP=e;later();});
   addEventListener("appinstalled",()=>{const b=document.querySelector(".inst-bar");b&&b.remove();window.track&&track("pwa_installed",{});});
   if(ios)later();})();
 /* (sample-fee notice हटाया गया) */

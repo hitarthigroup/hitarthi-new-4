@@ -2840,8 +2840,11 @@ footer .legal>span:last-child{display:flex;flex-wrap:wrap;gap:4px 8px;align-item
 [data-page="home"] .sec{content-visibility:auto;contain-intrinsic-size:auto 900px}
 @media (max-width:700px){[data-page="home"] .sec{contain-intrinsic-size:auto 1100px}}
 /* 📲 PWA install bar */
+.nav-inst{color:var(--orange,#FF8C00)!important;font-weight:800}
+@media (min-width:1061px){.nav-inst{display:none!important}}
+html.is-app [data-install]{display:none!important}
 .inst-bar{position:fixed;left:12px;right:12px;bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:#0B1A4A;color:#fff;box-shadow:0 12px 34px rgba(11,26,74,.35);transform:translateY(140%);opacity:0;transition:transform .35s ease,opacity .35s ease}
-.inst-bar.on{transform:none;opacity:1}.inst-bar img{border-radius:10px;flex:none}.inst-bar div{flex:1;min-width:0}.inst-bar b{display:block;font-size:.95rem}.inst-bar small{display:block;font-size:.78rem;opacity:.85;line-height:1.35}
+.inst-bar.on{transform:none;opacity:1}.inst-bar img{border-radius:10px;flex:none}.inst-bar div{flex:1;min-width:0}.inst-bar div>b{display:block;font-size:.95rem}.inst-bar small b{display:inline}.inst-bar small{display:block;font-size:.78rem;opacity:.85;line-height:1.35}
 .inst-bar .inst-x{background:none;border:0;color:#fff;font-size:1.05rem;width:32px;height:32px;cursor:pointer;opacity:.8;flex:none}
 @media (min-width:900px){.inst-bar{left:auto;right:20px;bottom:20px;max-width:420px}}
 /* 🔒 Secure reader (Nov 2026) */
@@ -2990,6 +2993,7 @@ footer .legal>span:last-child{display:flex;flex-wrap:wrap;gap:4px 8px;align-item
       <button data-go="library">Library</button>
       <button data-go="partner">Partner</button>
       <button data-go="contact">Contact</button>
+      <button type="button" class="nav-inst" data-install="1">📲 App Install करें</button>
       <div class="nav-more"><b>और देखें</b><button data-go="fees">Fees &amp; Monthly Plan</button><button data-go="health">Health Store</button><button data-go="schools">Schools</button><button data-go="finance">पैसे की समझ</button><button data-go="blog">Blog</button><button data-go="about">About</button><button data-go="track">मेरा Order</button><button data-go="notices">सूचनाएँ</button><button data-go="library">मेरा खाता</button></div>
     </nav>
     <div class="bar-actions">
@@ -4585,7 +4589,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
   <div class="wrap">
     <div class="f-cta">
       <div><h3>आज ही पहला कदम उठाएँ</h3><p>Free Counselling लें — पसंद आए तभी admission लें।</p></div>
-      <div class="f-cta-b"><button class="btn btn-orange" data-go="contact" data-demo="1">Free Counselling लें</button><a class="btn btn-wa" href="https://wa.me/919453717356" target="_blank" rel="noopener">WhatsApp करें</a></div>
+      <div class="f-cta-b"><button type="button" class="btn btn-primary" data-install="1">📲 HITARTHI App Install करें</button><button class="btn btn-orange" data-go="contact" data-demo="1">Free Counselling लें</button><a class="btn btn-wa" href="https://wa.me/919453717356" target="_blank" rel="noopener">WhatsApp करें</a></div>
     </div>
     <div class="cols">
       <div>
@@ -4668,7 +4672,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
 <input type="file" id="phInput" accept="image/*" hidden>
 
 <script defer src="js/780b897e07.js"></script>
-<script defer src="js/2428dcb1b9.js"></script>
+<script defer src="js/1ee0643cf1.js"></script>
 <script defer src="js/dc2f1002f4.js"></script>
 
 
