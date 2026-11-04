@@ -2839,6 +2839,11 @@ footer .legal>span:last-child{display:flex;flex-wrap:wrap;gap:4px 8px;align-item
 /* ⚡ Performance (Nov 2026): home के नीचे वाले sections तब तक render नहीं होते जब तक screen के पास न आएँ */
 [data-page="home"] .sec{content-visibility:auto;contain-intrinsic-size:auto 900px}
 @media (max-width:700px){[data-page="home"] .sec{contain-intrinsic-size:auto 1100px}}
+/* 📲 PWA install bar */
+.inst-bar{position:fixed;left:12px;right:12px;bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:#0B1A4A;color:#fff;box-shadow:0 12px 34px rgba(11,26,74,.35);transform:translateY(140%);opacity:0;transition:transform .35s ease,opacity .35s ease}
+.inst-bar.on{transform:none;opacity:1}.inst-bar img{border-radius:10px;flex:none}.inst-bar div{flex:1;min-width:0}.inst-bar b{display:block;font-size:.95rem}.inst-bar small{display:block;font-size:.78rem;opacity:.85;line-height:1.35}
+.inst-bar .inst-x{background:none;border:0;color:#fff;font-size:1.05rem;width:32px;height:32px;cursor:pointer;opacity:.8;flex:none}
+@media (min-width:900px){.inst-bar{left:auto;right:20px;bottom:20px;max-width:420px}}
 /* 🔒 Secure reader (Nov 2026) */
 .mc-mylib{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;background:linear-gradient(90deg,#EEF4FF,#FFF7ED)}.mc-mylib h4{margin:0 0 4px}.mc-mylib p{margin:0}.mc-mylib,.mc-mylib h4,.mc-mylib p{color:#0B1A4A!important}.mc-mylib p{opacity:.85}
 .mlpdf2{min-height:100%;background:#E5E7EB;padding:0 0 30px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
@@ -4663,7 +4668,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
 <input type="file" id="phInput" accept="image/*" hidden>
 
 <script defer src="js/780b897e07.js"></script>
-<script defer src="js/9755824907.js"></script>
+<script defer src="js/2428dcb1b9.js"></script>
 <script defer src="js/dc2f1002f4.js"></script>
 
 

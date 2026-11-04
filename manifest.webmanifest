@@ -1,24 +1,102 @@
 {
+ "id": "/",
  "name": "HITARTHI — From Learning to Earning",
  "short_name": "HITARTHI",
  "start_url": "/?src=app",
  "scope": "/",
  "display": "standalone",
+ "display_override": [
+  "standalone",
+  "minimal-ui"
+ ],
+ "orientation": "portrait",
  "background_color": "#0B1A4A",
  "theme_color": "#0B1A4A",
  "lang": "hi",
+ "dir": "ltr",
+ "categories": [
+  "education",
+  "books"
+ ],
  "description": "Computer, AI, Spoken English, E-books और Financial Education — सरल हिंदी में",
  "icons": [
   {
    "src": "img/icon-192.png",
    "sizes": "192x192",
-   "type": "image/png"
+   "type": "image/png",
+   "purpose": "any"
   },
   {
    "src": "img/icon-512.png",
    "sizes": "512x512",
    "type": "image/png",
-   "purpose": "any maskable"
+   "purpose": "any"
+  },
+  {
+   "src": "img/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "मेरी Library",
+   "short_name": "Library",
+   "url": "/?src=app#library",
+   "icons": [
+    {
+     "src": "img/icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "Courses",
+   "url": "/?src=app#courses",
+   "icons": [
+    {
+     "src": "img/icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "Books",
+   "url": "/?src=app#books",
+   "icons": [
+    {
+     "src": "img/icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  },
+  {
+   "name": "Partner Dashboard",
+   "short_name": "Partner",
+   "url": "/?src=app#partner",
+   "icons": [
+    {
+     "src": "img/icon-192.png",
+     "sizes": "192x192"
+    }
+   ]
+  }
+ ],
+ "screenshots": [
+  {
+   "src": "img/shot-mobile.webp",
+   "sizes": "540x1170",
+   "type": "image/webp",
+   "form_factor": "narrow",
+   "label": "HITARTHI Home"
+  },
+  {
+   "src": "img/shot-wide.webp",
+   "sizes": "1280x800",
+   "type": "image/webp",
+   "form_factor": "wide",
+   "label": "HITARTHI Home"
   }
  ]
 }

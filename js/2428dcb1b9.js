@@ -2977,6 +2977,21 @@ $("#menuBtn").addEventListener("click",()=>{const o=$("#nav").classList.toggle("
 (function(){const qc=new URLSearchParams(location.search).get("course");if(!qc)return;const run=()=>{go("courses");setTimeout(()=>{const b=document.createElement("button");b.dataset.cdetail=qc;b.hidden=true;document.body.appendChild(b);b.click();b.remove();},350);};document.readyState==="complete"?run():window.addEventListener("load",run);})();
 /* ---------- PWA (फ़ोन में App की तरह) ---------- */
 if("serviceWorker" in navigator&&location.protocol==="https:"){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+/* 📲 App install (PWA) — Android: एक tap में install • iPhone: Share → Add to Home Screen */
+(function(){const SA=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;if(SA())return;
+  const K="hb_inst_x";let off=false;try{off=Date.now()-(+localStorage.getItem(K)||0)<7*864e5;}catch(e){}
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!/crios|fxios|edgios/i.test(navigator.userAgent);let dp=null,shown=false;
+  function bar(){if(shown||off)return;shown=true;const b=document.createElement("div");b.className="inst-bar";b.setAttribute("role","dialog");b.setAttribute("aria-label","HITARTHI App install");
+    b.innerHTML='<img loading="lazy" decoding="async" src="img/icon-192.png" alt="" width="40" height="40"><div><b>HITARTHI App install करें</b><small>'+(ios?'नीचे <b>Share ⬆️</b> दबाएँ → <b>"Add to Home Screen"</b>':'Library, Courses और Books — एक tap में, बिना Play Store')+'</small></div>'+(ios?'':'<button type="button" class="btn btn-orange btn-sm" data-inst="go">Install</button>')+'<button type="button" class="inst-x" data-inst="x" aria-label="बंद करें">✕</button>';
+    document.body.appendChild(b);requestAnimationFrame(()=>b.classList.add("on"));
+    b.addEventListener("click",async e=>{const k=e.target.closest("[data-inst]");if(!k)return;
+      if(k.dataset.inst==="go"&&dp){dp.prompt();try{const r=await dp.userChoice;window.track&&track("pwa_install",{outcome:r.outcome});}catch(x){}dp=null;}
+      else{try{localStorage.setItem(K,String(Date.now()));}catch(x){}}
+      b.classList.remove("on");setTimeout(()=>b.remove(),300);});}
+  const later=()=>{const go=()=>{removeEventListener("scroll",go);setTimeout(bar,1200);};addEventListener("scroll",go,{passive:true});setTimeout(bar,15000);};
+  addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;window.hbInstall=()=>{dp&&dp.prompt();};later();});
+  addEventListener("appinstalled",()=>{const b=document.querySelector(".inst-bar");b&&b.remove();window.track&&track("pwa_installed",{});});
+  if(ios)later();})();
 /* (sample-fee notice हटाया गया) */
 const h=(location.hash||"").slice(1);
 go(PAGES.includes(h)?h:"home",true);
