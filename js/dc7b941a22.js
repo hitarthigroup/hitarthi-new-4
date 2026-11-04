@@ -1316,7 +1316,12 @@ const saveCart=()=>{try{localStorage.setItem("hitarthi_cart_v2",JSON.stringify(c
 function toast(t){const el=$("#toast");el.textContent=t;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,2200);}
 function cartCount(){const n=cart.reduce((a,c)=>a+c.q,0);const b=$("#cartCount");b.textContent=n;b.hidden=!n;}
 const linePrice=c=>c.t==="h"?(HPROD[c.i]||{mrp:0}).mrp:c.t==="x"?bundlePrice(BUNDLES[c.i]).now:priceOf(BOOKS[c.i],c.f);
-function addItem(it,label){track("add_to_cart",{item:label});const ex=cart.find(c=>c.t===it.t&&c.i===it.i&&c.f===it.f);if(ex)ex.q++;else cart.push({...it,q:1});saveCart();cartCount();toast("Cart में जोड़ा गया: "+label);}
+/* Printed book / सामान (Physical) और e-book / course (Digital) का order अलग-अलग */
+function cartIsPhys(c){return c.t==="h"||(c.t==="x"&&typeof BUNDLES!=="undefined"&&BUNDLES[c.i]&&!!BUNDLES[c.i].printed)||(c.t==="b"&&c.f!=="e");}
+function cartMixBlocked(phys){if(!cart.length)return false;const has=cart.some(c=>cartIsPhys(c)===phys);if(has)return false;
+  toast(phys?"📦 Printed books / सामान का order अलग से होता है — पहले cart की e-books का payment करें, फिर printed books जोड़ें":"📚 E-book / course का order अलग से होता है — पहले cart की printed books का payment करें, फिर e-book जोड़ें");
+  if(typeof openCart==="function")setTimeout(openCart,400);return true;}
+function addItem(it,label){if(cartMixBlocked(cartIsPhys(it)))return;track("add_to_cart",{item:label});const ex=cart.find(c=>c.t===it.t&&c.i===it.i&&c.f===it.f);if(ex)ex.q++;else cart.push({...it,q:1});saveCart();cartCount();toast("Cart में जोड़ा गया: "+label);}
 function totals(){
   let sub=0,printed=0;
   cart.forEach(c=>{const p=linePrice(c)*c.q;sub+=p;if(c.t==="h"||(c.t==="b"&&c.f!=="e")||(c.t==="x"&&BUNDLES[c.i].printed))printed+=p;});
@@ -2842,7 +2847,7 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
       </div></div>`;}
   function open(k){cur=hIdx(k);if(cur<0)return;qty=1;img="f";draw();M.hidden=false;document.body.style.overflow="hidden";track("view_item",{item:HPROD[cur].full,value:HPROD[cur].mrp});setTimeout(()=>{const x=M.querySelector(".hpm-x");x&&x.focus();},30);}
   function close(){M.hidden=true;document.body.style.overflow="";}
-  function add(i,q){const ex=cart.find(c=>c.t==="h"&&c.i===i);if(ex)ex.q+=q;else cart.push({t:"h",i,q});saveCart();cartCount();track("add_to_cart",{item:HPROD[i].full,value:HPROD[i].mrp*q});}
+  function add(i,q){if(typeof cartMixBlocked==="function"&&cartMixBlocked(true))return false;const ex=cart.find(c=>c.t==="h"&&c.i===i);if(ex)ex.q+=q;else cart.push({t:"h",i,q});saveCart();cartCount();track("add_to_cart",{item:HPROD[i].full,value:HPROD[i].mrp*q});return true;}
   M.addEventListener("click",e=>{if(e.target===M||e.target.closest(".hpm-x")){close();return;}
     const iq=e.target.closest("[data-himg]");if(iq){img=iq.dataset.himg;draw();return;}
     const q=e.target.closest("[data-hq]");if(q){qty=Math.max(1,Math.min(20,qty+ +q.dataset.hq));draw();return;}
@@ -2854,8 +2859,8 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!M.hidden)close();});
   document.addEventListener("click",e=>{
     const o=e.target.closest("[data-hopen]");if(o&&!M.contains(o)){e.preventDefault();open(o.dataset.hopen);return;}
-    const a=e.target.closest("[data-hadd]");if(a){const i=hIdx(a.dataset.hadd);add(i,1);toast("Cart में जोड़ा गया: "+HPROD[i].n);return;}
-    const b=e.target.closest("[data-hbuy]");if(b){add(hIdx(b.dataset.hbuy),1);openCart();return;}
+    const a=e.target.closest("[data-hadd]");if(a){const i=hIdx(a.dataset.hadd);if(add(i,1))toast("Cart में जोड़ा गया: "+HPROD[i].n);return;}
+    const b=e.target.closest("[data-hbuy]");if(b){if(add(hIdx(b.dataset.hbuy),1))openCart();return;}
     const sc=e.target.closest("[data-hscroll]");if(sc){const el=document.getElementById(sc.dataset.hscroll);el&&el.scrollIntoView({behavior:"smooth",block:"start"});}
   });
 })();
