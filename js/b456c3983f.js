@@ -2611,7 +2611,7 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
       ${row("⭐","आप (जोड़ने वाले) — Level "+C.s,C.s>C.l?"बीच का फ़र्क़: Level "+(C.l+1)+"–"+C.s+" ("+Math.round((CUM(C.s)-CUM(C.l))*100)/100+"%) • Team commission":"—",b,"me")}
       ${up?row("👔","आपके Senior — Level "+up,"फ़र्क़: Level "+(C.s+1)+"–"+up+" ("+Math.round((CUM(up)-CUM(C.s))*100)/100+"%)",c):""}
       ${row("🏢","Company को",(up||C.s)<24?"Level "+((up||C.s)+1)+"–24 (ऊपर कोई ऊँचे Level का Partner नहीं)":"कुछ नहीं बचा",Math.max(0,co),"co")}</div>
-      <p class="small muted" style="margin-top:8px">⚠️ शर्त: बेचने वाले की ID उस महीने Green हो (KYC + ₹4,500 BV)। Seniors को फ़र्क़ पाने के लिए सिर्फ़ KYC ज़रूरी है। नीचे वाला बराबर Level पर पहुँच जाए तो senior को 1% बराबरी Bonus।</p>`;}
+      <p class="small muted" style="margin-top:8px">✅ अपनी बिक्री का commission हमेशा मिलता है — ID Green हो या न हो। BV = बिक्री − GST − 2% (payment charge)। पैसा bank में आने के लिए KYC (PAN + Bank) ज़रूरी है, कम से कम ₹100 कभी भी निकाल सकते हैं। नीचे वाला बराबर Level पर पहुँच जाए तो senior को 1% बराबरी Bonus।</p>`;}
   fillSel();calc();
   $("#ptS").addEventListener("change",e=>{C.s=+e.target.value;fillSel();calc();});
   $("#ptL").addEventListener("change",e=>{C.l=+e.target.value;calc();});
