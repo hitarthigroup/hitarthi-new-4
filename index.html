@@ -2840,6 +2840,10 @@ footer .legal>span:last-child{display:flex;flex-wrap:wrap;gap:4px 8px;align-item
 [data-page="home"] .sec{content-visibility:auto;contain-intrinsic-size:auto 900px}
 @media (max-width:700px){[data-page="home"] .sec{contain-intrinsic-size:auto 1100px}}
 /* 📲 PWA install bar */
+.hh-inst{display:inline-flex;align-items:center;gap:10px;margin:0 0 14px;padding:8px 16px 8px 8px;border-radius:999px;border:2px solid #FFB020;background:linear-gradient(90deg,#FF8C00,#FFB020);color:#0B1A4A;cursor:pointer;box-shadow:0 8px 22px rgba(255,140,0,.35);font:inherit;text-align:left;animation:hhInst 2.4s ease-in-out infinite}
+.hh-inst img{border-radius:50%;background:#0B1A4A;flex:none}.hh-inst b{display:block;font-size:.98rem;line-height:1.2}.hh-inst small{display:block;font-size:.75rem;font-weight:600;opacity:.85}
+@keyframes hhInst{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.hh-inst{animation:none}}
 .nav-inst{color:var(--orange,#FF8C00)!important;font-weight:800}
 @media (min-width:1061px){.nav-inst{display:none!important}}
 html.is-app [data-install]{display:none!important}
@@ -3027,6 +3031,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
   <div class="hh" id="homeHero">
     <div class="wrap hh-in">
       <div class="hh-txt">
+        <button type="button" class="hh-inst" data-install="1"><img loading="lazy" decoding="async" src="img/icon-192.png" alt="" width="28" height="28"><span><b>📲 HITARTHI App Download करें</b><small>मुफ़्त • एक tap में • बिना Play Store</small></span></button>
         <div class="hh-eye">HITARTHI Education &amp; Skill Development</div>
         <h1>From Learning <em>to Earning</em></h1>
         <p class="hh-hi">सीखिए आज, कमाइए कल।</p>
