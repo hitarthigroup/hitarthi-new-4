@@ -577,7 +577,7 @@ try{$("#appQR").innerHTML=qrSVG("https://play.google.com/store/apps/details?id=c
    `<div><button class="mh" data-go="courses" data-soon="1"><i style="background:linear-gradient(135deg,#94A3B8,#64748B)"></i>🔜 जल्द आ रहे</button>${C_SOON.filter(x=>/DCA|ADCA|Python|AI Tools|Spoken/.test(x.name)).slice(0,4).map(x=>`<button data-go="courses" data-soon="1">${esc(x.name.replace(/ — .*/,""))}</button>`).join("")}</div>`+
    `<div class="mm-feat"><span class="eyebrow" style="color:#9DE6FF">Free Counselling</span><b>समझ नहीं आ रहा कौन-सा course लें?</b><p>2 प्रश्नों के Skill Finder से या counselor से बात करके तय करें।</p><button data-go="contact" data-demo="1">Counselor से बात करें</button></div>`;
   const mb=$("#megaBooks");if(mb)mb.innerHTML=[["all","📚 सभी E-books"],["computer","💻 Computer Books"],["printed","📦 Printed Books"],["finance","💰 Finance"],["self","🌱 Self-help"],["business","💼 Business"],["english","🗣️ English"],["student","🎒 Students"],["kids","🧒 बच्चों के लिए"]].map(([k,n])=>`<button data-go="books" data-bcat="${k}">${n}</button>`).join("");
-  const ma=$("#megaAcc");if(ma)ma.innerHTML=[["🏠 My Dashboard",""],["🎓 My Courses","all"],["📚 My E-books","read"],["🏅 My Certificates","all"],["📦 My Orders","track"]].map(([n,f])=>f==="track"?`<button data-go="track">${n}</button>`:`<button data-go="library"${f?` data-mlf="${f}"`:""}>${n}</button>`).join("")+`<button data-acclogout="1">🚪 Logout</button>`;
+  const ma=$("#megaAcc");if(ma)ma.innerHTML=[["🎓 Student Profile","lib"],["📚 My Library","lib"],["📘 My Books","books"],["🎬 My Courses","courses"],["🏅 My Certificates","certs"],["📦 My Orders","track"]].map(([n,f])=>f==="track"?`<button data-go="track">${n}</button>`:`<button data-go="student" data-sptab="${f}">${n}</button>`).join("")+`<button data-acclogout="1">🚪 Logout</button>`;
   document.addEventListener("click",e=>{const b=e.target.closest("[data-bcat],[data-mlf],[data-soon],[data-acclogout]");if(!b)return;
     if(b.dataset.acclogout){const o=$("#mlOut");if(o&&!o.closest("[hidden]")){go("library");o.click();toast("आप logout हो गए");}else{go("library");toast("आप अभी login नहीं हैं");}return;}
     setTimeout(()=>{if(b.dataset.bcat){const c=document.querySelector(`#bookChips [data-bc="${b.dataset.bcat}"]`);c&&c.click();}
@@ -1789,6 +1789,7 @@ async function openCert(c){const cv=await drawCert(c),u=cv.toDataURL("image/png"
     <div class="idm-acts"><a class="btn btn-orange btn-sm" href="${u}" download="HITARTHI-Certificate-${esc(c.id)}.png">⬇️ Download</a><button class="btn btn-ghost btn-sm" id="certShare">📤 Share</button><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent("मैंने HITARTHI का "+c.course+" course पूरा किया 🎉 Certificate verify करें: "+certURL(c.id))}">WhatsApp</a></div>
     <p class="small muted">Verify link: ${esc(certURL(c.id))}</p></div>`;M.hidden=false;M.querySelector(".idm-x").onclick=()=>{M.hidden=true;};
   $("#certShare").onclick=()=>shareCanvas(cv,"HITARTHI-Certificate-"+c.id+".png","मैंने HITARTHI का "+c.course+" course पूरा किया 🎉 "+certURL(c.id));}
+window.openCert=openCert;
 async function shareCanvas(cv,name,text){try{const bl=await new Promise(ok=>cv.toBlob(ok,"image/png"));const f=new File([bl],name,{type:"image/png"});
   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],text});return;}}catch(e){}
   const a=document.createElement("a");a.href=cv.toDataURL("image/png");a.download=name;document.body.appendChild(a);a.click();a.remove();toast("Image save हो गई — WhatsApp status / group में लगाएँ");}
@@ -2366,7 +2367,7 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
 
   /* ---- Shelf ---- */
   function show(on){sec.querySelector(".ml-hero").classList.toggle("in",on);$("#mlLogin").hidden=on;$("#mlShelf").hidden=!on;}
-  function renderShelf(){
+  function renderShelf(){try{window.spRender&&setTimeout(spRender,0);}catch(e){}
     show(true);
     $("#mlHello").textContent="नमस्ते, "+(ML.name||"पाठक")+" 🙏";
     $("#mlSub").textContent=ML.items.length+" items आपकी Library में • "+ML.mobile+(ML.demo?" • यह Demo है":"");setTimeout(()=>{window.hbStreakShow&&hbStreakShow();window.hbMeShow&&hbMeShow();},0);
@@ -2417,6 +2418,8 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
   /* Partner Dashboard → "मेरी Library" (ID + PIN दोबारा नहीं डालना) */
   window.mlPartnerLogin=function(id,pin){location.hash="library";setTimeout(()=>{try{init();}catch(e){}login({id,pin});},350);};
   /* Payment के तुरंत बाद — "Library खोलें" */
+  window.SPX={get ML(){return ML;},init:()=>init(),loadLib:()=>loadLib(),openItem:(it,n,m)=>openItem(it,n,m),cover:(it,c)=>cover(it,c),doneCount:it=>doneCount(it),TI,TN,
+    setTok:(t,n,m)=>{ML.token=t;ML.name=n||"";ML.mobile=m||"";LS.set("ml_tok",{t,n:ML.name,m:ML.mobile});},logout:()=>{const b=$("#mlOut");if(b)b.click();}};
   window.mlAfterPay=function(orderId,mob){const lines=(typeof PAY!=="undefined"&&PAY.lines)||null;if(lines&&lines.length&&lines.every(l=>l.cat==="Physical"))return;
     let el=$("#payLib");if(!el){el=document.createElement("button");el.type="button";el.id="payLib";el.className="btn btn-primary btn-block";$("#payOk").after(el);}
     el.hidden=false;el.textContent="📚 अभी पढ़ना / सुनना / देखना शुरू करें — मेरी Library";
@@ -2595,6 +2598,60 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
     const s=LS.get("ml_tok",null);if(s&&s.t){ML.token=s.t;ML.name=s.n||"";ML.mobile=s.m||"";loadLib();}}
   new MutationObserver(()=>{if(!sec.hidden)init();}).observe(sec,{attributes:true,attributeFilter:["hidden"]});
   if(!sec.hidden)init();
+})();
+/* ---------- 🎓 STUDENT PROFILE — My Library • My Books • My Courses • My Certificates ---------- */
+(function(){
+  const sec=document.querySelector('section[data-page="student"]');if(!sec||!window.SPX)return;
+  let tab="lib",certs=null,stu=null,loading=false;
+  const isCourse=it=>it.types.includes("Video")||it.types.includes("Live")||it.types.includes("Test")||!!it.lms;
+  const isBook=it=>!isCourse(it)&&(it.types.includes("Ebook")||it.types.includes("PDF")||it.types.includes("Audio"));
+  const msgE=(el,t,bad)=>{el.className="mc-msg "+(bad?"err":"ok");el.textContent=t;};
+  function card(it){const i=SPX.ML.items.indexOf(it),d=SPX.doneCount(it),pct=Math.round(d/Math.max(1,it.total)*100);
+    return `<button type="button" class="ml-card" data-spopen="${i}">${SPX.cover(it,"ml-cv")}<div class="ml-ci"><h3>${esc(it.title)}</h3><div class="ml-chips">${it.types.map(t=>`<span>${SPX.TI[t]||""} ${SPX.TN[t]||t}</span>`).join("")}</div><div class="ml-bar"><i style="width:${pct}%"></i></div><div class="ml-meta">${it.total?`${d}/${it.total} पूरे`:""}</div></div></button>`;}
+  const empty=(t,b)=>`<div class="sp-empty">${t}<br><br>${b||'<button class="btn btn-orange btn-sm" type="button" data-go="books">📘 Books देखें</button> <button class="btn btn-ghost btn-sm" type="button" data-go="courses">🎬 Courses देखें</button>'}</div>`;
+  async function loadCerts(){if(!HB_API||!SPX.ML.token||SPX.ML.demo)return;try{const r=await hbCall("mycerts",{token:SPX.ML.token});if(r&&r.ok){certs=r.certs||[];stu=r.student;spRender();}}catch(e){}}
+  window.spRender=function(){
+    const ML=SPX.ML,on=!!(ML.token||ML.demo)&&!loading;$("#spOut").hidden=on;$("#spIn").hidden=!on;if(!on)return;
+    const items=ML.items||[],B=items.filter(isBook),C=items.filter(isCourse);
+    $("#spName").textContent="नमस्ते, "+(ML.name||"Student")+" 🙏";$("#spAv").textContent=(ML.name||"🎓").trim().charAt(0).toUpperCase()||"🎓";
+    $("#spId").textContent=stu&&stu.id?"Student ID: "+stu.id:"HITARTHI Student";
+    $("#spMeta").textContent=[ML.mobile,stu&&stu.since?"जुड़े: "+stu.since:"",stu&&stu.batch?"Batch: "+stu.batch:""].filter(Boolean).join(" • ");
+    $("#spNL").textContent=items.length;$("#spNB").textContent=B.length;$("#spNC").textContent=C.length;$("#spNX").textContent=certs?certs.length:"–";
+    $$("[data-spt]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.spt===tab));
+    const body=$("#spBody");
+    if(tab==="certs"){if(certs===null){body.innerHTML='<div class="sp-empty">⏳ Certificates आ रहे हैं…</div>';loadCerts();return;}
+      body.innerHTML=certs.length?certs.map((c,k)=>`<div class="sp-cert"><span style="font-size:1.6rem">🏅</span><b>${esc(c.course)}</b><span class="small muted">${esc(c.date)} • ${c.pct}% • Grade ${esc(c.grade||"-")}</span><span class="small">ID: <b>${esc(c.id)}</b></span><button class="btn btn-orange btn-sm" type="button" data-spcert="${k}">🏅 Certificate देखें / Download</button></div>`).join("")
+        :empty("अभी कोई certificate नहीं।<br>Course के सारे lessons + final test पूरा करने पर certificate यहाँ आएगा।",'<button class="btn btn-ghost btn-sm" type="button" data-spt="courses">🎬 My Courses खोलें</button>');return;}
+    const L=tab==="books"?B:tab==="courses"?C:items;
+    body.innerHTML=L.length?L.map(card).join(""):empty(tab==="books"?"अभी आपकी कोई Book नहीं।":tab==="courses"?"अभी आपका कोई Course नहीं।":"अभी आपकी Library ख़ाली है।");
+  };
+  sec.addEventListener("click",e=>{const o=e.target.closest("[data-spopen]");if(o){const it=SPX.ML.items[+o.dataset.spopen];if(it)SPX.openItem(it,null,"own");return;}
+    const t=e.target.closest("[data-spt]");if(t){tab=t.dataset.spt;spRender();return;}
+    const c=e.target.closest("[data-spcert]");if(c&&certs){const x=certs[+c.dataset.spcert];if(x&&window.openCert)openCert(Object.assign({name:SPX.ML.name},x));}});
+  document.addEventListener("click",e=>{const b=e.target.closest("[data-sptab]");if(b){tab=b.dataset.sptab==="lib"?"lib":b.dataset.sptab;setTimeout(spRender,60);}});
+  $("#spOutBtn").addEventListener("click",()=>{SPX.logout();certs=null;stu=null;spRender();toast("आप logout हो गए");});
+  async function doLogin(payload,btn,msg,label){btn.disabled=true;btn.textContent="खुल रहा है…";
+    try{const r=await hbCall("liblogin",payload);if(!r||!r.ok){msgE(msg,(r&&r.err)||"Login नहीं हुआ",true);return;}
+      SPX.setTok(r.token,r.name,r.mobile);certs=null;stu=null;msg.textContent="";await SPX.loadLib();loadCerts();spRender();window.scrollTo({top:0,behavior:"smooth"});}
+    catch(e){msgE(msg,"Server से जुड़ नहीं पाए — दोबारा कोशिश करें",true);}finally{btn.disabled=false;btn.textContent=label;}}
+  $("#spLogin").addEventListener("submit",e=>{e.preventDefault();const msg=$("#spMsg"),mobile=$("#spMob").value.replace(/\D/g,""),raw=$("#spSid").value.trim(),id=raw.indexOf("@")>0?raw.toLowerCase():raw.toUpperCase().replace(/\s+/g,"");
+    if(mobile.length!==10)return msgE(msg,"10 अंकों का mobile नंबर लिखें",true);
+    if(!/^(HT\d{4}-\d{4}|EN\d{9}|HS\d{4,7})$/.test(id)&&!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(id))return msgE(msg,"Student ID (HS10001), Order ID (HT2110-4821) या अपना email लिखें",true);
+    if(!HB_API)return msgE(msg,"यह preview है — असली login website पर चलेगा।",true);
+    doLogin({mobile,orderId:id},$("#spGo"),msg,"🎓 मेरी Profile खोलें");});
+  $("#spReg").addEventListener("submit",async e=>{e.preventDefault();const msg=$("#srMsg"),b=$("#srGo");
+    const d={name:$("#srName").value.trim(),mobile:$("#srMob").value.replace(/\D/g,""),email:$("#srEmail").value.trim()};
+    if(d.name.length<2)return msgE(msg,"अपना पूरा नाम लिखें",true);if(d.mobile.length!==10)return msgE(msg,"10 अंकों का mobile नंबर लिखें",true);
+    if(d.email&&!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(d.email))return msgE(msg,"Email सही लिखें — या खाली छोड़ दें",true);
+    if(!HB_API)return msgE(msg,"यह preview है — असली account website पर बनेगा।",true);
+    b.disabled=true;b.textContent="बन रहा है…";
+    try{const r=await hbCall("stureg",d);if(!r||!r.ok){msgE(msg,(r&&r.err)||"Account नहीं बना",true);if(r&&r.exists){$("#spMob").value=d.mobile;$("#spSid").focus();}return;}
+      SPX.setTok(r.token,r.name,r.mobile);certs=[];stu={id:r.sid,since:new Date().toISOString().slice(0,10)};await SPX.loadLib();spRender();toast(r.msg);
+      $("#spBody").insertAdjacentHTML("beforebegin",`<div class="ml-note" id="spWelcome">${esc(r.msg)}<br><small>Login के लिए: Mobile + Student ID <b>${esc(r.sid)}</b> • मुफ़्त अध्याय Library में पढ़ें।</small></div>`);loadCerts();}
+    catch(err){msgE(msg,"Server से जुड़ नहीं पाए — दोबारा कोशिश करें",true);}finally{b.disabled=false;b.textContent="✨ Account बनाएँ";}});
+  const start=()=>{if(sec.hidden)return;const s=(()=>{try{return JSON.parse(localStorage.getItem("ml_tok")||"null");}catch(e){return null;}})();
+    SPX.init();if(s&&s.t&&!SPX.ML.token){SPX.setTok(s.t,s.n,s.m);SPX.loadLib();}spRender();if(SPX.ML.token&&certs===null)loadCerts();};
+  new MutationObserver(start).observe(sec,{attributes:true,attributeFilter:["hidden"]});start();
 })();
 /* ---------- ONLINE PAYMENT GATEWAY (Razorpay) — keys Google Sheet में, website में नहीं ---------- */
 if(HB_API){hbCall("config",{}).then(r=>{HB.gw=r&&r.gateway||"";}).catch(()=>{});}
@@ -2929,7 +2986,7 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
   $("#dwOff").onclick=()=>{try{localStorage.setItem(K,"1");}catch(e){}apply(false);window.OFFER=null;toast("Offer की पट्टी हटा दी गई");};
 })();
 /* ---------- ROUTER ---------- */
-const PAGES=["home","courses","books","library","notices","schools","track","pp","health","finance","fees","why","blog","ppt","partner","about","contact"];
+const PAGES=["home","courses","books","student","library","notices","schools","track","pp","health","finance","fees","why","blog","ppt","partner","about","contact"];
 function go(p,noHash){
   if(!PAGES.includes(p))p="home";try{if(!$("#drawer").hidden)closeAll();}catch(e){}
   $$("section.page").forEach(s=>s.hidden=s.dataset.page!==p);

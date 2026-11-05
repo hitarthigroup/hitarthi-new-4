@@ -2081,6 +2081,16 @@ footer.site .legal{border-top:1px solid rgba(255,255,255,.12);margin-top:28px;pa
 .ml-cont i{font-style:normal;font-size:1.8rem}.ml-cont small{display:block;opacity:.85}.ml-cont b{font-size:1.05rem}
 .ml-cont span:last-child{margin-left:auto;font-weight:800;white-space:nowrap}
 .ml-ftabs{margin-top:16px;max-width:520px}
+.sp-hero{text-align:center;max-width:720px;margin:0 auto 22px}.sp-hero h1 em{color:var(--orange,#FF8C00);font-style:normal}
+.sp-two{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px;margin:0 auto}@media (max-width:760px){.sp-two{grid-template-columns:1fr}}
+.sp-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:10px}.sp-card h2{font-size:1.25rem;margin:0}.sp-card h2 small{font-size:.75rem;background:var(--green-soft);color:var(--green);padding:2px 8px;border-radius:99px;vertical-align:middle}
+.sp-card label{display:flex;flex-direction:column;gap:4px;font-weight:600}.sp-card input{padding:11px 12px;border:1px solid var(--line);border-radius:12px;font:inherit;background:var(--bg,#fff);color:inherit}.sp-new{border:2px solid var(--green)}
+.sp-head{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:linear-gradient(135deg,#0B1A4A,#1D4ED8);color:#fff;border-radius:20px;padding:18px}.sp-head .muted{color:#C7D2FE}
+.sp-av{width:58px;height:58px;border-radius:50%;background:#FFB020;color:#0B1A4A;display:grid;place-items:center;font:800 1.6rem var(--display)}.sp-who{flex:1;min-width:180px}.sp-who h2{margin:0;color:#fff}.sp-who p{margin:4px 0 0}.sp-act{display:flex;gap:8px;flex-wrap:wrap}.sp-act .btn{background:#ffffff1f;color:#fff;border-color:#ffffff55}
+.sp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.sp-stats div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}.sp-stats b{display:block;font:800 1.4rem var(--display)}.sp-stats small{color:var(--ink-2)}
+.sp-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px}.sp-tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:99px;padding:9px 14px;font:600 .95rem inherit;cursor:pointer;min-height:40px}.sp-tabs button[aria-pressed=true]{background:#0B1A4A;color:#fff;border-color:#0B1A4A}
+@media (max-width:560px){.sp-tabs{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.sp-tabs button{width:100%}.sp-stats small{font-size:.75rem}}
+.sp-cert{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px}.sp-cert b{font-size:1.05rem}.sp-empty{grid-column:1/-1;text-align:center;padding:30px 14px;border:1px dashed var(--line);border-radius:18px;color:var(--ink-2)}
 .ml-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:4px}
 .ml-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:transform .15s,box-shadow .15s}
 .ml-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
@@ -2982,7 +2992,7 @@ html.is-app [data-install]{display:none!important}
 
 <div class="util"><div class="wrap ub">
   <span class="ub-l"><span>📞 <b class="num">+91 94537 17356</b></span><span class="hide-sm">✉️ hitarthigroup@gmail.com</span><span class="hide-sm">🕘 सोम–शनि, सुबह 9 – शाम 7</span></span>
-  <span class="ub-r"><a class="hide-sm" href="https://www.instagram.com/hitarthigroup" target="_blank" rel="noopener">Instagram</a><a class="hide-sm" href="https://www.youtube.com/@hitarthigroup" target="_blank" rel="noopener">YouTube</a><a href="https://play.google.com/store/apps/details?id=co.rogers.flabo" target="_blank" rel="noopener">📱 App Download</a><button data-go="finance" data-scrollto="iqCard">Money IQ Test</button><a class="hide-sm" href="https://play.google.com/store/apps/details?id=co.rogers.flabo" target="_blank" rel="noopener">Student Login</a></span>
+  <span class="ub-r"><a class="hide-sm" href="https://www.instagram.com/hitarthigroup" target="_blank" rel="noopener">Instagram</a><a class="hide-sm" href="https://www.youtube.com/@hitarthigroup" target="_blank" rel="noopener">YouTube</a><a href="https://play.google.com/store/apps/details?id=co.rogers.flabo" target="_blank" rel="noopener">📱 App Download</a><button data-go="finance" data-scrollto="iqCard">Money IQ Test</button><a class="hide-sm" href="#student" data-go="student">🎓 Student Login</a></span>
 </div></div>
 <div class="progress" id="progress"></div>
 <header class="top">
@@ -2995,6 +3005,7 @@ html.is-app [data-install]{display:none!important}
       <button data-go="home">Home</button>
       <div class="mm"><button data-go="courses" aria-haspopup="true">Courses <span class="car">▾</span></button><div class="mm-panel" id="mega"></div></div>
       <div class="mm mm-sm"><button data-go="books" aria-haspopup="true">Books <span class="car">▾</span></button><div class="mm-panel mm-list" id="megaBooks"></div></div>
+      <button data-go="student">🎓 Student Profile</button>
       <button data-go="library">Library</button>
       <button data-go="partner">Partner</button>
       <button data-go="contact">Contact</button>
@@ -3009,7 +3020,7 @@ html.is-app [data-install]{display:none!important}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
         <span class="badge num" id="cartCount" hidden>0</span>
       </button>
-      <div class="mm mm-acc"><button class="btn btn-sm hb-login hide-xs" data-go="library"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg> मेरा खाता</button><div class="mm-panel mm-list mm-right" id="megaAcc"></div></div><button class="btn btn-orange btn-sm hide-xs" data-go="contact" data-demo="1">Free Counselling</button>
+      <div class="mm mm-acc"><button class="btn btn-sm hb-login hide-xs" data-go="student"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg> मेरा खाता</button><div class="mm-panel mm-list mm-right" id="megaAcc"></div></div><button class="btn btn-orange btn-sm hide-xs" data-go="contact" data-demo="1">Free Counselling</button>
       <button class="icon-btn menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
@@ -4275,6 +4286,34 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
     </div>
   </div>
 </section>
+<section class="page" data-page="student" hidden>
+  <div class="wrap sp">
+    <div id="spOut">
+      <div class="sp-hero"><div class="eyebrow">🎓 Student Profile</div><h1>आपका HITARTHI <em>Student Account</em></h1>
+        <p>एक ही जगह — <b>My Library</b>, <b>My Books</b>, <b>My Courses</b> और <b>My Certificates</b>। Mobile नंबर + Student ID से login करें, या 1 मिनट में मुफ़्त account बनाएँ।</p></div>
+      <div class="sp-two">
+        <form class="sp-card" id="spLogin" autocomplete="on"><h2>🔑 Login करें</h2><p class="small muted">पहले से HITARTHI छात्र हैं या कुछ खरीदा है?</p>
+          <label>Mobile नंबर<input id="spMob" type="tel" inputmode="numeric" maxlength="10" placeholder="10 अंक" autocomplete="tel"></label>
+          <label>Student ID / Order ID / Email <small class="muted">(जैसे HS10001, HT2110-4821 या email)</small><input id="spSid" type="text" maxlength="80" placeholder="जैसे HS10001"></label>
+          <button class="btn btn-orange btn-block" type="submit" id="spGo">🎓 मेरी Profile खोलें</button><p class="mc-msg" id="spMsg" role="status"></p>
+          <p class="small muted">Student ID याद नहीं? <a href="https://wa.me/919453717356?text=Namaste%20HITARTHI%2C%20mujhe%20apni%20Student%20ID%20chahiye" target="_blank" rel="noopener">WhatsApp करें</a></p></form>
+        <form class="sp-card sp-new" id="spReg" autocomplete="on"><h2>✨ नया Account बनाएँ <small>मुफ़्त</small></h2><p class="small muted">पहली बार आए हैं? Student ID तुरंत मिलेगी।</p>
+          <label>पूरा नाम<input id="srName" type="text" maxlength="60" autocomplete="name" required></label>
+          <label>Mobile नंबर<input id="srMob" type="tel" inputmode="numeric" maxlength="10" placeholder="10 अंक" autocomplete="tel" required></label>
+          <label>Email <small class="muted">(वैकल्पिक)</small><input id="srEmail" type="email" inputmode="email" maxlength="120" placeholder="naam@gmail.com" autocomplete="email"></label>
+          <button class="btn btn-primary btn-block" type="submit" id="srGo">✨ Account बनाएँ</button><p class="mc-msg" id="srMsg" role="status"></p>
+          <ul class="ticks small"><li>मुफ़्त अध्याय पढ़ें / सुनें</li><li>जो भी खरीदें — सब My Library में</li><li>Course पूरा करने पर Certificate</li></ul></form>
+      </div>
+    </div>
+    <div id="spIn" hidden>
+      <div class="sp-head"><span class="sp-av" id="spAv">🎓</span><div class="sp-who"><h2 id="spName">नमस्ते!</h2><p><span class="mc-chip g" id="spId"></span> <span class="muted" id="spMeta"></span></p></div>
+        <span class="sp-act"><button class="btn btn-ghost btn-sm" type="button" data-go="track">📦 My Orders</button><button class="btn btn-ghost btn-sm" type="button" id="spOutBtn">Logout</button></span></div>
+      <div class="sp-stats"><div><b id="spNL">0</b><small>Library में</small></div><div><b id="spNB">0</b><small>Books</small></div><div><b id="spNC">0</b><small>Courses</small></div><div><b id="spNX">0</b><small>Certificates</small></div></div>
+      <div class="sp-tabs" role="tablist"><button type="button" data-spt="lib" aria-pressed="true">📚 My Library</button><button type="button" data-spt="books" aria-pressed="false">📘 My Books</button><button type="button" data-spt="courses" aria-pressed="false">🎬 My Courses</button><button type="button" data-spt="certs" aria-pressed="false">🏅 My Certificates</button></div>
+      <div id="spBody" class="ml-grid"></div>
+    </div>
+  </div>
+</section>
 <section class="page" data-page="notices" hidden>
   <div class="wrap">
     <div class="page-hero"><div class="eyebrow">🔔 HITARTHI सूचना</div><h1>सूचनाएँ और <em>Announcements</em></h1><p class="muted">छुट्टी, नए batch, test और ज़रूरी ख़बरें — सब यहाँ। "मेरा खाता" में login करने पर आपके batch की सूचनाएँ भी दिखेंगी।</p></div>
@@ -4679,7 +4718,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
 <input type="file" id="phInput" accept="image/*" hidden>
 
 <script defer src="js/780b897e07.js"></script>
-<script defer src="js/9615b9b64b.js"></script>
+<script defer src="js/84b97e3192.js"></script>
 <script defer src="js/dc2f1002f4.js"></script>
 
 
