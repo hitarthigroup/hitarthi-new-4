@@ -1699,6 +1699,7 @@ html[data-theme="dark"] .mc-note{background:#2A2208;color:#FDE68A}
 .mc-k.k1{background:linear-gradient(135deg,#0E8F55,#17C47A)}.mc-k.k2{background:linear-gradient(135deg,#0057D9,#00A6F0)}.mc-k.k3{background:linear-gradient(135deg,#C2410C,#FF8C00)}
 .mc-sum{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:baseline;justify-content:space-between;background:var(--surface-2);border-radius:16px;padding:12px 16px;margin-top:12px}
 .mc-sum span{color:var(--ink-2)}.mc-sum b{font-variant-numeric:tabular-nums}.mc-sum .net b{font:800 1.6rem var(--display);color:var(--green)}
+.ph-in{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.ph-pick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}.ph-pick .btn{cursor:pointer}.ph-sel{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--green)}.ph-sel img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--green)}
 .mc-wal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}.mc-wal b+small{font-size:.76rem;margin-top:2px}
 .mc-wal div{border:1px solid var(--line);border-radius:14px;padding:10px 12px}.mc-wal small{color:var(--ink-2);display:block;font-size:.84rem}.mc-wal b{font:800 1.25rem var(--display);font-variant-numeric:tabular-nums}
 .mc-wal .bal{background:var(--green-soft);border-color:var(--green)}.mc-wal .bal b{color:var(--green)}
@@ -4436,7 +4437,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
               <div><label for="mjPin">अपना PIN बनाइए</label><input id="mjPin" type="password" inputmode="numeric" maxlength="6" placeholder="4–6 अंक" autocomplete="new-password" required></div>
               <div><label for="mjPin2">PIN दोबारा</label><input id="mjPin2" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" required></div>
             </div>
-            <div><label for="mjPhoto">अपनी photo (ID card के लिए • बाद में भी लगा सकते हैं)</label><input id="mjPhoto" type="file" accept="image/*" capture="user"></div>
+            <div><label for="mjPhoto">अपनी photo (ID card के लिए • बाद में भी लगा सकते हैं)</label><input id="mjPhoto" type="file" accept="image/*" class="ph-in"><input id="mjPhotoCam" type="file" accept="image/*" capture="user" class="ph-in" data-cam-for="mjPhoto"><div class="ph-pick"><label for="mjPhotoCam" class="btn btn-ghost btn-sm">📷 फ़ोटो खींचें</label><label for="mjPhoto" class="btn btn-ghost btn-sm">🖼️ Gallery से चुनें</label><span class="ph-sel" data-sel-for="mjPhoto"></span></div></div>
             <button class="btn btn-primary btn-block" id="mjGo" type="submit">Partner ID बनाइए</button>
             <p class="mc-msg" id="mjMsg" role="status"></p>
             <div id="mjOk"></div>
@@ -4678,7 +4679,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
 <input type="file" id="phInput" accept="image/*" hidden>
 
 <script defer src="js/780b897e07.js"></script>
-<script defer src="js/50755a857c.js"></script>
+<script defer src="js/5e3a7055f1.js"></script>
 <script defer src="js/dc2f1002f4.js"></script>
 
 
