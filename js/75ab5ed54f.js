@@ -148,7 +148,7 @@ const BOOK_PAL={finance:["#0E5A34","#1FA85A","#073A21","#FFD34D"],business:["#7C
 function hbMergeBooks(list){if(!Array.isArray(list)||!list.length)return false;const seen=new Set();
   list.forEach(r=>{const t=String(r.t||"").trim();if(!t)return;const i=BOOKS.findIndex(b=>b.t.toLowerCase()===t.toLowerCase());
     const col=Array.isArray(r.col)&&r.col.length===4?r.col:null,img=/^https:\/\//.test(String(r.img||""))?String(r.img):(i>=0&&BOOKS[i].img0)||"";
-    const v={s:String(r.s||""),a:String(r.a||"HITARTHI"),bcat:BOOK_PAL[r.bcat]?r.bcat:"self",e:Math.max(0,+r.e||0),p:Math.max(0,+r.p||0),img,shelf:r.shelf!==false,pages:+r.pages||0,learn:Array.isArray(r.learn)?r.learn.map(String):[],ser:String(r.ser||""),hide:false};
+    const v={s:String(r.s||""),a:String(r.a||"HITARTHI"),bcat:BOOK_PAL[r.bcat]?r.bcat:"self",e:Math.max(0,+r.e||0),p:Math.max(0,+r.p||0),c:Math.max(0,+r.c||0),img,shelf:r.shelf!==false,pages:+r.pages||0,learn:Array.isArray(r.learn)?r.learn.map(String):[],ser:String(r.ser||""),hide:false};
     if(i>=0){Object.assign(BOOKS[i],v);if(col)BOOKS[i].col=col;seen.add(i);}
     else{BOOKS.push(Object.assign({t,col:col||BOOK_PAL[v.bcat]},v));seen.add(BOOKS.length-1);}});
   BOOKS.forEach((b,i)=>{if(!seen.has(i))b.hide=true;});return true;}
@@ -288,7 +288,7 @@ function book3d(b,size){
 }
 const fmtState={};
 const fmtOf=(b,i)=>b.p>0?(fmtState[i]||"e"):"e";
-const comboOf=b=>b.p+Math.round(b.e/2);
+const comboOf=b=>(+b.c>0?+b.c:b.p+Math.round(b.e/2));
 const priceOf=(b,f)=>f==="e"?b.e:f==="p"?b.p:comboOf(b);
 const fmtName=f=>f==="e"?"E-book (PDF)":f==="p"?"Printed Book":"Combo (Printed + E-book)";
 function fmtGroup(b,i,f){
