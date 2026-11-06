@@ -2201,7 +2201,7 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
     const W=q.split(" "),hitW=s=>{s=norm(s);return W.every(w=>s.includes(w));};
     const C=COURSES.filter(c=>hitW(c.name+" "+c.hin+" "+c.cat+" "+(c.out||[]).join(" "))).slice(0,8).map(c=>`<button type="button" data-sgo="c" data-v="${esc(c.name)}"><i>🎓</i><span><b>${esc(c.name)}</b><small>${esc(c.hin)} • ${rs(c.fee)}</small></span></button>`);
     const Bk=BOOKS.map((b,i)=>[b,i]).filter(([b])=>hitW(b.t+" "+b.s+" "+b.a+" "+b.ser)).slice(0,8).map(([b,i])=>`<button type="button" data-sgo="b" data-v="${i}"><i>📘</i><span><b>${esc(b.t)}</b><small>${esc(b.s)} • E-book ${rs(b.e)}</small></span></button>`);
-    const H=(typeof HPROD!=="undefined"?HPROD:[]).filter(h=>hitW(h.full+" "+h.n+" "+(h.tag||""))).slice(0,5).map(h=>`<button type="button" data-sgo="h" data-v="${esc(h.k)}"><i>🌿</i><span><b>${esc(h.full)}</b><small>Health • ${rs(h.mrp)}</small></span></button>`);
+    const H=(typeof HPROD!=="undefined"&&window.hsOpen&&hsOpen()?HPROD:[]).filter(h=>hitW(h.full+" "+h.n+" "+(h.tag||""))).slice(0,5).map(h=>`<button type="button" data-sgo="h" data-v="${esc(h.k)}"><i>🌿</i><span><b>${esc(h.full)}</b><small>Health • ${rs(h.mrp)}</small></span></button>`);
     const P=PG.filter(p=>hitW(p[0]+" "+p[1])).map(p=>`<button type="button" data-sgo="p" data-v="${p[1]}"><i>${p[2]}</i><span><b>${esc(p[0])}</b></span></button>`);
     const sec=(t,a)=>a.length?`<h4>${t}</h4>${a.join("")}`:"";
     out.innerHTML=(sec("Courses",C)+sec("Books",Bk)+sec("Health",H)+sec("Pages",P))||`<p class="muted">"${esc(inp.value)}" नहीं मिला। <button type="button" class="lnk" data-sgo="lead">Free Counselling लें →</button></p>`;}
@@ -2996,6 +2996,16 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
   let closed3=false;try{closed3=Date.now()-(+localStorage.getItem("hb_dw_closed")||0)<3*864e5;}catch(e){}
   apply(!!O&&!off&&!closed3);
   $("#dwOff").onclick=()=>{try{localStorage.setItem(K,"1");}catch(e){}apply(false);window.OFFER=null;toast("Offer की पट्टी हटा दी गई");};
+})();
+/* ---------- 🔒 Health Store password lock ---------- */
+const HS_KEY="1qjxyw2";
+const hsHash=v=>{let h=5381;for(const c of String(v))h=((h*33)^c.charCodeAt(0))>>>0;return h.toString(36);};
+window.hsOpen=()=>{try{return sessionStorage.getItem("hs_ok")===HS_KEY;}catch(e){return !!window.__hsOk;}};
+(function(){const sec=document.querySelector('section[data-page="health"]');if(!sec)return;
+  const paint=()=>sec.classList.toggle("hs-open",hsOpen());paint();
+  const f=document.getElementById("hslForm");if(f)f.addEventListener("submit",e=>{e.preventDefault();const p=document.getElementById("hslPin");
+    if(hsHash(p.value.trim())===HS_KEY){try{sessionStorage.setItem("hs_ok",HS_KEY);}catch(e){window.__hsOk=1;}p.value="";document.getElementById("hslErr").textContent="";paint();}
+    else{document.getElementById("hslErr").textContent="गलत password — दोबारा डालें";p.select();}});
 })();
 /* ---------- ROUTER ---------- */
 const PAGES=["home","courses","books","student","library","notices","schools","track","pp","health","finance","fees","why","blog","ppt","partner","about","contact"];

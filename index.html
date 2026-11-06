@@ -1807,6 +1807,12 @@ html[data-theme="dark"] .mc-note{background:#2A2208;color:#FDE68A}
 @media (prefers-reduced-motion:reduce){.diya .fl,.diya .gl{animation:none}}
 
 /* ===== HITARTHI HEALTH STORE ===== */
+section[data-page="health"]:not(.hs-open) > .wrap:not(#hsLock){display:none}
+section[data-page="health"].hs-open #hsLock{display:none}
+.hsl-card{max-width:420px;margin:60px auto;text-align:center;background:var(--card,#fff);border-radius:18px;padding:32px 22px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+.hsl-card h2{margin:10px 0 6px}.hsl-card form{display:flex;gap:8px;margin-top:16px}
+.hsl-card input{flex:1;min-width:0;padding:12px 14px;border:1.5px solid #ccd;border-radius:10px;font-size:1.05rem}
+
 .hs-hero{position:relative;overflow:hidden;border-radius:28px;background:radial-gradient(90% 120% at 85% 10%,#FDE68A33,transparent 55%),linear-gradient(130deg,#052E16 0%,#14532D 45%,#166534 70%,#3F6212 100%);color:#fff;padding:34px 30px;display:grid;grid-template-columns:1.05fr 1fr;gap:20px;align-items:center;margin-top:18px}
 .hs-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(253,230,138,.5) 1px,transparent 1.6px) 0 0/40px 40px;opacity:.14;pointer-events:none}
 .hs-hero .eyebrow{color:#FDE68A}.hs-hero h1{color:#fff;font-size:clamp(1.9rem,4vw,3rem);margin:6px 0 8px}.hs-hero h1 em{font-style:normal;color:#FCD34D}.hs-hero p{color:#DCFCE7}
@@ -4365,6 +4371,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
   <div class="wrap"><div id="ppView"></div></div>
 </section>
 <section class="page" data-page="health" hidden>
+  <div id="hsLock" class="wrap"><div class="hsl-card"><div style="font-size:2.4rem">🔒</div><h2>Health Store अभी Private है</h2><p class="muted">यह section केवल HITARTHI team और चुने हुए लोगों के लिए है। Password डालें।</p><form id="hslForm" autocomplete="off"><input id="hslPin" type="password" inputmode="numeric" placeholder="Password" aria-label="Health Store password"><button class="btn btn-orange" type="submit">खोलें</button></form><p id="hslErr" class="small" style="color:#c0392b;min-height:1.2em"></p></div></div>
   <div class="wrap">
     <div class="hs-hero">
       <div style="position:relative">
@@ -4719,7 +4726,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
 <input type="file" id="phInput" accept="image/*" hidden>
 
 <script defer src="js/780b897e07.js"></script>
-<script defer src="js/6298fb6e4a.js"></script>
+<script defer src="js/666978f287.js"></script>
 <script defer src="js/dc2f1002f4.js"></script>
 
 
