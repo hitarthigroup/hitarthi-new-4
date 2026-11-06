@@ -2330,6 +2330,7 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
     {key:"basic computer course",title:"Basic Computer Course",types:["Video","Live","Test"],lms:JSON.parse(JSON.stringify(window.LMSX?LMSX.DEMO_LMS:null)),via:"",note:"किश्त: ₹1,000 / ₹1,499 भरे — बाकी किश्त भरते ही सारे lesson खुल जाएँगे",chapters:[ch("Lesson 1 — Computer चालू और बंद करना","Video",18,1,1,"v"),ch("Lesson 2 — Mouse और Keyboard","Video",22,0,1,"v"),ch("Lesson 3 — File और Folder बनाना","Video",25,0,0,"v")]}
   ].map(it=>Object.assign(it,{total:it.chapters.length,open:it.chapters.filter(c=>c.open).length,chapters:it.chapters.map((c,n)=>Object.assign(c,{n}))}))});
 
+  const HB_VCOV="img/b8f2616a9090.webp";
   /* ---- छोटे helpers ---- */
   const prog=k=>(LS.get("ml_prog",{})[k])||{d:{},pos:{}};
   const saveProg=(k,f)=>{const A=LS.get("ml_prog",{});const x=A[k]||{d:{},pos:{}};f(x);A[k]=x;LS.set("ml_prog",A);};
@@ -2337,6 +2338,8 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
   const coverBook=t=>{const s=String(t||"").toLowerCase().trim();{const d=DEMO_BOOKS.find(x=>s.includes(x.book.t.toLowerCase()));if(d)return d.book;}return BOOKS.find(b=>b.t.toLowerCase()===s)||BOOKS.find(b=>s.includes(b.t.toLowerCase())&&b.t.length>6);};
   function cover(it,cls){const tt=it.types.filter(t=>t!=="Live"&&t!=="Test"),vid=!tt.length||(tt.length===1&&tt[0]==="Video"), b=!vid&&coverBook(it.title);
     if(b)return `<div class="${cls}">${book3d(b)}</div>`;
+    const vimg=/^https:\/\//.test(String(it.img||""))?it.img:(vid&&/weekly|52 week|recorded/i.test(String(it.key||it.title)))?HB_VCOV:"";
+    if(vimg)return `<div class="${cls} vid has-img"><img src="${esc(vimg)}" alt="${esc(it.title)}" loading="lazy"></div>`;
     return `<div class="${cls} vid">${vid?"🎬":it.types.includes("Audio")?"🎧":"📖"}${cls==="ml-cv"?`<small>${esc(it.title.slice(0,38))}</small>`:""}</div>`;}
   const tm=s=>{s=Math.max(0,Math.floor(s||0));return Math.floor(s/60)+":"+("0"+s%60).slice(-2);};
   const msg=(t,err)=>{const m=$("#mlMsg");m.textContent=t||"";m.className="mc-msg"+(err?" err":t?" ok":"");};
