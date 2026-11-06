@@ -145,9 +145,10 @@ const HB_NEW=["Basic Computer — खेल-खेल में","MS Word Made E
 BOOKS.forEach(b=>{b.nw=HB_NEW.includes(b.t);});
 const bookBtn=(b,i,cls,lbl)=>b.nw?`<button class="btn btn-orange ${cls} bb-buy" data-buy="${i}">⚡ Buy Now${lbl||""}</button>`:`<button class="btn btn-orange ${cls}" data-add="${i}">Cart में जोड़ें${lbl||""}</button>`;
 const BOOK_PAL={finance:["#0E5A34","#1FA85A","#073A21","#FFD34D"],business:["#7C2D12","#EA580C","#4A1A0B","#FFE066"],self:["#831843","#DB2777","#500724","#FFD34D"],english:["#312E81","#4F46E5","#1E1B4B","#FFC247"],student:["#0A2A73","#0057D9","#061A4A","#FFC247"],kids:["#9D174D","#F472B6","#500724","#FFE066"]};
+const HB_BCOV2={"C++ Programming":"img/3a65e03eaeb2.webp","Tally Prime with GST":"img/599ba9b99f4a.webp","CCC Course":"img/2a0d405883db.webp","Complete Keyboard Guide":"img/7e97eacc31dd.webp"};
 function hbMergeBooks(list){if(!Array.isArray(list)||!list.length)return false;const seen=new Set();
   list.forEach(r=>{const t=String(r.t||"").trim();if(!t)return;const i=BOOKS.findIndex(b=>b.t.toLowerCase()===t.toLowerCase());
-    const col=Array.isArray(r.col)&&r.col.length===4?r.col:null,img=/^https:\/\//.test(String(r.img||""))?String(r.img):(i>=0&&BOOKS[i].img0)||"";
+    const col=Array.isArray(r.col)&&r.col.length===4?r.col:null,img=HB_BCOV2[t]||(/^https:\/\//.test(String(r.img||""))?String(r.img):(i>=0&&BOOKS[i].img0)||"");
     const v={s:String(r.s||""),a:String(r.a||"HITARTHI"),bcat:BOOK_PAL[r.bcat]?r.bcat:"self",e:Math.max(0,+r.e||0),p:Math.max(0,+r.p||0),c:Math.max(0,+r.c||0),img,shelf:r.shelf!==false,pages:+r.pages||0,learn:Array.isArray(r.learn)?r.learn.map(String):[],ser:String(r.ser||""),hide:false};
     if(i>=0){Object.assign(BOOKS[i],v);if(col)BOOKS[i].col=col;seen.add(i);}
     else{BOOKS.push(Object.assign({t,col:col||BOOK_PAL[v.bcat]},v));seen.add(BOOKS.length-1);}});
