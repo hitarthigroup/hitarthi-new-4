@@ -166,60 +166,8 @@ const hbMap=(()=>{const m={},used=new Set();return i=>{if(hbOk(i))return i;if(m[
 const bdOk=bd=>!!bd&&bd.items.every(hbOk);
 const HB_SHELF=()=>{const L=BOOKS.map((b,i)=>i).filter(i=>!BOOKS[i].hide&&BOOKS[i].shelf!==false);return L.length?L:[0];};
 const hbNextShelf=(i,d)=>{const L=HB_SHELF();let k=L.indexOf(i);if(k<0)k=0;return L[(k+d+L.length)%L.length];};
-const HIMG={"oil":{f:"img/2a5af1f9a8cb.webp",a:"img/2dfa9c4c2c79.webp"},"dact":{f:"img/258b62bc8a9a.webp",a:"img/b3522a7f8349.webp"},"nlife":{f:"img/2189bfa14e7a.webp",a:"img/9d4e7ccfd629.webp"},"nplus":{f:"img/c9402b96076f.webp",a:"img/55b9e81aef76.webp"},"jp":{f:"img/cab231b0286c.webp",a:"img/7eb156d60fb8.webp"},"vita":{f:"img/d7258a5ed0fc.webp",a:"img/f0cb6f40a2cc.webp"}};
-
-/* ---------- HITARTHI HEALTH PRODUCTS — नया product यहाँ जोड़ें (photo HIMG में) ---------- */
 const HCATS=[["all","सभी"],["nutrition","पोषण पेय"],["vitamins","Vitamins"],["ayurveda","आयुर्वेद"],["hair","बालों की देखभाल"]];
-const HPROD=[
- {k:"nplus",n:"NutriPlus",full:"HITARTHI NutriPlus Complete Nutrition Drink",cat:"nutrition",size:"400 g",flav:"केसर बादाम",mrp:1200,unit:"₹3 / g",c:["#14532D","#16A34A","#FBBF24"],
-  tag:"सही पोषण, बेहतर जीवन — बच्चों, युवाओं, महिलाओं और बुज़ुर्गों के लिए",
-  pts:["High Protein — हर 30 g में 10 g protein","बादाम, काजू, अखरोट, खजूर, पिस्ता, केसर और ओट्स","No Added Sugar • No Artificial Colours • 100% Vegetarian"],
-  ing:"बादाम, काजू, अखरोट, खजूर, पिस्ता, ओट्स, केसर, प्राकृतिक जड़ी-बूटियाँ, Vitamins व Minerals, प्राकृतिक flavour (केसर बादाम)। इसमें Milk Solids हैं।",
-  use:"1–2 scoop (लगभग 30 g) को 200–250 ml दूध या पानी में अच्छी तरह मिलाएँ। दिन में 1 या 2 बार लें।",
-  who:"पूरा परिवार — बढ़ते बच्चे, पढ़ाई और काम करने वाले युवा, महिलाएँ और बुज़ुर्ग।",
-  ben:["रोज़ की ऊर्जा और ताक़त में सहायक","हड्डियों और मांसपेशियों के पोषण में सहायक","पाचन और रोज़ की सेहत में सहायक"],
-  care:"ठंडी और सूखी जगह पर रखें। ढक्कन कसकर बंद करें। यह दवा नहीं, पोषण आहार है। किसी एलर्जी की स्थिति में सेवन बंद करें।"},
- {k:"nlife",n:"NutriLife",full:"HITARTHI NutriLife Complete Nutrition Drink",cat:"nutrition",size:"400 g",flav:"केसर बादाम",mrp:1200,unit:"₹3 / g",c:["#166534","#65A30D","#F59E0B"],
-  tag:"40+ प्राकृतिक घटक — बच्चों, युवाओं और पूरे परिवार के लिए",
-  pts:["हर 30 g में 120 kcal, 10 g protein, Calcium, Iron, Zinc","बादाम, काजू, अखरोट, खजूर, अश्वगंधा, शतावरी, सफ़ेद मूसली","No Added Sugar • No Preservatives • 100% Vegetarian"],
-  ing:"बादाम, काजू, अखरोट, खजूर, Milk Solids, Soya Protein (Non-GMO), ओट्स, अलसी, चिया बीज, अश्वगंधा, शतावरी, सफ़ेद मूसली, काली तिल, इलायची, Vitamins व Minerals।",
-  use:"1–2 scoop (लगभग 30 g) को 200–250 ml दूध या पानी में मिलाएँ, अच्छी तरह हिलाएँ। दिन में 1 या 2 बार लें।",
-  who:"बढ़ते बच्चे, students और युवा — और पूरा परिवार।",
-  ben:["Immunity को सहारा","हड्डियों की मज़बूती में सहायक","ऊर्जा, stamina और मानसिक विकास में सहायक"],
-  care:"दवा नहीं, पोषण पूरक है। Milk और Soya है — एलर्जी हो तो न लें। ठंडी, सूखी जगह पर रखें।"},
- {k:"jp",n:"जीवनप्राश",full:"HITARTHI जीवनप्राश — सम्पूर्ण परिवार के लिए",cat:"ayurveda",size:"500 g",mrp:720,unit:"₹1.44 / g",c:["#7F1D1D","#B91C1C","#FBBF24"],
-  tag:"40+ आयुर्वेदिक जड़ी-बूटियों का पोषण — Complete Family Health Tonic",
-  pts:["आंवला, अश्वगंधा, शतावरी, गिलोय, हरीतकी, बहेड़ा, केसर","बच्चे (5–12 वर्ष), बड़े और बुज़ुर्ग — सबके लिए","No Added Sugar • No Artificial Colours • 100% Vegetarian"],
-  ing:"आंवला, अश्वगंधा, शतावरी, गिलोय, हरीतकी, बहेड़ा, दालचीनी, पिप्पली, काली मिर्च, केसर, इलायची, लौंग, ब्राह्मी, शंखपुष्पी, मुलेठी, सफ़ेद मूसली, विदारीकंद, घृत, शहद और अन्य आयुर्वेदिक जड़ी-बूटियाँ।",
-  use:"बड़े: 1–2 चम्मच सुबह और रात, दूध या गुनगुने पानी के साथ। बच्चे (5–12 वर्ष): रोज़ 1 चम्मच। बुज़ुर्ग: स्वास्थ्य के अनुसार 1–2 चम्मच।",
-  who:"पूरा परिवार — बदलते मौसम में रोज़ की सेहत के लिए।",
-  ben:["रोग प्रतिरोधक क्षमता को सहारा","ऊर्जा, पाचन और साँस संबंधी सेहत में सहायक","रोज़ की ताक़त और स्फूर्ति"],
-  care:"सूखे चम्मच से निकालें। ठंडी, सूखी जगह पर रखें। बच्चों की पहुँच से दूर रखें। यह दवा नहीं, आयुर्वेदिक पोषक आहार है।"},
- {k:"dact",n:"Daily Active",full:"HITARTHI Daily Active Multivitamin & Multimineral",cat:"vitamins",size:"30 Capsules",mrp:650,unit:"₹21.67 / capsule",c:["#1E3A8A","#2563EB","#FBBF24"],
-  tag:"13 Vitamins + 12 Minerals + 8 Essential Amino Acids + Botanical Extracts",
-  pts:["रोज़ सिर्फ़ 1 capsule — खाने के बाद पानी के साथ","Ginseng, अश्वगंधा, Green Tea, तुलसी, आंवला, गोखरू","No Added Sugar • No Preservatives • 100% Vegetarian"],
-  ing:"Vitamin A, B1, B2, B3, B5, B6, B9, B12, C, D3, E, K2-7, Biotin; Calcium, Magnesium, Zinc, Iron, Selenium आदि; L-Lysine, L-Leucine आदि Amino Acids; Ginseng, Ashwagandha, Green Tea, Tulsi, Amla, Gokhru। Vegetarian capsule (HPMC)। इसमें Soy है।",
-  use:"रोज़ 1 capsule, खाने के बाद पानी के साथ।",
-  who:"काम-काजी और व्यस्त बड़े (Adults) — जिन्हें रोज़ के खाने से पूरा पोषण नहीं मिल पाता।",
-  ben:["ऊर्जा और stamina में सहायक","Immunity, हड्डियों और दिमाग़ के पोषण में सहायक","संपूर्ण सेहत (overall wellness)"],
-  care:"बच्चों के लिए नहीं। गर्भवती/स्तनपान कराने वाली महिलाएँ या दवा ले रहे लोग डॉक्टर से पूछकर लें। यह किसी बीमारी के इलाज के लिए नहीं है।"},
- {k:"vita",n:"VITA+",full:"HITARTHI VITA+ Daily Nutrition Capsules",cat:"vitamins",size:"30 Capsules",mrp:650,unit:"₹21.67 / capsule",c:["#0C4A6E","#0284C7","#FBBF24"],
-  tag:"Daily Nutrition Capsules — 13 Vitamins, 12 Minerals, 8 Amino Acids",
-  pts:["Nutraceutical — बड़ों (Adults) के लिए","Botanical Extracts के साथ","No Added Sugar • No Artificial Colours • 100% Vegetarian"],
-  ing:"Mineral Premix, Vitamin Premix (A, B1, B2, B3, B5, B6, B12, C, D3, E, K2-7, Biotin), Essential Amino Acids, Botanical Extracts (Ginseng, Ashwagandha, Green Tea, Tulsi, Amla, Gokhru)। Vegetarian capsule। इसमें Soy है।",
-  use:"रोज़ 1 capsule, खाने के बाद पानी के साथ।",
-  who:"बड़े (Adults) — रोज़ के पोषण की कमी पूरी करने के लिए।",
-  ben:["ऊर्जा में सहायक","आँखों, नसों और हड्डियों के पोषण में सहायक","Immunity को सहारा"],
-  care:"बच्चों के लिए नहीं। गर्भवती/स्तनपान कराने वाली महिलाएँ या दवा ले रहे लोग डॉक्टर से पूछकर लें। यह किसी बीमारी के इलाज के लिए नहीं है।"},
- {k:"oil",n:"Mahabhringraj Hair Oil",full:"HITARTHI Herbal Care Mahabhringraj Hair Oil",cat:"hair",size:"100 ml",mrp:280,unit:"₹2.80 / ml",c:["#14532D","#15803D","#EAB308"],
-  tag:"घने, लंबे और काले बालों के लिए — Premium Ayurvedic Hair Oil",
-  pts:["भृंगराज, आंवला, नीम, मेहंदी, ब्राह्मी, जटामांसी","तिल और नारियल तेल में बना","No Mineral Oil • No Silicone • No Artificial Colours"],
-  ing:"भृंगराज, आंवला, नीम, मेहंदी, ब्राह्मी, जटामांसी, तिल तेल, नारियल तेल।",
-  use:"थोड़ा तेल हाथ में लें, उँगलियों से स्कैल्प पर हल्की मालिश करें, कम से कम 1–2 घंटे रहने दें, फिर माइल्ड शैम्पू से धो लें।",
-  who:"बाल झड़ने, कमज़ोर-पतले बाल, रूखा स्कैल्प और डैंड्रफ़ की परेशानी वाले — पुरुष और महिलाएँ।",
-  ben:["बाल झड़ना कम करने में सहायक","स्कैल्प को पोषण, बालों को मज़बूती और चमक","डैंड्रफ़ और रूखेपन में सहायक"],
-  care:"केवल बाहरी उपयोग के लिए। आँखों में जाने से बचाएँ। बच्चों की पहुँच से दूर रखें। एलर्जी हो तो उपयोग बंद करें।"}
-];
+var HIMG={},HPROD=[];window.__hsSet=function(i,p){HIMG=i;HPROD=p;};
 const hIdx=k=>HPROD.findIndex(x=>x.k===k);
 const BCATS=[["all","सभी"],["printed","📦 Printed Books"],["computer","💻 Computer Books"],["finance","Finance"],["business","Business"],["self","Self-help"],["english","English"],["student","Students"],["kids","बच्चों के लिए"]];
 const BUNDLES=[
@@ -579,7 +527,7 @@ $("#authors").innerHTML=AUTH.map(([n,o])=>{const bks=BOOKS.map((b,i)=>[b,i]).fil
    <div class="as-nav"><span style="color:#7C83A6">Home</span><span>Classes</span><span style="color:#0057D9">Books</span><span>Profile</span></div>`;
 })();
 applyPhotos();
-try{$("#appQR").innerHTML=qrSVG("https://play.google.com/store/apps/details?id=co.rogers.flabo",84,"#0B1A4A");}catch(e){$(".qrbox").hidden=true;}
+try{$("#appQR").innerHTML=qrSVG("https://www.hitarthi.com/",84,"#0B1A4A");}catch(e){$(".qrbox").hidden=true;}
 /* mega menu + scroll helpers */
 (function(){
   const top=c=>COURSES.filter(x=>x.cat===c.id).slice(0,4);
@@ -865,7 +813,7 @@ function track(ev,p){p=p||{};try{window.dataLayer.push(Object.assign({event:ev},
    {g:["#0C4A6E","#0369A1","#38BDF8"],chip:"HITARTHI Books Store",h:BOOKS.length+" Hindi-English Books",p:"E-book या Printed — जैसा आपको पसंद",cta:"Books देखें →",act:'data-go="books"',art:`<div class="pr-books">${bk(16,2,24,-12,1)}${bk(11,22,16,-4,2)}${bk(5,42,16,4,3)}${bk(19,60,24,12,2)}</div>`},
    {g:["#14532D","#16A34A","#A3E635"],chip:"मुफ़्त Test",h:"आपका Money IQ कितना है?",p:"छोटा quiz + SIP और बचत calculator",cta:"Test दें →",act:'data-go="finance" data-scrollto="iqCard"',pc:"#FFF",art:gauge},
    {g:["#831843","#DB2777","#F9A8D4"],chip:"Kids (8–15 वर्ष)",h:"Computer और Typing की मज़ेदार शुरुआत",p:"खेल-खेल में सीखें • Parents को progress report",cta:"Kids Courses →",act:'data-go="courses" data-cat="kids"',art:`<div style="display:grid;gap:8px;justify-items:center"><span class="avwrap" style="width:60px">${avatar(AV.kids)}</span><div class="pr-keys"><span>H</span><span>I</span><span>T</span><span>A</span></div></div>`},
-   {g:["#0B1A4A","#12235B","#FF8C00"],chip:"HITARTHI App",h:"पढ़ाई अब आपकी जेब में",p:"Classes, recordings और e-books — एक ही app में",cta:"Google Play से Download →",href:"https://play.google.com/store/apps/details?id=co.rogers.flabo",art:phone},
+   {g:["#0B1A4A","#12235B","#FF8C00"],chip:"HITARTHI App",h:"पढ़ाई अब आपकी जेब में",p:"Classes, recordings और e-books — एक ही app में",cta:"App Install करें →",act:'data-install="1"',art:phone},
    {g:["#0F172A","#0057D9","#16A34A"],chip:"🤝 Partner Program",h:"मुफ़्त Partner बनिए",p:"मुफ़्त joining • हर sale पर commission • अपना dashboard",cta:"Plan देखें →",act:'data-go="partner"',art:`<div style="display:grid;gap:6px;justify-items:center"><span class="pr-badge" style="position:static">FREE</span><span style="font:800 2rem 'Baloo 2',sans-serif;text-shadow:0 3px 10px rgba(0,0,0,.35)">🤝</span><span class="pr-badge" style="position:static;background:#fff;color:#0057D9">🟢 Green ID</span></div>`},
    {g:["#1A1050","#0B1A4A","#B87900"],chip:"🏆 Team Partner बनें",h:"Students तक सही शिक्षा पहुँचाइए",p:"हर महीने Star Performers को सम्मान",cta:"Winners देखें →",act:'data-scroll="winners"',art:trophy}
   ];
@@ -1352,7 +1300,7 @@ function renderCart(){
   foot.innerHTML=`<div class="sumrow"><span>सामान</span><span class="num">${rs(T.sub)}</span></div>
     ${T.printed>0?`<div class="sumrow"><span>Delivery</span><span class="num">${T.del?rs(T.del):'<b style="color:var(--green)">Free</b>'}</span></div>
       <div class="prog"><i style="width:${Math.min(100,T.printed/FREE_AT*100)}%"></i></div>
-      <p class="small muted">${need>0?`Printed books / Health products में <b class="num">${rs(need)}</b> और जोड़ें — delivery free हो जाएगी।`:"बधाई! आपकी delivery free है।"}</p>`:""}
+      <p class="small muted">${need>0?`Printed books में <b class="num">${rs(need)}</b> और जोड़ें — delivery free हो जाएगी।`:"बधाई! आपकी delivery free है।"}</p>`:""}
     <div class="tot"><span>कुल</span><span class="num">${rs(T.total)}</span></div>
     <div class="field"><label for="coName">नाम</label><input type="text" id="coName" placeholder="आपका नाम"></div>
     ${T.printed>0?`<div class="field"><label for="coAddr">Delivery पता + Pin code</label><textarea id="coAddr" rows="2" placeholder="पूरा पता"></textarea></div>`:""}
@@ -1533,6 +1481,11 @@ const HB_SNAP={"content":{"ok":true,"courses":{},"reviews":[],"training":[{"titl
 document.addEventListener("change",e=>{const el=e.target;if(!el||el.type!=="file")return;
   const tid=el.dataset&&el.dataset.camFor;if(tid){const main=document.getElementById(tid);if(main&&el.files&&el.files[0]){try{const dt=new DataTransfer();dt.items.add(el.files[0]);main.files=dt.files;}catch(x){}main.dispatchEvent(new Event("change",{bubbles:true}));}el.value="";return;}
   const sel=document.querySelector(`[data-sel-for="${el.id}"]`);if(sel){const f=el.files&&el.files[0];if(!f){sel.textContent="";return;}const u=URL.createObjectURL(f);sel.innerHTML=`<img loading="lazy" decoding="async" src="${u}" alt=""> ✓ photo चुनी गई`;}},true);
+/* ⚡ Server को पहले से जगाएँ — login / library / dashboard खोलते समय इंतज़ार कम हो (हर 4 मिनट में ज़्यादा से ज़्यादा 1 बार) */
+function hbWarm(){try{if(!HB_API)return;const k="hb_warm",l=+sessionStorage.getItem(k)||0;if(Date.now()-l<24e4)return;sessionStorage.setItem(k,String(Date.now()));hbRaw("ping",{}).catch(()=>{});}catch(e){}}
+setTimeout(()=>{try{if(localStorage.getItem("ml_tok")||localStorage.getItem("hb_pid")||/student|library|partner|track/.test(location.hash))hbWarm();}catch(e){}},1500);
+addEventListener("hashchange",()=>{if(/student|library|partner|track|typing/.test(location.hash))hbWarm();});
+document.addEventListener("focusin",e=>{if(e.target&&e.target.matches&&e.target.matches("input"))hbWarm();});
 async function hbCall(a,d){d=d||{};if(!(HB_RO[a]&&!d.token&&!d.pin&&!d.id))return hbRaw(a,d);
   const k="hbc_"+a+(Object.keys(d).length?"_"+JSON.stringify(d):"");let c=null;try{c=JSON.parse(localStorage.getItem(k)||"null");}catch(e){}
   if(!(c&&c.r)&&HB_SNAP[a]&&!Object.keys(d).length)c={t:0,r:HB_SNAP[a]};
@@ -1897,8 +1850,8 @@ async function kitMount(t){const host=$("#kitHost");if(!host)return;host.innerHT
 /* ---------- 🏆 महीने का LEADERBOARD (असली बिक्री से अपने-आप) ---------- */
 async function lbLoad(){if(!HB_API)return {demo:true,list:[]};try{let r=await hbCall("leaderboard",{});if(r&&r.ok&&!r.list.length){const d=new Date(),pm=new Date(d.getFullYear(),d.getMonth()-1,1);const m=pm.getFullYear()+"-"+String(pm.getMonth()+1).padStart(2,"0");const r2=await hbCall("leaderboard",{month:m});if(r2&&r2.ok&&r2.list.length)r=r2;}return r||{list:[]};}catch(e){return {list:[]};}}
 function lbHTML(r){const L=r.list||[],mn=r.month?mNameH(r.month):"इस महीने";
-  if(!L.length)return `<div class="lb-empty"><b>🏆 ${esc(mn)} का Leaderboard</b><p>${r.demo?"आपकी website पर यह list हर महीने की असली बिक्री से अपने-आप बनेगी — Top 10 Partners, उनके शहर और Level के साथ।":"इस महीने अभी पहली बिक्री का इंतज़ार है — पहली बिक्री करके सबसे ऊपर आइए!"}</p></div>`;
-  return `<div class="lb"><div class="lb-h"><b>🏆 ${esc(mn)} — Top Partners</b><small>हर घंटे अपने-आप update</small></div>${L.map(x=>`<div class="lb-r r${x.rank}"><span class="lb-n">${x.rank<=3?["🥇","🥈","🥉"][x.rank-1]:x.rank}</span><div><b>${esc(x.name)}</b><small>${esc(x.city||"")}${x.city?" • ":""}Level ${x.level}</small></div><span class="lb-s num">₹${(+x.sales).toLocaleString("en-IN")}+</span></div>`).join("")}<p class="small muted lb-note">बिक्री = Partner और उसकी team की उस महीने की कुल पक्की बिक्री (गोल अंकों में)। यह कमाई नहीं है।</p></div>`;}
+  if(!L.length)return `<div class="lb-empty"><b>🏆 ${esc(mn)} का Leaderboard</b><p>${r.demo?"यह list हर महीने की असली बिक्री से अपने-आप बनेगी — Top 10 Partners का नाम और शहर।":"इस महीने अभी पहली बिक्री का इंतज़ार है — पहली बिक्री करके सबसे ऊपर आइए!"}</p></div>`;
+  return `<div class="lb"><div class="lb-h"><b>🏆 ${esc(mn)} — Top Partners</b><small>हर घंटे अपने-आप update</small></div>${L.map(x=>`<div class="lb-r r${x.rank}"><span class="lb-n">${x.rank<=3?["🥇","🥈","🥉"][x.rank-1]:x.rank}</span><div><b>${esc(String(x.name||"").trim().split(/\s+/)[0])}</b><small>${esc(x.city||"")}</small></div></div>`).join("")}<p class="small muted lb-note">Ranking उस महीने की पक्की बिक्री के क्रम में है। Partners की बिक्री और कमाई privacy के लिए नहीं दिखाई जाती।</p></div>`;}
 let LBP=null;hbOnFresh("leaderboard",()=>{LBP=null;lbMount();});function lbMount(){if(!LBP)LBP=lbLoad();LBP.then(r=>{["#lbHome","#lbPartner"].forEach(s=>{const el=$(s);if(el)el.innerHTML=lbHTML(r);});const m=$("#wMonth");if(m)m.textContent=r.month?mNameH(r.month):mNameH(new Date().toISOString().slice(0,7));});}
 lbMount();
 
@@ -2083,7 +2036,7 @@ function ptMount(t){const ib=document.querySelector("#mcDash .mc-idbar");if(!ib)
 {const _mcR=mcRender;mcRender=function(t){_mcR(t);try{ptMount(t);kitMount(t);}catch(e){console.error(e);}};}
 /* ---------- WhatsApp CHAT WIDGET ---------- */
 (function(){const W=$("#wac");const logoSrc=(document.querySelector("#logo image")||{getAttribute:()=>""}).getAttribute("href");
-  const Q=[["🎓 Course / Free Counselling की जानकारी","Namaste HITARTHI, mujhe courses aur Free Counselling ki jankari chahiye."],["📚 Books और E-books","Namaste HITARTHI, mujhe books / e-books ki jankari chahiye."],["🌿 Health Products","Namaste HITARTHI, mujhe Health products (NutriPlus, Jeevanprash, Hair Oil) ki jankari chahiye."],["🤝 Partner बनना है","Namaste HITARTHI, mujhe free Partner banna hai. Plan samjha dijiye."],["💳 Order / Payment में मदद","Namaste HITARTHI, mujhe apne order/payment ke baare me madad chahiye."],["🔑 Partner PIN / KYC मदद","Namaste HITARTHI, mujhe Partner PIN / KYC me madad chahiye."]];
+  const Q=[["🎓 Course / Free Counselling की जानकारी","Namaste HITARTHI, mujhe courses aur Free Counselling ki jankari chahiye."],["📚 Books और E-books","Namaste HITARTHI, mujhe books / e-books ki jankari chahiye."],["🤝 Partner बनना है","Namaste HITARTHI, mujhe free Partner banna hai. Plan samjha dijiye."],["💳 Order / Payment में मदद","Namaste HITARTHI, mujhe apne order/payment ke baare me madad chahiye."],["🔑 Partner PIN / KYC मदद","Namaste HITARTHI, mujhe Partner PIN / KYC me madad chahiye."]];
   const send=t=>{const r=typeof getRef==="function"?getRef():"";window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(t+(r?"\nPartner ID: "+r:"")),"_blank","noopener");track("wa_chat",{});};
   W.innerHTML=`<div class="wac-h">${logoSrc?`<img loading="lazy" decoding="async" src="${logoSrc}" alt="">`:""}<span><b>HITARTHI Support</b><small>आम तौर पर कुछ मिनटों में जवाब</small></span><button aria-label="बंद करें" id="wacX">✕</button></div>
     <div class="wac-b"><div class="wac-msg">🙏 नमस्ते! HITARTHI में आपका स्वागत है। बताइए, किस बारे में बात करनी है? नीचे से चुनिए या अपना सवाल लिखिए।</div><div class="wac-q">${Q.map((q,k)=>`<button data-wq="${k}">${q[0]}</button>`).join("")}</div></div>
@@ -2197,9 +2150,9 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
 /* ---------- 🔍 SEARCH — Courses, Books, Health, Pages ---------- */
 (function(){
   const box=$("#srch"),inp=$("#srchIn"),out=$("#srchOut");
-  const PG=[["Fees और Monthly Plan (₹300 / ₹500)","fees","💳"],["मेरी Library — खरीदी book पढ़ें / सुनें","library","📚"],["Partner बनें — commission plan","partner","🤝"],["Schools के लिए tie-up","schools","🏫"],["मेरा Order / Tracking / Invoice","track","📦"],["Health Store","health","🌿"],["पैसे की समझ — calculators, Money IQ","finance","🧮"],["Blog","blog","📰"],["Contact","contact","📞"],["About HITARTHI","about","🏢"]];
+  const PG=[["Fees और Monthly Plan (₹300 / ₹500)","fees","💳"],["मेरी Library — खरीदी book पढ़ें / सुनें","library","📚"],["Partner बनें — commission plan","partner","🤝"],["Schools के लिए tie-up","schools","🏫"],["मेरा Order / Tracking / Invoice","track","📦"],["पैसे की समझ — calculators, Money IQ","finance","🧮"],["Blog","blog","📰"],["Contact","contact","📞"],["About HITARTHI","about","🏢"]];
   const norm=s=>String(s||"").toLowerCase().replace(/\s+/g," ");
-  function run(){const q=norm(inp.value).trim();if(!q){out.innerHTML='<p class="muted small">जैसे: Excel, English, typing, compounding, जीवनप्राश, किश्त…</p>';return;}
+  function run(){const q=norm(inp.value).trim();if(!q){out.innerHTML='<p class="muted small">जैसे: Excel, English, typing, compounding, किश्त…</p>';return;}
     const W=q.split(" "),hitW=s=>{s=norm(s);return W.every(w=>s.includes(w));};
     const C=COURSES.filter(c=>hitW(c.name+" "+c.hin+" "+c.cat+" "+(c.out||[]).join(" "))).slice(0,8).map(c=>`<button type="button" data-sgo="c" data-v="${esc(c.name)}"><i>🎓</i><span><b>${esc(c.name)}</b><small>${esc(c.hin)} • ${rs(c.fee)}</small></span></button>`);
     const Bk=BOOKS.map((b,i)=>[b,i]).filter(([b])=>hitW(b.t+" "+b.s+" "+b.a+" "+b.ser)).slice(0,8).map(([b,i])=>`<button type="button" data-sgo="b" data-v="${i}"><i>📘</i><span><b>${esc(b.t)}</b><small>${esc(b.s)} • E-book ${rs(b.e)}</small></span></button>`);
@@ -2268,7 +2221,7 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
       ${o.track?`<a class="btn btn-primary btn-sm" href="${esc(o.track.url||"#")}" target="_blank" rel="noopener">🚚 Track करें</a><small class="muted">${esc(o.track.text)}</small>`:""}${o.invoice?`<button type="button" class="btn btn-ghost btn-sm" data-inv="${esc(o.id)}" data-mob="${mob}">🧾 Invoice</button>`:""}</div></div>`).join("");}
   $("#tkForm").addEventListener("submit",async e=>{e.preventDefault();const mob=$("#tkMob").value.replace(/\D/g,""),oid=$("#tkId").value.trim().toUpperCase();
     if(mob.length!==10||!/^HT\d{4}-\d{4}$/.test(oid)){out.innerHTML='<p class="mc-msg err">Mobile और Order ID (जैसे HT2110-4821) सही लिखें</p>';return;}
-    if(!HB_API){render({name:"Demo ग्राहक",orders:[{id:oid,date:"2026-10-20",item:"HITARTHI Daily Active x1",amount:700,status:"Paid",mode:"COD",coupon:"HT1007",track:{text:"Shiprocket 1234567890",url:"https://shiprocket.co/tracking/1234567890"},invoice:true}]},mob);return;}
+    if(!HB_API){render({name:"Demo ग्राहक",orders:[{id:oid,date:"2026-10-20",item:"Basic Computer (Printed) x1",amount:700,status:"Paid",mode:"COD",coupon:"HT1007",track:{text:"Shiprocket 1234567890",url:"https://shiprocket.co/tracking/1234567890"},invoice:true}]},mob);return;}
     out.innerHTML='<p class="muted">खोज रहे हैं…</p>';
     try{const r=await hbCall("track",{mobile:mob,orderId:oid});if(r&&r.ok){render(r,mob);if(window.__invWant===oid){window.__invWant="";const ib=out.querySelector('[data-inv="'+oid+'"]');if(ib)ib.click();}}else out.innerHTML=`<p class="mc-msg err">${esc((r&&r.err)||"नहीं मिला")}</p>`;}catch(x){out.innerHTML='<p class="mc-msg err">Server से जुड़ नहीं पाए</p>';}});
   /* WhatsApp वाला invoice link: ?inv=HT0211-1234 → Order ID भरा मिलेगा, ग्राहक mobile डाले → invoice अपने-आप खुले */
@@ -2284,7 +2237,7 @@ function payAbandon(){try{if(!HB_API||PAY.done||!(PAY.amt>0))return;const mob=$(
     m.hidden=false;document.body.style.overflow="hidden";$("#invX").onclick=()=>{m.hidden=true;document.body.style.overflow="";};
     $("#invPrint").onclick=()=>{document.body.classList.add("print-inv");window.print();setTimeout(()=>document.body.classList.remove("print-inv"),600);};}
   document.addEventListener("click",async e=>{const b=e.target.closest("[data-inv]");if(!b)return;
-    if(!HB_API){showInv({invoice:"HT/2026-27/0001",date:"2026-10-20",orderId:b.dataset.inv,company:{name:"HITARTHI Education & Skill Development Pvt. Ltd.",addr:"HITARTHI Bhawan, Mayur Vihar Phase-1, New Delhi",phone:"+91 94537 17356",email:"hitarthigroup@gmail.com",web:"www.hitarthi.com"},gstin:"20AAICH6362D1ZY",type:"Tax Invoice",buyer:{name:"Demo ग्राहक",mobile:b.dataset.mob,addr:"Sector 4, Bokaro Steel City, Jharkhand 827004"},lines:[{item:"HITARTHI Daily Active",amount:650,rate:18,taxable:550.85,tax:99.15},{item:"Delivery",amount:50,rate:18,taxable:42.37,tax:7.63}],total:700,tax:106.78,split:"CGST + SGST (आधा-आधा)",mode:"COD",ref:"",coupon:"HT1007"});return;}
+    if(!HB_API){showInv({invoice:"HT/2026-27/0001",date:"2026-10-20",orderId:b.dataset.inv,company:{name:"HITARTHI Education & Skill Development Pvt. Ltd.",addr:"HITARTHI Bhawan, Mayur Vihar Phase-1, New Delhi",phone:"+91 94537 17356",email:"hitarthigroup@gmail.com",web:"www.hitarthi.com"},gstin:"20AAICH6362D1ZY",type:"Tax Invoice",buyer:{name:"Demo ग्राहक",mobile:b.dataset.mob,addr:"Sector 4, Bokaro Steel City, Jharkhand 827004"},lines:[{item:"Basic Computer — Printed Book",amount:650,rate:5,taxable:619.05,tax:30.95},{item:"Delivery",amount:50,rate:18,taxable:42.37,tax:7.63}],total:700,tax:106.78,split:"CGST + SGST (आधा-आधा)",mode:"COD",ref:"",coupon:"HT1007"});return;}
     b.disabled=true;try{const r=await hbCall("invoice",{mobile:b.dataset.mob,orderId:b.dataset.inv});if(r&&r.ok)showInv(r);else toast((r&&r.err)||"Invoice नहीं बना");}catch(x){toast("Server से जुड़ नहीं पाए");}finally{b.disabled=false;}});
 })();
 
@@ -2923,7 +2876,7 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
   });
 })();
 
-/* ---------- HITARTHI HEALTH STORE ---------- */
+window.__hsUI=function(){window.__hsUI=null;/* ---------- HITARTHI HEALTH STORE ---------- */
 (function(){
   let cat="all";
   const card=(h,i)=>`<article class="hp-card" style="--c1:${h.c[0]};--c2:${h.c[1]};--c3:${h.c[2]}" data-noi18n="1">
@@ -2976,7 +2929,7 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
     const b=e.target.closest("[data-hbuy]");if(b){if(add(hIdx(b.dataset.hbuy),1))openCart();return;}
     const sc=e.target.closest("[data-hscroll]");if(sc){const el=document.getElementById(sc.dataset.hscroll);el&&el.scrollIntoView({behavior:"smooth",block:"start"});}
   });
-})();
+})();};
 /* ---------- OFFER अपने-आप: दिवाली (1 अक्टूबर – 15 नवंबर) → Winter (16 नवंबर – 31 जनवरी) → फिर बंद ----------
    तारीख़ें / नाम यहीं बदलें। Preview: ?offer=winter या ?offer=diwali */
 (function(){
@@ -2999,15 +2952,30 @@ $("#paySubmit").addEventListener("click",async()=>{const nm=$("#payName").value.
   apply(!!O&&!off&&!closed3);
   $("#dwOff").onclick=()=>{try{localStorage.setItem(K,"1");}catch(e){}apply(false);window.OFFER=null;toast("Offer की पट्टी हटा दी गई");};
 })();
-/* ---------- 🔒 Health Store password lock ---------- */
-const HS_KEY="1qjxyw2";
-const hsHash=v=>{let h=5381;for(const c of String(v))h=((h*33)^c.charCodeAt(0))>>>0;return h.toString(36);};
-window.hsOpen=()=>{try{return sessionStorage.getItem("hs_ok")===HS_KEY;}catch(e){return !!window.__hsOk;}};
+/* ---------- 🔒 Health Store — password server पर जाँचा जाता है; products भी password सही होने पर ही server से आते हैं ---------- */
+window.hsOpen=()=>{try{return !!sessionStorage.getItem("hs_pin");}catch(e){return !!window.__hsPin;}};
 (function(){const sec=document.querySelector('section[data-page="health"]');if(!sec)return;
-  const paint=()=>sec.classList.toggle("hs-open",hsOpen());paint();
-  const f=document.getElementById("hslForm");if(f)f.addEventListener("submit",e=>{e.preventDefault();const p=document.getElementById("hslPin");
-    if(hsHash(p.value.trim())===HS_KEY){try{sessionStorage.setItem("hs_ok",HS_KEY);}catch(e){window.__hsOk=1;}p.value="";document.getElementById("hslErr").textContent="";paint();}
-    else{document.getElementById("hslErr").textContent="गलत password — दोबारा डालें";p.select();}});
+  let loaded=false;
+  const paint=()=>sec.classList.toggle("hs-open",loaded);
+  async function unlock(pin,quiet){
+    const err=document.getElementById("hslErr"),btn=document.querySelector("#hslForm button");
+    if(!quiet&&btn){btn.disabled=true;btn.textContent="जाँच रहे हैं…";}
+    let r=null;try{r=await hbCall("healthget",{pin:pin});}catch(e){r=null;}
+    if(btn){btn.disabled=false;btn.textContent="खोलें";}
+    if(!r||!r.ok){if(!quiet&&err)err.textContent=r&&r.err?r.err:"Server से जुड़ नहीं पाए — internet देखकर दोबारा कोशिश करें";try{sessionStorage.removeItem("hs_pin");}catch(e){}return false;}
+    if(!loaded){
+      try{window.__i18nAdd&&window.__i18nAdd(r.i18n);}catch(e){}
+      const box=document.getElementById("hsBody");if(box)box.outerHTML=r.html;
+      const sc=document.createElement("script");sc.textContent=r.js;document.body.appendChild(sc);
+      loaded=true;}
+    try{sessionStorage.setItem("hs_pin",pin);}catch(e){window.__hsPin=pin;}
+    if(err)err.textContent="";paint();return true;}
+  paint();
+  let saved="";try{saved=sessionStorage.getItem("hs_pin")||"";}catch(e){}
+  if(saved)unlock(saved,true);
+  const f=document.getElementById("hslForm");if(f)f.addEventListener("submit",e=>{e.preventDefault();const p=document.getElementById("hslPin");const v=p.value.trim();
+    if(!v){document.getElementById("hslErr").textContent="Password डालें";return;}
+    unlock(v,false).then(ok=>{if(ok)p.value="";else p.select();});});
 })();
 /* ---------- ROUTER ---------- */
 const PAGES=["home","courses","books","student","library","notices","schools","track","pp","health","finance","fees","why","blog","ppt","partner","about","contact"];

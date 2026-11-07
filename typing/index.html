@@ -602,7 +602,7 @@ td.wpm { font-weight: 600; color: var(--accent); }
 
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} try { window.__tuChanged && window.__tuChanged(k); } catch (e) {} }
   };
 
   const cfg = Object.assign({ lang: "en", mode: "time", amount: 30, punct: false, lesson: 0, layout: "inscript", exam: "ssc", backspace: true }, store.get("tu-config", {}));
@@ -1546,8 +1546,87 @@ td.wpm { font-weight: 600; color: var(--accent); }
 
   renderHistory();
   newTest();
+  window.__tuRender = renderHistory;
 })();
 </script>
+<!-- ☁️ HITARTHI login से typing record हर computer पर (Mobile + Student ID) -->
+<style>
+#tuAcc{position:fixed;right:14px;bottom:14px;z-index:9998;display:flex;align-items:center;gap:8px;background:#0B1A4A;color:#fff;font:600 13px system-ui,sans-serif;padding:8px 10px 8px 12px;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.25);max-width:calc(100vw - 150px)}
+#tuAcc button{font:inherit;border:0;border-radius:9px;padding:6px 10px;cursor:pointer;background:#F2A81D;color:#1B1F3B;font-weight:800}
+#tuAcc button.g{background:transparent;color:#cfd8ff;border:1px solid rgba(255,255,255,.3);font-weight:600}
+#tuAcc .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tuLM{position:fixed;inset:0;z-index:99998;background:rgba(5,10,30,.6);display:flex;align-items:center;justify-content:center;padding:16px}
+#tuLM[hidden]{display:none}
+#tuLM .b{background:#fff;color:#1B1F3B;border-radius:16px;max-width:380px;width:100%;padding:22px;font-family:system-ui,sans-serif;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+#tuLM h3{margin:0 0 4px;font-size:1.2rem}#tuLM p{margin:0 0 14px;color:#56607a;font-size:.9rem;line-height:1.5}
+#tuLM label{display:block;font-size:.8rem;font-weight:700;margin:10px 0 4px}
+#tuLM input{width:100%;box-sizing:border-box;padding:11px 12px;border:1.5px solid #ccd3e6;border-radius:10px;font-size:1rem}
+#tuLM .r{display:flex;gap:8px;margin-top:16px}#tuLM .r button{flex:1;padding:11px;border-radius:10px;border:0;font-weight:800;cursor:pointer;font-size:.95rem}
+#tuLM .ok{background:#0057D9;color:#fff}#tuLM .no{background:#eef1f8;color:#1B1F3B}
+#tuLM .e{color:#c0392b;font-size:.85rem;min-height:1.2em;margin-top:8px}#tuLM a{color:#0057D9}
+</style>
+<div id="tuAcc" aria-live="polite"></div>
+<div id="tuLM" hidden role="dialog" aria-modal="true" aria-label="Login"><form class="b" id="tuLF">
+  <h3>☁️ Apna typing record save karein</h3>
+  <p>HITARTHI login karein — aapki speed, best score, streak aur history har computer par dikhegi.</p>
+  <label for="tuMob">Mobile number</label><input id="tuMob" inputmode="numeric" autocomplete="tel" maxlength="10" placeholder="10 ank ka mobile">
+  <label for="tuSid">Student ID / Order ID</label><input id="tuSid" autocomplete="off" placeholder="jaise HS10023 ya HT2110-4821">
+  <div class="e" id="tuErr"></div>
+  <div class="r"><button type="button" class="no" id="tuNo">Baad mein</button><button type="submit" class="ok" id="tuGo">Login karein</button></div>
+  <p style="margin:14px 0 0;font-size:.82rem">Student ID nahi hai? <a href="/#student">Free account banayein →</a> (wahan banne ke baad yahan login karein)</p>
+</form></div>
+<script>
+(function(){
+  const API="https://script.google.com/macros/s/AKfycbz_lNguiwN0VTpMo4BEQDJefj2mET8QyPeteS_CqOloLivlgxdcAKl5xzoo0KlswlHOkg/exec";
+  const K=["tu-best","tu-count","tu-days","tu-history"];
+  const g=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}};
+  const p=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+  const tokO=()=>g("ml_tok",null);const tok=()=>{const t=tokO();return t&&t.t||"";};
+  const who=()=>{const t=tok();return t?String(t).split(".")[0]:"";};
+  const call=(a,d)=>fetch(API,{method:"POST",body:JSON.stringify(Object.assign({action:a},d||{}))}).then(r=>r.json());
+  const acc=document.getElementById("tuAcc"),M=document.getElementById("tuLM");
+  let state="idle",busy=false,again=false,timer=0;
+  function paint(){const t=tokO();
+    if(t&&t.t){acc.innerHTML=`<span class="t">☁️ ${esc((t.n||"Student").split(" ")[0])} • ${state==="sync"?"save ho raha hai…":state==="err"?"save nahi hua — net dekhein":"record saved ✓"}</span><button class="g" id="tuOut">Logout</button>`;}
+    else acc.innerHTML=`<span class="t">Record sirf is computer par</span><button id="tuIn">☁️ Login karein</button>`;}
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  function local(){return {best:g("tu-best",{}),days:g("tu-days",{}),hist:g("tu-history",[]),count:g("tu-count",0)};}
+  async function sync(){
+    const t=tok();if(!t)return;if(busy){again=true;return;}busy=true;state="sync";paint();
+    const m=who(),bk="tu-base-"+m;
+    try{
+      if(g("tu-owner","")&&g("tu-owner","")!==m){K.forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});}
+      p("tu-owner",m);
+      const r=await call("typesync",{token:t,local:local(),base:g(bk,{})});
+      if(r&&r.ok&&r.data){const d=r.data;applying=true;p("tu-best",d.best||{});p("tu-days",d.days||{});p("tu-history",(d.hist||[]).slice(0,10));p("tu-count",d.count||0);applying=false;
+        p(bk,{count:d.count||0,days:d.days||{}});state="ok";try{window.__tuRender&&window.__tuRender();}catch(e){}}
+      else if(r&&r.relogin){try{localStorage.removeItem("ml_tok");}catch(e){}state="idle";}
+      else state="err";
+    }catch(e){state="err";}
+    busy=false;paint();if(again){again=false;sync();}
+  }
+  let applying=false;
+  window.__tuChanged=k=>{if(applying||K.indexOf(k)<0||!tok())return;clearTimeout(timer);timer=setTimeout(sync,1500);};
+  acc.addEventListener("click",e=>{
+    if(e.target.id==="tuIn"){M.hidden=false;setTimeout(()=>document.getElementById("tuMob").focus(),50);}
+    if(e.target.id==="tuOut"){if(!confirm("Logout karein? Is computer par record dikhta rahega, par naye tests save nahi honge."))return;try{localStorage.removeItem("ml_tok");}catch(e){}state="idle";paint();}
+  });
+  document.getElementById("tuNo").onclick=()=>{M.hidden=true;};
+  M.addEventListener("click",e=>{if(e.target===M)M.hidden=true;});
+  document.getElementById("tuLF").addEventListener("submit",async e=>{e.preventDefault();
+    const mob=document.getElementById("tuMob").value.replace(/\D/g,"").slice(-10),sid=document.getElementById("tuSid").value.trim().toUpperCase(),er=document.getElementById("tuErr"),b=document.getElementById("tuGo");
+    if(mob.length!==10){er.textContent="10 ank ka mobile number likhein";return;}if(!sid){er.textContent="Student ID ya Order ID likhein";return;}
+    b.disabled=true;b.textContent="Jaanch rahe hain…";er.textContent="";
+    try{const r=await call("liblogin",{mobile:mob,orderId:sid,sid:sid});
+      if(r&&r.ok&&r.token){p("ml_tok",{t:r.token,n:r.name||"",m:r.mobile||""});M.hidden=true;paint();sync();}
+      else er.textContent=(r&&r.err)||"Login nahi hua — dobara koshish karein";}
+    catch(x){er.textContent="Internet ya server ki dikkat — dobara koshish karein";}
+    b.disabled=false;b.textContent="Login karein";});
+  paint();if(tok())sync();
+  window.addEventListener("storage",e=>{if(e.key==="ml_tok"){paint();if(tok())sync();}});
+})();
+</script>
+
 
 </body>
 </html>
