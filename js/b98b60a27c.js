@@ -263,7 +263,7 @@ const ROADS=[
 
 /* ---------- HELPERS ---------- */
 const catOf=id=>CATS.find(c=>c.id===id);
-const AUDC={computer:"शुरुआती, छात्र, office की नौकरी चाहने वाले",ai:"छात्र, नौकरी वाले, teachers, जो AI सीखना चाहें",digital:"छात्र, freelancers, दुकानदार",english:"छात्र, job seekers, नौकरी वाले",finance:"हर उम्र के लोग, परिवार, नौकरी वाले",business:"दुकानदार, व्यवसायी, नया काम शुरू करने वाले",kids:"8–15 वर्ष के बच्चे (अभिभावकों के साथ)",life:"Class 5 से college तक के छात्र"};
+const AUDC={computer:"शुरुआती, छात्र, office की नौकरी चाहने वाले",ai:"छात्र, नौकरी वाले, teachers, जो AI सीखना चाहें",digital:"छात्र, freelancers, दुकानदार",english:"छात्र, job seekers, नौकरी वाले",finance:"हर उम्र के लोग, परिवार, नौकरी वाले",business:"दुकानदार, व्यवसायी, नया काम शुरू करने वाले",kids:"8–15 वर्ष के बच्चे (अभिभावकों के साथ)",life:"Class 5 से college तक के छात्र",premium:"छात्र, परिवार और नौकरी वाले — जो कम ख़र्च में लंबे समय तक लगातार सीखना चाहें"};
 function courseCard(c){
   const k=catOf(c.cat);
   return `<article class="card course lift" style="--cc:linear-gradient(90deg,${k.g[0]},${k.g[1]})">
@@ -811,7 +811,7 @@ function track(ev,p){p=p||{};try{window.dataLayer.push(Object.assign({event:ev},
       <span class="tag" style="background:color-mix(in srgb,${k.g[0]} 14%,var(--surface));color:${k.g[0]}">${esc(k.name)}</span>
       <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin-top:8px">${esc(c.name)}</h2><p class="muted">${esc(c.hin)}</p>
       <div class="cd-grid"><div>
-        <h3>यह course किसके लिए है</h3><p class="muted">${esc(AUDC[c.cat])}</p>
+        <h3>यह course किसके लिए है</h3><p class="muted">${esc(AUDC[c.cat]||"छात्र, नौकरी वाले और हर वो व्यक्ति जो नया skill सीखना चाहे")}</p>
         <h3>आप क्या सीखेंगे</h3><ul class="ticks">${c.out.map(o=>`<li>${esc(o)}</li>`).join("")}<li>हर topic पर practice assignment</li></ul>
         ${hbEbSec(c)}
         <h3>पूरा Syllabus</h3><div id="cdSyl"></div>
