@@ -79,6 +79,8 @@ nav.main{display:flex;gap:2px;margin-left:auto}
 nav.main button{background:none;border:0;padding:8px 11px;border-radius:10px;cursor:pointer;font-weight:700;color:var(--ink-2);font-size:.95rem;white-space:nowrap}
 nav.main button:hover{background:var(--surface-2);color:var(--ink)}
 nav.main button[aria-current="page"]{color:var(--royal);background:var(--royal-soft)}
+@media (max-width:700px),(hover:none) and (pointer:coarse){nav.main .nav-typing{display:none!important}}
+@media (min-width:1061px) and (max-width:1120px){nav.main button{padding:8px 5px!important;font-size:.84rem!important}}
 .bar-actions{display:flex;gap:8px;align-items:center}
 .icon-btn{position:relative;display:inline-grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;color:var(--ink)}
 .icon-btn svg{width:20px;height:20px}
@@ -1141,7 +1143,7 @@ footer.site button.pol{display:inline;padding:0}
 .lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 @media (max-width:520px){.lang button{padding:0 9px;font-size:.82rem}}
 html[data-lang="en"] nav.main button{padding:8px 8px;font-size:.92rem}
-@media (min-width:1321px) and (max-width:1900px){nav.main button{padding:8px 7px;font-size:.88rem}html[data-lang="en"] nav.main button{padding:8px 6px;font-size:.86rem}.bar-actions [data-demo]{display:none!important}}
+@media (min-width:1061px) and (max-width:1900px){nav.main button{padding:8px 7px;font-size:.88rem}html[data-lang="en"] nav.main button{padding:8px 6px;font-size:.86rem}.bar-actions [data-demo]{display:none!important}}
 @media (min-width:1321px) and (max-width:1460px){html[data-lang="en"] .brand small{display:none}}
 /* winners */
 .winners{position:relative;overflow:hidden;border-radius:28px;background:radial-gradient(900px 400px at 50% -10%,rgba(255,200,40,.28),transparent 60%),linear-gradient(160deg,#0B1A4A,#12235B 55%,#1A1050);color:#EEF1FB;padding:48px clamp(16px,4vw,44px)!important;margin-top:28px}
@@ -3013,6 +3015,7 @@ html.is-app [data-install]{display:none!important}
       <div class="mm"><button data-go="courses" aria-haspopup="true">Courses <span class="car">▾</span></button><div class="mm-panel" id="mega"></div></div>
       <div class="mm mm-sm"><button data-go="books" aria-haspopup="true">Books <span class="car">▾</span></button><div class="mm-panel mm-list" id="megaBooks"></div></div>
       <button data-go="student">🎓 Student Profile</button>
+      <button type="button" class="nav-typing" onclick="location.href='/typing/'" title="Typing सीखें — सिर्फ़ Laptop / Computer पर">⌨️ Typing</button>
       <button data-go="library">Library</button>
       <button data-go="partner">Partner</button>
       <button data-go="contact">Contact</button>
