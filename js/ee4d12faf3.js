@@ -2964,6 +2964,11 @@ window.__hsUI=function(){window.__hsUI=null;/* ---------- HITARTHI HEALTH STORE 
     try{track("buy_now",{item:it,value:amt});}catch(e){}openPay({amt,item:it,lines:[{item:it,amount:amt,cat:"Digital"}]});
     try{const u=new URL(location.href);u.searchParams.delete("buy");history.replaceState(null,"",u.pathname+u.search+u.hash);}catch(e){}};
   if(document.readyState==="complete")setTimeout(go,300);else addEventListener("load",()=>setTimeout(go,300));})();
+/* ---------- 🔗 नए homepage से Membership: hitarthi.com/?plan=mastery | growth | starter ---------- */
+(function(){let t="";try{t=(new URLSearchParams(location.search).get("plan")||"").trim().toLowerCase();}catch(e){}if(!t)return;
+  const go=()=>{try{if(t==="mastery")openFlag(0);else if(t==="growth")openFlag(1);else if(t==="starter"){try{track("buy_now",{item:"HITARTHI STARTER BOOK MEMBERSHIP",value:2200});}catch(e){}openPay({amt:2200,item:"HITARTHI STARTER BOOK MEMBERSHIP"});}}catch(e){}
+    try{const u=new URL(location.href);u.searchParams.delete("plan");history.replaceState(null,"",u.pathname+u.search+u.hash);}catch(e){}};
+  if(document.readyState==="complete")setTimeout(go,400);else addEventListener("load",()=>setTimeout(go,400));})();
 /* ---------- OFFER अपने-आप: दिवाली (1 अक्टूबर – 15 नवंबर) → Winter (16 नवंबर – 31 जनवरी) → फिर बंद ----------
    तारीख़ें / नाम यहीं बदलें। Preview: ?offer=winter या ?offer=diwali */
 (function(){

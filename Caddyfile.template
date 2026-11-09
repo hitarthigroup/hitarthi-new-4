@@ -15,9 +15,7 @@
 		format json
 	}
 
-	handle /health {
-		respond 200
-	}
+	respond /health 200
 
 	header {
 		X-XSS-Protection "1; mode=block"
@@ -25,33 +23,6 @@
 		Referrer-Policy "strict-origin-when-cross-origin"
 		Content-Security-Policy "default-src 'self'; img-src 'self' data: https: *; style-src 'self' 'unsafe-inline' https: *; script-src 'self' 'unsafe-inline' https: *; font-src 'self' data: https: *; connect-src 'self' https: *; media-src 'self' https: *; object-src 'none'; frame-src 'self' https: *;"
 		-Server
-	}
-
-	# 📲 WhatsApp (Meta) webhook → Google Apps Script (HITARTHI Sheet का "WhatsApp Inbox")
-	@waverify {
-		path /wa-webhook
-		method GET
-		query hub.verify_token=hitarthi-wa-7a1bf4d3ca1a
-	}
-	handle @waverify {
-		respond "{http.request.uri.query.hub.challenge}" 200
-	}
-	@wapost {
-		path /wa-webhook
-		method POST
-	}
-	handle @wapost {
-		reverse_proxy https://script.google.com {
-			rewrite /macros/s/AKfycbz_lNguiwN0VTpMo4BEQDJefj2mET8QyPeteS_CqOloLivlgxdcAKl5xzoo0KlswlHOkg/exec?wa=hke27faf9989a66f2a7017
-			header_up Host {upstream_hostport}
-			@redir status 3xx
-			handle_response @redir {
-				respond "ok" 200
-			}
-		}
-	}
-	handle /wa-webhook {
-		respond "forbidden" 403
 	}
 
 	# नाम में hash वाली files (js/abc123.js, img/abc123.webp) कभी नहीं बदलतीं → 1 साल cache
@@ -70,21 +41,18 @@
 
 	root * {{.StaticFileRoot}}
 
+	file_server {
+		hide .git
+		hide .env*
+		hide Caddyfile.template
+	}
 
 	encode {
 		zstd
 		gzip
 	}
 
-	# बाकी सब: website की files (WhatsApp webhook ऊपर अलग handle होता है)
-	handle {
-		try_files {path} {path}.html {path}/index.html{{if .IndexFallback}} /index.html{{end}}
-		file_server {
-			hide .git
-			hide .env*
-			hide Caddyfile.template
-		}
-	}
+	try_files {path} {path}.html {path}/index.html{{if .IndexFallback}} /index.html{{end}}
 
 	handle_errors {
 		rewrite * /{err.status_code}.html
