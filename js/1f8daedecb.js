@@ -738,11 +738,11 @@ document.addEventListener("click",e=>{
 window.dataLayer=window.dataLayer||[];
 /* ---------- ANALYTICS — Google Analytics 4 + Meta Pixel: ID मिलते ही यहाँ डालें (सिर्फ़ hitarthi.com पर चलते हैं) ---------- */
 const GA4_ID="";        /* जैसे "G-ABC123XYZ"  — analytics.google.com → Admin → Data streams */
-const META_PIXEL_ID=""; /* जैसे "1234567890123456" — business.facebook.com → Events Manager */
+const META_PIXEL_ID="1709431587273724"; /* जैसे "1234567890123456" — business.facebook.com → Events Manager */
 (function(){if(!/hitarthi\.com$/i.test(location.hostname))return;
   if(GA4_ID){const sc=document.createElement("script");sc.async=true;sc.src="https://www.googletagmanager.com/gtag/js?id="+GA4_ID;document.head.appendChild(sc);window.gtag=function(){window.dataLayer.push(arguments);};gtag("js",new Date());gtag("config",GA4_ID);}
   if(META_PIXEL_ID){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init",META_PIXEL_ID);fbq("track","PageView");}})();
-const FBMAP={purchase:"Purchase",generate_lead:"Lead",payment_started:"InitiateCheckout",course_view:"ViewContent",add_to_cart:"AddToCart",partner_join:"CompleteRegistration",search_pick:"Search"};
+const FBMAP={buy_now:"AddToCart",purchase:"Purchase",generate_lead:"Lead",payment_started:"InitiateCheckout",course_view:"ViewContent",add_to_cart:"AddToCart",partner_join:"CompleteRegistration",search_pick:"Search"};
 function track(ev,p){p=p||{};try{window.dataLayer.push(Object.assign({event:ev},p));}catch(e){}
   try{if(window.gtag&&GA4_ID)gtag("event",ev,Object.assign({currency:"INR"},p));}catch(e){}
   try{if(window.fbq&&META_PIXEL_ID&&FBMAP[ev])fbq("track",FBMAP[ev],Object.assign({currency:"INR"},p.value?{value:p.value}:{},p.item||p.course?{content_name:p.item||p.course}:{}));}catch(e){}}
