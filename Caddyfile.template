@@ -54,6 +54,26 @@
 		respond "forbidden" 403
 	}
 
+	# 🔁 Razorpay Subscription webhook → Apps Script (signature + event id URL में, क्योंकि Apps Script header नहीं पढ़ता)
+	@rzphook {
+		path /rzp-webhook
+		method POST
+	}
+	handle @rzphook {
+		reverse_proxy https://script.google.com {
+			rewrite /macros/s/AKfycbz_lNguiwN0VTpMo4BEQDJefj2mET8QyPeteS_CqOloLivlgxdcAKl5xzoo0KlswlHOkg/exec?wa=r&rzp=1&sig={http.request.header.X-Razorpay-Signature}&eid={http.request.header.X-Razorpay-Event-Id}
+			header_up Host {upstream_hostport}
+			@redir2 status 3xx
+			handle_response @redir2 {
+				respond "ok" 200
+			}
+		}
+	}
+	handle /rzp-webhook {
+		respond "forbidden" 403
+	}
+
+
 	# नाम में hash वाली files (js/abc123.js, img/abc123.webp) कभी नहीं बदलतीं → 1 साल cache
 	@hashed path_regexp hashed ^/(js|img)/[0-9a-f]{10,12}(-\d+)?\.(js|webp|jpg|jpeg|png)$
 	header @hashed Cache-Control "public, max-age=31536000, immutable"
