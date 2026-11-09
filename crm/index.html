@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0B1A4A">
+<title>HITARTHI CRM</title>
+<link rel="icon" href="/favicon.ico">
+<style>
+:root{--navy:#0B1A4A;--navy2:#13286B;--gold:#F5B301;--bg:#F3F5FA;--card:#fff;--ink:#14213D;--mut:#5B6478;--line:#E3E7F0;--red:#C62828;--green:#15803D;--amber:#B45309;--blue:#1D4ED8;--r:14px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans Devanagari","Segoe UI",system-ui,-apple-system,Arial,sans-serif;font-size:15px;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.hide{display:none!important}
+header{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+header .logo{font-weight:800;letter-spacing:.02em}header .logo b{color:var(--gold)}
+header .sp{flex:1}header .who{font-size:.8rem;opacity:.85;text-align:right;line-height:1.2}
+header .ib{color:#fff;font-size:1.15rem;padding:6px 8px;border-radius:10px}header .ib:hover{background:rgba(255,255,255,.12)}
+nav.tabs{position:sticky;top:52px;z-index:19;background:#fff;border-bottom:1px solid var(--line);display:flex;overflow-x:auto}
+nav.tabs button{flex:1;min-width:84px;padding:11px 8px;font-weight:700;color:var(--mut);border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs button.on{color:var(--navy);border-color:var(--gold)}
+main{max-width:980px;margin:0 auto;padding:14px 12px 90px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+h2{font-size:1.05rem;margin:4px 0 10px;color:var(--navy)}h3{font-size:.95rem;margin:14px 0 8px;color:var(--navy)}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+@media(min-width:700px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px;text-align:left}
+.kpi .n{font-size:1.7rem;font-weight:800;line-height:1.1}.kpi .l{font-size:.8rem;color:var(--mut)}
+.kpi.red .n{color:var(--red)}.kpi.amber .n{color:var(--amber)}.kpi.blue .n{color:var(--blue)}.kpi.green .n{color:var(--green)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.inp,select.inp,textarea.inp{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none}
+.inp:focus{border-color:var(--navy2);box-shadow:0 0 0 3px rgba(19,40,107,.12)}
+.btn{padding:10px 14px;border-radius:10px;font-weight:700;background:var(--navy);color:#fff}
+.btn.gold{background:var(--gold);color:var(--navy)}.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.btn.sm{padding:7px 10px;font-size:.85rem}.btn.green{background:var(--green)}.btn.red{background:var(--red)}
+.btn:disabled{opacity:.55}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.chip{padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:.82rem;font-weight:700;color:var(--mut);white-space:nowrap}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.lead{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px}
+.lead:hover{border-color:#C9D2E6}
+.lead .t{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.lead .nm{font-weight:800}.lead .mb{font-size:.82rem;color:var(--mut)}
+.lead .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;font-size:.78rem}
+.b{padding:2px 8px;border-radius:999px;background:#EEF1F8;color:var(--navy2);font-weight:700}
+.b.New{background:#E0E7FF;color:#3730A3}.b.Called{background:#FEF3C7;color:#92400E}.b.Demo{background:#DBEAFE;color:#1E40AF}.b.Joined{background:#DCFCE7;color:#166534}.b.No{background:#FEE2E2;color:#991B1B}
+.b.due{background:#FEE2E2;color:var(--red)}.b.tod{background:#FFEDD5;color:#9A3412}.b.paid{background:#DCFCE7;color:#166534}.b.wa{background:#D1FAE5;color:#065F46}
+.empty{text-align:center;color:var(--mut);padding:20px}
+.muted{color:var(--mut);font-size:.85rem}
+/* detail sheet */
+.ov{position:fixed;inset:0;background:rgba(10,18,40,.45);z-index:40;display:flex;justify-content:flex-end}
+.sheet{background:var(--bg);width:100%;max-width:560px;height:100%;overflow:auto;padding:0 0 40px;animation:sl .18s ease-out}
+@keyframes sl{from{transform:translateX(30px);opacity:.6}to{transform:none;opacity:1}}
+.sh-h{position:sticky;top:0;background:var(--navy);color:#fff;padding:12px 14px;display:flex;gap:10px;align-items:center;z-index:2}
+.sh-h .nm{font-weight:800;font-size:1.05rem}.sh-h .mb{opacity:.85;font-size:.85rem}
+.sh-b{padding:12px}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.acts a,.acts button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border-radius:12px;background:#fff;border:1px solid var(--line);font-weight:700;font-size:.8rem;color:var(--navy);text-decoration:none}
+.acts .ic{font-size:1.3rem}
+.stg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.stg button{padding:9px 2px;border-radius:10px;border:1px solid var(--line);background:#fff;font-weight:700;font-size:.78rem}
+.stg button.on{outline:3px solid var(--gold);outline-offset:-1px}
+.fuq{display:flex;gap:6px;flex-wrap:wrap}
+.tl{list-style:none;margin:0;padding:0}.tl li{border-left:3px solid var(--line);padding:4px 0 10px 12px;position:relative;font-size:.86rem}
+.tl li:before{content:"";position:absolute;left:-7px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--gold)}
+.tl .when{color:var(--mut);font-size:.75rem}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mut);font-weight:700;font-size:.78rem}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:6px;background:#E8ECF5;overflow:hidden}.bar i{display:block;height:100%;background:var(--navy2)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:60;font-weight:700;max-width:92vw;text-align:center}
+.login{max-width:380px;margin:60px auto;padding:22px}
+.login h1{margin:0 0 4px;color:var(--navy)}.login h1 b{color:var(--gold)}
+.fab{position:fixed;right:16px;bottom:18px;z-index:30;width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:1.8rem;font-weight:800;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+label.lb{font-size:.8rem;font-weight:700;color:var(--mut);display:block;margin:8px 0 4px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.tabs2{display:flex;gap:6px;margin:12px 0 8px;overflow-x:auto}
+.copy{word-break:break-all;background:#F8FAFF;border:1px dashed #B9C3DD;border-radius:10px;padding:10px;font-size:.82rem}
+</style>
+</head>
+<body>
+<div id="vLogin" class="hide">
+  <div class="card login">
+    <h1>HITARTHI <b>CRM</b></h1>
+    <p class="muted">Team login — अपनी Login ID और PIN डालें</p>
+    <label class="lb" for="lId">Login ID</label><input id="lId" class="inp" autocomplete="username" autocapitalize="none" placeholder="जैसे admin या ravi">
+    <label class="lb" for="lPin">PIN</label><input id="lPin" class="inp" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••••">
+    <p id="lMsg" class="muted" style="color:var(--red);min-height:1.2em"></p>
+    <button id="lBtn" class="btn gold" style="width:100%">Login</button>
+  </div>
+</div>
+
+<div id="vApp" class="hide">
+  <header>
+    <div class="logo">HITARTHI <b>CRM</b></div><div class="sp"></div>
+    <div class="who"><div id="hName"></div><div id="hSync" style="font-size:.7rem"></div></div>
+    <button class="ib" id="bRef" title="ताज़ा करें" aria-label="ताज़ा करें">⟳</button>
+    <button class="ib" id="bOut" title="Logout" aria-label="Logout">⎋</button>
+  </header>
+  <nav class="tabs">
+    <button data-v="today" class="on">🏠 आज</button>
+    <button data-v="all">📋 सभी Leads</button>
+    <button data-v="rep">📊 रिपोर्ट</button>
+    <button data-v="tools">🔗 Ad Links</button>
+  </nav>
+  <main>
+    <section id="v-today"></section>
+    <section id="v-all" class="hide">
+      <input id="q" class="inp" placeholder="🔎 नाम, मोबाइल, शहर या course खोजें" style="margin-bottom:8px">
+      <div class="chips" id="fSt"></div>
+      <div class="row" style="margin:8px 0">
+        <select id="fCh" class="inp" style="flex:1;min-width:130px"></select>
+        <select id="fOw" class="inp" style="flex:1;min-width:130px"></select>
+        <select id="fSort" class="inp" style="flex:1;min-width:130px">
+          <option value="new">नए पहले</option><option value="fu">Follow-up तारीख</option><option value="upd">हाल में बदले</option>
+        </select>
+      </div>
+      <div class="muted" id="cnt" style="margin:4px 2px 8px"></div>
+      <div id="list"></div>
+      <div style="text-align:center"><button class="btn ghost sm hide" id="more">और दिखाएँ</button></div>
+    </section>
+    <section id="v-rep" class="hide"></section>
+    <section id="v-tools" class="hide"></section>
+  </main>
+  <button class="fab" id="fab" title="नया lead" aria-label="नया lead">＋</button>
+</div>
+
+<div id="ov" class="ov hide"><div class="sheet" id="sheet"></div></div>
+<div id="toast" class="toast hide"></div>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycbz_lNguiwN0VTpMo4BEQDJefj2mET8QyPeteS_CqOloLivlgxdcAKl5xzoo0KlswlHOkg/exec";
+const ST={New:"🆕 नया",Called:"📞 बात हुई",Demo:"🎯 Demo / रुचि",Joined:"✅ जुड़ गया",No:"❌ नहीं"};
+const CHS=["Phone call","Walk-in (ऑफ़िस आए)","Facebook","Instagram","YouTube","Google","WhatsApp Marketing","Reference / जान-पहचान","Seminar / Camp","अन्य"];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const S={tok:"",me:null,D:null,view:"today",fst:"open",lim:60,cur:null};
+try{S.tok=localStorage.getItem("crm_tok")||"";}catch(e){}
+function toast(t,ms){const el=$("#toast");el.textContent=t;el.classList.remove("hide");clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.add("hide"),ms||2600);}
+async function api(a,d){const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),30000);
+  try{const r=await fetch(API,{method:"POST",body:JSON.stringify(Object.assign({action:a,token:S.tok},d||{})),signal:ctl.signal});const j=await r.json();
+    if(j&&j.relogin&&a!=="crmlogin"){logout(j.err||"दोबारा login करें");throw new Error("relogin");}return j;}
+  catch(e){if(e.message!=="relogin")toast("इंटरनेट / server धीमा है — फिर से कोशिश करें");throw e;}finally{clearTimeout(tm);}}
+function logout(msg){S.tok="";try{localStorage.removeItem("crm_tok");}catch(e){}$("#vApp").classList.add("hide");$("#vLogin").classList.remove("hide");$("#lMsg").textContent=msg||"";}
+$("#lBtn").onclick=async()=>{const lid=$("#lId").value.trim(),pin=$("#lPin").value.trim();if(!lid||!pin){$("#lMsg").textContent="Login ID और PIN लिखें";return;}
+  $("#lBtn").disabled=true;$("#lBtn").textContent="जाँच रहे हैं…";
+  try{const r=await api("crmlogin",{lid,pin});if(!r.ok){$("#lMsg").textContent=r.err||"Login नहीं हुआ";return;}S.tok=r.token;try{localStorage.setItem("crm_tok",r.token);localStorage.setItem("crm_lid",lid);}catch(e){}$("#lPin").value="";start();}
+  catch(e){}finally{$("#lBtn").disabled=false;$("#lBtn").textContent="Login";}};
+$("#lPin").addEventListener("keydown",e=>{if(e.key==="Enter")$("#lBtn").click();});
+try{$("#lId").value=localStorage.getItem("crm_lid")||"";}catch(e){}
+$("#bOut").onclick=()=>{if(confirm("Logout करें?"))logout();};
+$("#bRef").onclick=()=>load(true);
+$$("nav.tabs button").forEach(b=>b.onclick=()=>show(b.dataset.v));
+function show(v){S.view=v;$$("nav.tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));["today","all","rep","tools"].forEach(x=>$("#v-"+x).classList.toggle("hide",x!==v));render();scrollTo(0,0);}
+async function start(){$("#vLogin").classList.add("hide");$("#vApp").classList.remove("hide");await load();}
+async function load(manual){$("#hSync").textContent="ताज़ा हो रहा है…";
+  try{const d=await api("crmdata");if(!d.ok){toast(d.err||"data नहीं आया");return;}S.D=d;S.me=d.me;$("#hName").textContent=d.me.name+(d.me.role==="Admin"?" • Admin":"");
+    $("#hSync").textContent="अपडेट "+d.now.slice(11,16);fillFilters();render();if(manual)toast("✓ ताज़ा");}catch(e){$("#hSync").textContent="";}}
+/* helpers */
+const today=()=>S.D?S.D.today:new Date().toISOString().slice(0,10);
+const isOpen=x=>x.st!=="Joined"&&x.st!=="No";
+const owner=x=>x.own||(x.pid?"Partner "+x.pid:"");
+const addDays=n=>{const d=new Date(today()+"T12:00:00");d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);};
+const dmy=s=>{if(!s)return"";const a=s.slice(0,10).split("-");return a[2]+"/"+a[1]+(s.length>10?" "+s.slice(11,16):"");};
+const inr=n=>"₹"+(Math.round(+n||0)).toLocaleString("en-IN");
+function waOpen(x){if(!x.wl)return false;const t=new Date(x.wl.replace(" ","T")+":00+05:30").getTime();return Date.now()-t<23.5*3600e3;}
+function card(x){const t=today(),due=isOpen(x)&&x.fu&&x.fu<t,tod=isOpen(x)&&x.fu===t;
+  return `<button class="lead" data-m="${x.m}"><div class="t"><span class="nm">${esc(x.n||"(नाम नहीं)")}</span><span class="mb">${x.m}</span></div>
+  <div class="muted" style="margin-top:2px">${esc((x.i||"").slice(0,70))}${x.c?" • "+esc(x.c):""}</div>
+  <div class="meta"><span class="b ${x.st}">${ST[x.st]||x.st}</span><span class="b">${esc(x.ch)}</span>${x.paid?`<span class="b paid">${inr(x.paid)} खरीदा</span>`:""}${x.pend?'<span class="b tod">payment बाकी</span>':""}
+  ${due?`<span class="b due">⏰ छूटा ${dmy(x.fu)}</span>`:tod?'<span class="b tod">⏰ आज</span>':x.fu&&isOpen(x)?`<span class="b">📅 ${dmy(x.fu)}</span>`:""}
+  ${waOpen(x)?'<span class="b wa">💬 24 घंटे खुला</span>':""}<span class="b" style="background:#fff;border:1px solid var(--line)">👤 ${esc(owner(x)||"कोई नहीं")}</span></div></button>`;}
+function bindCards(root){root.querySelectorAll(".lead").forEach(b=>b.onclick=()=>openLead(b.dataset.m));}
+function render(){if(!S.D)return;if(S.view==="today")rToday();if(S.view==="all")rAll();if(S.view==="rep")rRep();if(S.view==="tools")rTools();}
+/* 🏠 आज */
+function rToday(){const L=S.D.leads,t=today(),me=S.me.name,mine=x=>x.own===me||(!x.own&&!x.pid)||S.me.role==="Admin";
+  const open=L.filter(x=>isOpen(x)&&mine(x));
+  const fresh=open.filter(x=>x.st==="New"&&!x.fc),due=open.filter(x=>x.fu&&x.fu<t),tod=open.filter(x=>x.fu===t),noFu=open.filter(x=>x.st!=="New"&&!x.fu);
+  const wk=L.filter(x=>x.t>=addDays(-6));const won=L.filter(x=>x.paid&&x.t>=addDays(-29)).length;
+  const sec=(title,arr,empty)=>`<h3>${title} <span class="muted">(${arr.length})</span></h3>${arr.length?arr.slice(0,40).map(card).join(""):`<div class="empty">${empty}</div>`}`;
+  $("#v-today").innerHTML=`<div class="kpis">
+   <div class="kpi blue"><div class="n">${fresh.length}</div><div class="l">🆕 नए — अभी बात नहीं हुई</div></div>
+   <div class="kpi red"><div class="n">${due.length}</div><div class="l">⏰ छूटे follow-up</div></div>
+   <div class="kpi amber"><div class="n">${tod.length}</div><div class="l">📅 आज के follow-up</div></div>
+   <div class="kpi green"><div class="n">${wk.length}</div><div class="l">इस हफ़्ते आए lead • ${won} ग्राहक (30 दिन)</div></div></div>
+   <p class="muted" style="margin:-4px 2px 10px">${S.me.role==="Admin"?"Admin: सबके leads दिख रहे हैं":"आपके leads + जिनका कोई owner नहीं"}</p>
+   ${sec("⏰ छूटे follow-up — पहले इन्हें",due.sort((a,b)=>a.fu.localeCompare(b.fu)),"बहुत बढ़िया — कोई छूटा नहीं 👏")}
+   ${sec("🆕 नए lead — 15 मिनट में call करें",fresh,"कोई नया lead नहीं")}
+   ${sec("📅 आज के follow-up",tod,"आज कोई follow-up नहीं")}
+   ${noFu.length?sec("⚠️ बात हुई पर अगली तारीख नहीं",noFu,""):""}`;
+  bindCards($("#v-today"));}
+/* 📋 सभी */
+function fillFilters(){const L=S.D.leads,chs=[...new Set(L.map(x=>x.ch))].sort();
+  $("#fCh").innerHTML='<option value="">सभी source</option>'+chs.map(c=>`<option>${esc(c)}</option>`).join("");
+  $("#fOw").innerHTML='<option value="">सभी owner</option><option value="__me">👤 मेरे</option><option value="__none">कोई owner नहीं</option><option value="__p">Partner वाले</option>'+S.D.staff.map(s=>`<option>${esc(s)}</option>`).join("");
+  const sts=[["open","खुले"],["","सभी"],["New",ST.New],["Called",ST.Called],["Demo",ST.Demo],["Joined",ST.Joined],["No",ST.No],["due","⏰ छूटे"]];
+  $("#fSt").innerHTML=sts.map(s=>`<button class="chip${S.fst===s[0]?" on":""}" data-s="${s[0]}">${s[1]}</button>`).join("");
+  $$("#fSt .chip").forEach(b=>b.onclick=()=>{S.fst=b.dataset.s;S.lim=60;$$("#fSt .chip").forEach(c=>c.classList.toggle("on",c===b));rAll();});}
+["#q","#fCh","#fOw","#fSort"].forEach(s=>$(s).addEventListener("input",()=>{S.lim=60;rAll();}));
+$("#more").onclick=()=>{S.lim+=60;rAll();};
+function rAll(){const L=S.D.leads,q=$("#q").value.trim().toLowerCase(),ch=$("#fCh").value,ow=$("#fOw").value,t=today();
+  let a=L.filter(x=>{if(S.fst==="open"&&!isOpen(x))return false;if(S.fst==="due"&&!(isOpen(x)&&x.fu&&x.fu<=t))return false;if(["New","Called","Demo","Joined","No"].includes(S.fst)&&x.st!==S.fst)return false;
+    if(ch&&x.ch!==ch)return false;if(ow==="__me"&&x.own!==S.me.name)return false;if(ow==="__none"&&(x.own||x.pid))return false;if(ow==="__p"&&!x.pid)return false;if(ow&&ow[0]!=="_"&&x.own!==ow)return false;
+    if(q&&!(x.m.includes(q.replace(/\D/g,"")||"@@")||(x.n+" "+x.c+" "+x.i+" "+x.src.join(" ")+" "+x.pid).toLowerCase().includes(q)))return false;return true;});
+  const so=$("#fSort").value;if(so==="fu")a.sort((x,y)=>(x.fu||"9999").localeCompare(y.fu||"9999"));else if(so==="upd")a.sort((x,y)=>(y.u||"").localeCompare(x.u||""));
+  $("#cnt").textContent=a.length+" lead";$("#list").innerHTML=a.slice(0,S.lim).map(card).join("")||'<div class="empty">कोई lead नहीं मिला</div>';
+  $("#more").classList.toggle("hide",a.length<=S.lim);bindCards($("#list"));}
+/* 👤 detail */
+$("#ov").addEventListener("click",e=>{if(e.target.id==="ov")closeLead();});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#ov").classList.contains("hide"))closeLead();});
+function closeLead(){$("#ov").classList.add("hide");S.cur=null;render();}
+async function openLead(m){const x=S.D.leads.find(l=>l.m===m);if(!x)return;S.cur=x;drawLead(x,null);$("#ov").classList.remove("hide");
+  try{const g=await api("crmget",{m});if(g.ok&&S.cur===x)drawLead(x,g);}catch(e){}}
+function drawLead(x,g){const isA=S.me.role==="Admin",t=today();
+  const waTxt=encodeURIComponent("Namaste "+(x.n||"")+" ji 🙏 HITARTHI Education se baat kar rahe hain"+(x.i?" — aapne "+x.i+" ke baare me poocha tha.":"."));
+  const ownSel=isA?`<select id="dOwn" class="inp"><option value="">— कोई नहीं —</option>${S.D.staff.map(s=>`<option ${s===x.own?"selected":""}>${esc(s)}</option>`).join("")}</select>`
+    :(x.own===S.me.name?`<div class="muted">👤 यह lead आपके पास है</div>`:x.own?`<div class="muted">👤 ${esc(x.own)}</div>`:`<button class="btn sm" id="dTake">🙋 मैं लूँगा</button>`);
+  $("#sheet").innerHTML=`<div class="sh-h"><button class="ib" id="dX" style="color:#fff;font-size:1.3rem" aria-label="बंद करें">←</button>
+   <div style="flex:1"><div class="nm">${esc(x.n||"(नाम नहीं)")}</div><div class="mb">${x.m}${x.c?" • "+esc(x.c):""}</div></div><span class="b ${x.st}">${ST[x.st]}</span></div>
+  <div class="sh-b">
+   <div class="acts"><a href="tel:+91${x.m}" id="aCall"><span class="ic">📞</span>Call</a>
+    <button id="aWa"><span class="ic">💬</span>WhatsApp (कंपनी)</button>
+    <a href="https://wa.me/91${x.m}?text=${waTxt}" target="_blank" rel="noopener" id="aWa2"><span class="ic">📱</span>अपने फ़ोन से</a></div>
+   <div id="waBox" class="card hide"><div class="muted" style="margin-bottom:6px">${waOpen(x)?"✅ ग्राहक ने 24 घंटे में संदेश भेजा है — आप लिखकर भेज सकते हैं":"⚠️ ग्राहक का 24 घंटे में कोई संदेश नहीं — WhatsApp नियम से शायद न जाए। तब 'अपने फ़ोन से' इस्तेमाल करें"}</div>
+     <textarea id="waT" class="inp" rows="3" placeholder="संदेश लिखें…"></textarea>
+     <div class="seg" style="margin:6px 0"><button class="chip" data-q="fees">💰 Fees</button><button class="chip" data-q="demo">🎯 Demo</button><button class="chip" data-q="pay">🔗 Payment</button><button class="chip" data-q="thx">🙏 धन्यवाद</button></div>
+     <button class="btn green" id="waS" style="width:100%">भेजें</button></div>
+   <div class="card"><h3 style="margin-top:0">Stage</h3><div class="stg">${["New","Called","Demo","Joined","No"].map(s=>`<button data-st="${s}" class="b ${s} ${x.st===s?"on":""}">${ST[s]}</button>`).join("")}</div>
+    <div id="lostBox" class="${x.st==="No"?"":"hide"}"><label class="lb">❌ क्यों नहीं लिया?</label><select id="dLost" class="inp"><option value="">— कारण चुनें —</option>${S.D.lost.map(l=>`<option ${l===x.lost?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <h3>⏰ अगला follow-up ${x.fu?`<span class="muted">(${dmy(x.fu)}${isOpen(x)&&x.fu<t?" — छूट गया":""})</span>`:""}</h3>
+    <div class="fuq"><button class="chip" data-fu="0">आज</button><button class="chip" data-fu="1">कल</button><button class="chip" data-fu="3">3 दिन</button><button class="chip" data-fu="7">1 हफ़्ता</button><button class="chip" data-fu="30">1 महीना</button>
+     <input type="date" id="dFu" class="chip" value="${x.fu||""}" style="padding:4px 8px"><button class="chip" data-fu="x">हटाएँ</button></div>
+    <h3>📝 Note (बात क्या हुई)</h3><textarea id="dNt" class="inp" rows="2" placeholder="जैसे: Excel में रुचि, शाम 6 बजे बात करें, fees ज़्यादा लगी…"></textarea>
+    ${x.nt?`<div class="muted" style="margin-top:4px">पिछला note: ${esc(x.nt)}</div>`:""}${x.pn?`<div class="muted" style="margin-top:4px">Partner का note: ${esc(x.pn)}</div>`:""}
+    <button class="btn gold" id="dSave" style="width:100%;margin-top:10px">💾 Note सहेजें</button>
+    <h3>👤 Owner</h3>${ownSel}</div>
+   <div class="card"><h3 style="margin-top:0">जानकारी</h3>
+    <div class="grid2"><div><label class="lb">नाम</label><input id="eN" class="inp" value="${esc(x.n)}"></div><div><label class="lb">शहर</label><input id="eC" class="inp" value="${esc(x.c)}"></div></div>
+    <label class="lb">Course / रुचि</label><input id="eI" class="inp" value="${esc(x.i)}">
+    <button class="btn ghost sm" id="eSave" style="margin-top:8px">जानकारी सहेजें</button>
+    <div class="muted" style="margin-top:10px;line-height:1.7">📥 Source: <b>${esc(x.ch)}</b>${x.utm?" • "+esc(x.utm):""}<br>कहाँ से: ${esc(x.src.join(", "))}${x.pid?"<br>Partner: <b>"+esc(x.pid)+"</b>":""}<br>पहली बार आए: ${dmy(x.t)}${x.fc?" • पहला संपर्क: "+dmy(x.fc):" • <b style='color:var(--red)'>अभी तक संपर्क नहीं</b>"}${x.paid?`<br>🛒 कुल खरीद: <b>${inr(x.paid)}</b> (${x.bn} order) — ${esc((x.items||[]).join(", "))}`:""}</div></div>
+   <div class="tabs2"><button class="chip on" data-tb="log">🕘 इतिहास</button><button class="chip" data-tb="ord">🛒 खरीदारी</button><button class="chip" data-tb="wa">💬 WhatsApp</button><button class="chip" data-tb="ld">📥 Lead lines</button></div>
+   <div class="card" id="tbBody">${g?"":'<div class="empty">लोड हो रहा है…</div>'}</div>
+  </div>`;
+  $("#dX").onclick=closeLead;
+  const save=async(d,msg)=>{try{const r=await api("crmupd",Object.assign({m:x.m},d));if(!r.ok){toast(r.err||"सेव नहीं हुआ");return false;}
+     if(d.st)x.st=d.st;if(d.fu!=null)x.fu=d.fu;if(d.nt)x.nt=d.nt;if(d.lost!=null)x.lost=d.lost;if(d.own!=null)x.own=d.own;if(d.n)x.n=d.n;if(d.c!=null)x.c=d.c;if(d.i!=null)x.i=d.i;
+     if(!x.fc&&((d.st&&d.st!=="New")||d.nt||d.act))x.fc=r.now;x.u=r.now;toast(msg||"✓ सेव हो गया");drawLead(x,null);openLeadRefresh(x);return true;}catch(e){return false;}};
+  $$("#sheet .stg button").forEach(b=>b.onclick=()=>{const st=b.dataset.st;if(st===x.st)return;
+    if(st==="No"){$("#lostBox").classList.remove("hide");$$("#sheet .stg button").forEach(c=>c.classList.toggle("on",c===b));$("#dLost").onchange=()=>save({st:"No",lost:$("#dLost").value,fu:""},"✓ ❌ नहीं — कारण सहेजा");return;}
+    const d={st};if(st==="Joined")d.fu="";else if(!x.fu||x.fu<today())d.fu=addDays(st==="New"?0:2);save(d,"✓ "+ST[st]+(d.fu?" • follow-up "+dmy(d.fu):""));});
+  if($("#dLost"))$("#dLost").onchange=()=>save({st:"No",lost:$("#dLost").value,fu:""});
+  $$("#sheet [data-fu]").forEach(b=>b.onclick=()=>{const v=b.dataset.fu;save({fu:v==="x"?"":addDays(+v)},v==="x"?"✓ follow-up हटाया":"✓ follow-up "+dmy(addDays(+v)));});
+  $("#dFu").onchange=()=>{const v=$("#dFu").value;if(v)save({fu:v},"✓ follow-up "+dmy(v));};
+  $("#dSave").onclick=()=>{const nt=$("#dNt").value.trim();if(!nt){toast("पहले note लिखें");return;}const d={nt};if(x.st==="New")d.st="Called";if(!x.fu||x.fu<today())d.fu=addDays(2);save(d,"✓ Note सहेजा"+(d.fu?" • follow-up "+dmy(d.fu):""));};
+  if($("#dOwn"))$("#dOwn").onchange=()=>save({own:$("#dOwn").value},"✓ Owner बदला");
+  if($("#dTake"))$("#dTake").onclick=()=>save({own:S.me.name},"✓ अब यह lead आपका");
+  $("#eSave").onclick=()=>save({n:$("#eN").value.trim(),c:$("#eC").value.trim(),i:$("#eI").value.trim()},"✓ जानकारी सहेजी");
+  $("#aCall").addEventListener("click",()=>{api("crmupd",{m:x.m,act:"📞 Call किया"}).then(r=>{if(r&&r.ok&&!x.fc){x.fc=r.now;}}).catch(()=>{});setTimeout(()=>toast("Call के बाद Note लिखना न भूलें 📝",3500),1200);});
+  $("#aWa2").addEventListener("click",()=>{api("crmupd",{m:x.m,act:"📱 अपने फ़ोन से WhatsApp"}).catch(()=>{});});
+  $("#aWa").onclick=()=>{$("#waBox").classList.toggle("hide");if(!$("#waBox").classList.contains("hide"))$("#waT").focus();};
+  const QT={fees:`Namaste ${x.n||""} ji 🙏 Fees aur Monthly / Kisht plan yahan dekhein: https://www.hitarthi.com/#fees — koi sawal ho to isi number par likhiye.`,demo:`Namaste ${x.n||""} ji 🙏 Aapki free Demo class ke liye kaunsa samay theek rahega? Hum aapko call karke join karwa denge.`,
+    pay:`Namaste ${x.n||""} ji 🙏 Admission / order ke liye yahan se payment kar sakte hain: https://www.hitarthi.com/ — kisi madad ki zarurat ho to batayein.`,thx:`Dhanyavaad ${x.n||""} ji 🙏 HITARTHI se judne ke liye shukriya. Koi bhi sawal ho to isi number par likhiye.`};
+  $$("#waBox [data-q]").forEach(b=>b.onclick=()=>{$("#waT").value=QT[b.dataset.q];});
+  $("#waS").onclick=async()=>{const text=$("#waT").value.trim();if(!text){toast("संदेश लिखें");return;}$("#waS").disabled=true;
+    try{const r=await api("crmwa",{m:x.m,text});if(r.ok){toast("✓ WhatsApp भेजा");$("#waT").value="";$("#waBox").classList.add("hide");if(!x.fc)x.fc=S.D.now;openLeadRefresh(x);}else toast(r.err||"नहीं गया",6000);}catch(e){}finally{$("#waS").disabled=false;}};
+  const tb=k=>{$$("#sheet [data-tb]").forEach(b=>b.classList.toggle("on",b.dataset.tb===k));if(!g)return;let h="";
+    if(k==="log")h=g.log.length?`<ul class="tl">${g.log.map(l=>`<li><div class="when">${dmy(l[0])} • ${esc(l[1])}</div><b>${esc(l[2])}</b> ${esc(l[3])}</li>`).join("")}</ul>`:'<div class="empty">अभी कोई इतिहास नहीं</div>';
+    if(k==="ord")h=(g.orders.length?`<table><tr><th>तारीख</th><th>Item</th><th class="n">₹</th><th>Status</th></tr>${g.orders.map(o=>`<tr><td>${dmy(o.t)}</td><td>${esc(o.it)}</td><td class="n">${inr(o.amt)}</td><td>${esc(o.st)}</td></tr>`).join("")}</table>`:'<div class="empty">कोई order नहीं</div>')
+      +(g.en.length?`<h3>🎓 Enrollments</h3><table>${g.en.map(e=>`<tr><td>${esc(e.c)}</td><td class="n">${inr(e.fee)}</td><td>${esc(e.st)}</td></tr>`).join("")}</table>`:"");
+    if(k==="wa")h=g.wa.length?`<ul class="tl">${g.wa.map(w=>`<li><div class="when">${dmy(w.t)} • ${esc(w.ty)}</div>${esc(w.x)}${w.rp?`<div class="muted">↪ ${esc(w.rp)}</div>`:""}</li>`).join("")}</ul>`:'<div class="empty">कोई WhatsApp संदेश नहीं</div>';
+    if(k==="ld")h=g.leads.length?g.leads.map(l=>`<div style="padding:6px 0;border-bottom:1px solid var(--line)"><b>${dmy(l.t)}</b> • ${esc(l.src)}${l.pid?" • "+esc(l.pid):""}${l.utm?" • "+esc(l.utm):""}<div class="muted">${esc(l.i)}${l.nt?" — "+esc(l.nt):""}</div></div>`).join(""):'<div class="empty">सीधी खरीद (form नहीं भरा)</div>';
+    $("#tbBody").innerHTML=h;};
+  $$("#sheet [data-tb]").forEach(b=>b.onclick=()=>tb(b.dataset.tb));if(g)tb("log");}
+async function openLeadRefresh(x){try{const g=await api("crmget",{m:x.m});if(g.ok&&S.cur===x)drawLead(x,g);}catch(e){}}
+/* ＋ नया lead */
+$("#fab").onclick=()=>{S.cur=null;$("#sheet").innerHTML=`<div class="sh-h"><button class="ib" id="dX" style="color:#fff;font-size:1.3rem" aria-label="बंद करें">←</button><div class="nm" style="flex:1">➕ नया lead</div></div>
+  <div class="sh-b"><div class="card"><label class="lb">नाम *</label><input id="nN" class="inp"><label class="lb">Mobile *</label><input id="nM" class="inp" inputmode="numeric" maxlength="13" placeholder="10 अंक">
+  <div class="grid2"><div><label class="lb">शहर</label><input id="nC" class="inp"></div><div><label class="lb">कहाँ से आया</label><select id="nCh" class="inp">${CHS.map(c=>`<option>${c}</option>`).join("")}</select></div></div>
+  <label class="lb">Course / रुचि</label><input id="nI" class="inp" placeholder="जैसे Excel, Tally, Spoken English">
+  <label class="lb">Note</label><textarea id="nNt" class="inp" rows="2"></textarea>
+  <label class="lb">अगला follow-up</label><input id="nFu" type="date" class="inp" value="${addDays(1)}">
+  <p id="nMsg" class="muted" style="color:var(--red)"></p><button class="btn gold" id="nS" style="width:100%">सहेजें</button></div></div>`;
+  $("#ov").classList.remove("hide");$("#dX").onclick=closeLead;$("#nN").focus();
+  $("#nS").onclick=async()=>{const d={n:$("#nN").value.trim(),m:$("#nM").value.replace(/\D/g,"").slice(-10),c:$("#nC").value.trim(),ch:$("#nCh").value,i:$("#nI").value.trim(),nt:$("#nNt").value.trim(),fu:$("#nFu").value};
+    $("#nS").disabled=true;try{const r=await api("crmadd",d);if(!r.ok){$("#nMsg").textContent=r.err||"नहीं जुड़ा";return;}toast("✓ "+d.n+" जुड़ गए");closeLead();await load();}catch(e){}finally{$("#nS").disabled=false;}};};
+/* 📊 रिपोर्ट */
+let RP=30;
+function rRep(){const L=S.D.leads,from=RP?addDays(-(RP-1)):"0000";const A=L.filter(x=>(x.t||"")>=from);
+  const pct=(a,b)=>b?Math.round(a*100/b)+"%":"—";
+  const by=(key)=>{const M={};A.forEach(x=>{const k=key(x)||"—";const o=M[k]||(M[k]={k,n:0,c:0,j:0,rev:0,no:0});o.n++;if(x.fc||x.st!=="New")o.c++;if(x.st==="Joined"||x.paid)o.j++;if(x.st==="No")o.no++;o.rev+=x.paid||0;});return Object.values(M).sort((a,b)=>b.n-a.n);};
+  const ch=by(x=>x.ch),ow=by(x=>owner(x)||"कोई नहीं");
+  const tot={n:A.length,c:A.filter(x=>x.fc||x.st!=="New").length,j:A.filter(x=>x.st==="Joined"||x.paid).length,rev:A.reduce((s,x)=>s+(x.paid||0),0)};
+  const resp=A.filter(x=>x.fc&&x.t&&x.src[0]!=="सीधी खरीद").map(x=>(new Date(x.fc.replace(" ","T")+":00+05:30")-new Date(x.t.replace(" ","T")+":00+05:30"))/36e5).filter(h=>h>=0);
+  const med=resp.length?resp.sort((a,b)=>a-b)[Math.floor(resp.length/2)]:null;
+  const fun=["New","Called","Demo","Joined","No"].map(s=>[s,A.filter(x=>x.st===s).length]);const mx=Math.max(1,...fun.map(f=>f[1]));
+  const lost={};A.filter(x=>x.st==="No").forEach(x=>{const k=x.lost||"कारण नहीं लिखा";lost[k]=(lost[k]||0)+1;});
+  const overdue=L.filter(x=>isOpen(x)&&x.fu&&x.fu<today());
+  const tbl=(rows,first)=>`<div style="overflow-x:auto"><table><tr><th>${first}</th><th class="n">Lead</th><th class="n">संपर्क</th><th class="n">जुड़े</th><th class="n">Conversion</th><th class="n">बिक्री</th></tr>
+    ${rows.map(o=>`<tr><td>${esc(o.k)}</td><td class="n">${o.n}</td><td class="n">${pct(o.c,o.n)}</td><td class="n">${o.j}</td><td class="n"><b>${pct(o.j,o.n)}</b></td><td class="n">${inr(o.rev)}</td></tr>`).join("")}</table></div>`;
+  $("#v-rep").innerHTML=`<div class="chips" style="margin-bottom:10px">${[[7,"7 दिन"],[30,"30 दिन"],[90,"90 दिन"],[0,"सभी"]].map(p=>`<button class="chip ${RP===p[0]?"on":""}" data-rp="${p[0]}">${p[1]}</button>`).join("")}</div>
+   <div class="kpis"><div class="kpi blue"><div class="n">${tot.n}</div><div class="l">कुल lead</div></div><div class="kpi amber"><div class="n">${pct(tot.c,tot.n)}</div><div class="l">जिनसे बात हुई</div></div>
+   <div class="kpi green"><div class="n">${pct(tot.j,tot.n)}</div><div class="l">Conversion (${tot.j} जुड़े)</div></div><div class="kpi"><div class="n">${inr(tot.rev)}</div><div class="l">इन lead से बिक्री</div></div></div>
+   <div class="card"><h2>📥 Source के हिसाब से (कहाँ से lead आए, कहाँ से बिक्री हुई)</h2>${tbl(ch,"Source")}
+    <p class="muted">Ad पर खर्च ÷ उस source के lead = <b>CPL</b> (एक lead की लागत)। खर्च ÷ जुड़े = <b>CAC</b> (एक ग्राहक की लागत)। जिस source का Conversion और बिक्री ज़्यादा, उसी में पैसा बढ़ाएँ।</p></div>
+   <div class="card"><h2>👤 Team के हिसाब से</h2>${tbl(ow,"Owner")}
+    <p class="muted">⏱ पहला संपर्क (median): <b>${med==null?"—":med<1?Math.round(med*60)+" मिनट":Math.round(med*10)/10+" घंटे"}</b> — लक्ष्य 15 मिनट से कम • ⏰ अभी छूटे follow-up: <b style="color:var(--red)">${overdue.length}</b></p></div>
+   <div class="card"><h2>🔻 Stage funnel</h2>${fun.map(f=>`<div style="margin:6px 0"><div class="row" style="justify-content:space-between"><span>${ST[f[0]]}</span><b>${f[1]}</b></div><div class="bar"><i style="width:${f[1]*100/mx}%"></i></div></div>`).join("")}</div>
+   <div class="card"><h2>❌ क्यों नहीं लिया</h2>${Object.keys(lost).length?Object.entries(lost).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="row" style="justify-content:space-between;padding:4px 0"><span>${esc(k)}</span><b>${v}</b></div>`).join(""):'<div class="empty">अभी कोई नहीं</div>'}</div>`;
+  $$("#v-rep [data-rp]").forEach(b=>b.onclick=()=>{RP=+b.dataset.rp;rRep();});}
+/* 🔗 Ad links (UTM) */
+function rTools(){$("#v-tools").innerHTML=`<div class="card"><h2>🔗 Ad के लिए link बनाएँ</h2>
+  <p class="muted">हर ad / post / WhatsApp broadcast में यही link लगाएँ — फिर CRM अपने-आप बताएगा कि lead Facebook, Instagram, YouTube, Google या WhatsApp में से कहाँ से आया।</p>
+  <div class="grid2"><div><label class="lb">कहाँ चलाएँगे</label><select id="uS" class="inp"><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="youtube">YouTube</option><option value="google">Google</option><option value="whatsapp">WhatsApp Marketing</option></select></div>
+  <div><label class="lb">Page</label><select id="uP" class="inp"><option value="">Home</option><option value="#courses">Courses</option><option value="#fees">Fees</option><option value="#books">Books</option><option value="#contact">Contact / Demo</option><option value="#partner">Partner</option></select></div></div>
+  <label class="lb">Campaign का नाम (अंग्रेज़ी, बिना space)</label><input id="uC" class="inp" placeholder="जैसे nov_excel_offer">
+  <label class="lb">Ad (वैकल्पिक)</label><input id="uM" class="inp" value="paid" placeholder="paid / video1 / broadcast">
+  <div class="copy" id="uOut" style="margin-top:10px"></div><button class="btn gold" id="uCp" style="width:100%;margin-top:8px">📋 Copy link</button></div>
+  <div class="card"><h2>📌 नियम</h2><ul class="muted" style="line-height:1.8;padding-left:18px"><li>हर campaign का अलग नाम रखें — जैसे <b>nov_excel_offer</b>, <b>dec_tally_reel</b></li><li>Google Ads में "Auto-tagging" चालू रखें — link वैसे भी पहचान लेगा</li><li>Partner अपना link (?ref=…) ही बाँटें — वे lead अपने-आप Partner वाले में जाएँगे</li><li>हर हफ़्ते <b>रिपोर्ट</b> टैब देखें: किस source से सबसे सस्ता ग्राहक आ रहा है</li></ul></div>`;
+  const mk=()=>{const s=$("#uS").value,c=($("#uC").value.trim()||"campaign").toLowerCase().replace(/[^a-z0-9_-]+/g,"_"),m=($("#uM").value.trim()||"paid").toLowerCase().replace(/[^a-z0-9_-]+/g,"_"),p=$("#uP").value;
+    const u="https://www.hitarthi.com/?utm_source="+s+"&utm_medium="+m+"&utm_campaign="+c+p;$("#uOut").textContent=u;return u;};
+  ["#uS","#uP","#uC","#uM"].forEach(s=>$(s).addEventListener("input",mk));mk();
+  $("#uCp").onclick=async()=>{const u=mk();try{await navigator.clipboard.writeText(u);toast("✓ Link copy हो गया");}catch(e){prompt("Copy करें:",u);}};}
+/* शुरू */
+if(S.tok)start();else $("#vLogin").classList.remove("hide");
+setInterval(()=>{if(S.tok&&document.visibilityState==="visible"&&$("#ov").classList.contains("hide"))load();},5*60e3);
+</script>
+</body>
+</html>

@@ -1472,7 +1472,13 @@ const MNH=["जनवरी","फ़रवरी","मार्च","अप्�
 const mNameH=m=>{const a=String(m).split("-");return (MNH[+a[1]-1]||"")+" "+a[0];};
 const inr2=n=>"₹"+(Math.round((+n||0)*100)/100).toLocaleString("en-IN",{maximumFractionDigits:2});
 function refLink(id){const b=/hitarthi\.com$/i.test(location.hostname)?location.origin+"/":"https://www.hitarthi.com/";return b+"?ref="+id;}
-async function hbRaw(a,d){if(!HB_API)throw new Error("noapi");const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),25000);
+/* 📇 CRM: lead कहाँ से आया (Facebook / Instagram / YouTube / Google / WhatsApp ad) — पहली बार का source 90 दिन याद */
+(function(){try{const u=new URLSearchParams(location.search),g=k=>(u.get(k)||"").trim().toLowerCase().replace(/[^a-z0-9_.\-]+/g,"_").slice(0,40);let s=g("utm_source"),m=g("utm_medium"),c=g("utm_campaign");
+ if(!s&&u.get("gclid")){s="google";m=m||"cpc";}if(!s&&u.get("fbclid")){s="facebook";m=m||"social";}
+ if(!s){const r=document.referrer||"",h=(r.match(/^https?:\/\/([^/]+)/)||[])[1]||"";if(h&&!/hitarthi\.com$/i.test(h)){if(/(^|\.)google\./.test(h)){s="google";m="organic";}else if(/youtube\.|youtu\.be/.test(h)){s="youtube";m="organic";}else if(/instagram\./.test(h)){s="instagram";m="organic";}else if(/facebook\.|(^|\.)fb\./.test(h)){s="facebook";m="organic";}}}
+ if(s){let o=null;try{o=JSON.parse(localStorage.getItem("hb_utm")||"null");}catch(e){}if(!o||Date.now()-o.t>90*864e5||(/organic/.test(o.v)&&!/organic/.test(m)))localStorage.setItem("hb_utm",JSON.stringify({v:[s,m,c].filter(Boolean).join(" / "),t:Date.now()}));}}catch(e){}})();
+function hbUtm(){try{const o=JSON.parse(localStorage.getItem("hb_utm")||"null");return o&&Date.now()-o.t<90*864e5?o.v:"";}catch(e){return "";}}
+async function hbRaw(a,d){if(!HB_API)throw new Error("noapi");if(/^(lead|order|stureg|contact|rzpOrder)$/.test(a)&&d&&!d.utm){const _u=hbUtm();if(_u)d=Object.assign({},d,{utm:_u});}const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),25000);
   try{const r=await fetch(HB_API,{method:"POST",body:JSON.stringify(Object.assign({action:a},d)),signal:ctl.signal});return await r.json();}finally{clearTimeout(tm);}}
 /* तेज़ी: सिर्फ़ पढ़ने वाली calls (content, books, catalog…) पहले phone की memory / build-time snapshot से तुरंत, पीछे से ताज़ा — बदला हो तो "hb:fresh" event */
 const HB_RO={content:6e5,config:6e5,bookslist:6e5,libcatalog:6e5,notices:12e4,leaderboard:12e4};
