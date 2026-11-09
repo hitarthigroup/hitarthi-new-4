@@ -16,7 +16,7 @@
 <link rel="preload" as="image" href="img/50d0f68d7adc-800.webp" imagesrcset="img/50d0f68d7adc-480.webp 480w, img/50d0f68d7adc-800.webp 800w, img/50d0f68d7adc-1200.webp 1200w, img/50d0f68d7adc-1500.webp 1500w" imagesizes="(min-width:1100px) 567px, calc(100vw - 32px)" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Mukta:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Mukta:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Mukta:wght@400;500;600;700;800&display=swap"></noscript>
 <style>
 :root{
   --ink:#141A3A; --ink-2:#48507A; --ink-3:#666D8F;
@@ -2901,6 +2901,9 @@ html.is-app [data-install]{display:none!important}
 .paym-promo summary::-webkit-details-marker{display:none}
 .paym-promo[open] summary{margin-bottom:8px}
 .paym-promo:has(#payCp[hidden]){display:none}
+.pay-bump{display:flex;gap:10px;align-items:flex-start;background:#FFF8E1;border:2px dashed #F5B301;border-radius:12px;padding:10px 12px;margin:10px 0;cursor:pointer}
+.pay-bump input{width:20px;height:20px;flex:none;margin-top:3px;accent-color:#0B1A4A}.pay-bump b{display:block;color:#0B1A4A;font-size:.95rem}.pay-bump small{color:#5B6478;font-size:.8rem}
+.pay-trust{font-size:.78rem;color:#5B6478;text-align:center;margin:8px 0 4px;line-height:1.5}.bk-trust{margin-top:10px;line-height:1.6}.bk-trust a{font-weight:700}
 </style>
 
 <div class="pv" id="pv" hidden role="dialog" aria-modal="true" aria-label="Presentation">
@@ -2954,6 +2957,7 @@ html.is-app [data-install]{display:none!important}
       <button class="btn btn-orange btn-block" id="paySubmit" type="button" hidden>✅ Order दर्ज करें</button>
       <button class="btn btn-orange btn-block" id="payDemo" type="button" hidden>📖 ₹1 pay कर दिया — अभी पढ़ें</button>
       <button class="btn btn-ghost btn-block" id="payCOD" type="button" hidden>📦 Cash on Delivery — सामान मिलने पर नक़द दें</button>
+      <p class="pay-trust">🔒 Razorpay से सुरक्षित • ⚡ Payment होते ही Library में • 🧾 GST bill • 💬 कोई दिक्कत? WhatsApp करें</p>
       <div id="payOk" hidden></div>
       <a class="btn btn-wa btn-block" id="payWA" href="#" target="_blank" rel="noopener">WhatsApp पर Payment Confirm करें</a>
       <details class="paym-promo"><summary>🎟️ Promo code है? यहाँ लगाएँ</summary><div class="paym-cp" id="payCp" hidden><div class="cp-row"><input id="payCpIn" maxlength="15" placeholder="🎟️ Coupon या Refer code" style="text-transform:uppercase" aria-label="Coupon code"><button class="btn btn-ghost btn-sm" type="button" id="payCpGo">लगाएँ</button></div><small class="cp-msg" id="payCpMsg"></small></div></details>
@@ -4697,7 +4701,7 @@ var b=document.getElementById("dwBanner");if(b&&id&&!off)b.hidden=false;}catch(e
 <input type="file" id="phInput" accept="image/*" hidden>
 
 <script defer src="js/780b897e07.js"></script>
-<script defer src="js/1f8daedecb.js"></script>
+<script defer src="js/7cb1cd76f6.js"></script>
 <script defer src="js/ae5c1b4487.js"></script>
 
 
