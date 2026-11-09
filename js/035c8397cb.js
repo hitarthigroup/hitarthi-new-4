@@ -2078,20 +2078,20 @@ function partApply(){const on=$("#payPartOn").checked;$("#payPartBox").hidden=!o
   else{PAY.amt=PAY.full;PAY.plan=null;PAY.item=PAY.base;}
   $("#payItem").textContent=PAY.item;payRender();}
 $("#payPartOn").addEventListener("change",partApply);$("#payPartAmt").addEventListener("change",partApply);
-/* ---------- ₹1 DEMO BOOKS — ख़रीदें और वहीं पढ़ें (सुनें भी) ---------- */
+/* ---------- ₹9 DEMO BOOKS — ख़रीदें और वहीं पढ़ें (सुनें भी) ---------- */
 const DEMO_BOOKS=[
- {id:"paise",book:B("पैसे की पहली समझ","Demo Book • ₹1 में पढ़िए","HITARTHI","finance",1,0,["#7C2D12","#EA580C","#4A1A0B","#FFE066"],"HITARTHI Demo Book",20,["Income और ख़र्च","Emergency Fund","छोटी बचत की ताक़त"]),
+ {id:"paise",book:B("पैसे की पहली समझ","Demo Book • ₹9 में पढ़िए","HITARTHI","finance",9,0,["#7C2D12","#EA580C","#4A1A0B","#FFE066"],"HITARTHI Demo Book",20,["Income और ख़र्च","Emergency Fund","छोटी बचत की ताक़त"]),
   pts:["Income और ख़र्च का हिसाब","Emergency Fund — मुसीबत का साथी","छोटी बचत की बड़ी ताक़त"],
   ch:[["अध्याय 1 — Income और ख़र्च का हिसाब",`<h2>अध्याय 1 — Income और ख़र्च का हिसाब</h2><p>पैसे की समझ का पहला नियम है: <b>जो गिना नहीं जाता, वह संभाला नहीं जाता।</b> इस हफ़्ते हर ख़र्च एक कॉपी या mobile note में लिखिए — चाय से लेकर किराये तक।</p><p>हफ़्ते के अंत में ख़र्च को तीन हिस्सों में बाँटिए: <b>ज़रूरी</b> (किराया, राशन, फ़ीस), <b>ज़रूरी पर कम हो सकता है</b> (बिजली, mobile plan), और <b>चाहत</b> (बाहर खाना, shopping)।</p><p>ज़्यादातर परिवार तीसरे हिस्से में 15–25% बचा सकते हैं — बिना ज़िंदगी कठिन किए। बचत का पहला रुपया यहीं से निकलता है।</p><h3>आज का काम</h3><ul><li>आज के सारे ख़र्च लिखिए</li><li>हर ख़र्च के आगे लिखिए: ज़रूरी / कम हो सकता / चाहत</li></ul>`],
    ["अध्याय 2 — Emergency Fund: मुसीबत का साथी",`<h2>अध्याय 2 — Emergency Fund: मुसीबत का साथी</h2><p>बीमारी, नौकरी छूटना, घर की मरम्मत — मुसीबत बताकर नहीं आती। <b>Emergency fund</b> वह रकम है जो ऐसे समय में आपको कर्ज़ से बचाती है।</p><p><b>लक्ष्य:</b> घर के 3 से 6 महीने के ज़रूरी ख़र्च के बराबर रकम। इसे ऐसी जगह रखें जहाँ से एक-दो दिन में निकल सके, और जिसे रोज़ के ख़र्च में न छुएँ।</p><p>शुरुआत छोटी रखिए — हर महीने ₹500 भी काफ़ी है। धीरे-धीरे यही रकम आपकी सबसे बड़ी हिम्मत बनती है।</p><h3>आज का काम</h3><ul><li>अपना एक महीने का ज़रूरी ख़र्च जोड़िए</li><li>उसका 3 गुना = आपका पहला लक्ष्य</li></ul>`],
    ["अध्याय 3 — छोटी बचत की बड़ी ताक़त",`<h2>अध्याय 3 — छोटी बचत की बड़ी ताक़त</h2><p>रामू हर दिन चाय-नाश्ते पर बीस रुपये ख़र्च करता था। दादा जी ने पूछा — "यही बीस रुपये रोज़ बचाओ, तो दस साल में कितने होंगे?" जवाब: लगभग तिहत्तर हज़ार रुपये — और यह सिर्फ़ जोड़ है।</p><p>असली जादू तब होता है जब बचत पर कमाई हो, और उस कमाई पर भी कमाई — इसे <b>कंपाउंडिंग</b> कहते हैं। ₹10,000 पर हर साल 10% बढ़त मिले तो दसवें साल तक यह लगभग ₹25,900 हो जाते हैं।</p><p><b>याद रखिए:</b> कंपाउंडिंग को तीन चीज़ें चाहिए — नियमित बचत, धैर्य और समय। <i>(यह शिक्षा के लिए उदाहरण है, निवेश की सलाह नहीं।)</i></p><p>पूरी जानकारी के लिए पढ़ें — HITARTHI की "कंपाउंडिंग का जादू" और "The Money Blueprint"।</p>`]]},
- {id:"computer",book:B("Computer की पहली सीढ़ी","Demo Book • ₹1 में पढ़िए","HITARTHI","student",1,0,["#0B1A4A","#0057D9","#060F30","#00C2FF"],"HITARTHI Demo Book",20,["Computer चालू करना","File-Folder","Internet सुरक्षित"]),
+ {id:"computer",book:B("Computer की पहली सीढ़ी","Demo Book • ₹9 में पढ़िए","HITARTHI","student",9,0,["#0B1A4A","#0057D9","#060F30","#00C2FF"],"HITARTHI Demo Book",20,["Computer चालू करना","File-Folder","Internet सुरक्षित"]),
   pts:["Computer चालू करना, Mouse और Keyboard","File और Folder — सब कुछ व्यवस्थित","Internet और Email — सुरक्षित तरीके से"],
   ch:[["अध्याय 1 — Computer चालू करना, Mouse और Keyboard",`<h2>अध्याय 1 — Computer चालू करना, Mouse और Keyboard</h2><p>Computer सीखने से डरिए मत — हर expert ने भी कभी पहली बार mouse पकड़ा था।</p><ul><li><b>चालू करना:</b> CPU / laptop का power बटन एक बार दबाइए। Screen आने तक रुकिए।</li><li><b>बंद करना:</b> कभी सीधा plug न निकालें — <b>Start → Power → Shut down</b>। इससे files ख़राब नहीं होतीं।</li><li><b>Mouse:</b> बायाँ बटन = चुनना (click), दो बार जल्दी = खोलना (double-click), दायाँ बटन = और विकल्प (right-click)।</li><li><b>Keyboard:</b> Shift = बड़ा अक्षर, Enter = नई line / ठीक है, Backspace = पीछे का मिटाना।</li></ul><h3>आज का काम</h3><p>Computer चालू कीजिए, Notepad खोलिए और अपना नाम 5 बार टाइप कीजिए। फिर ठीक तरीके से Shut down कीजिए।</p>`],
    ["अध्याय 2 — File और Folder — सब कुछ व्यवस्थित",`<h2>अध्याय 2 — File और Folder — सब कुछ व्यवस्थित</h2><p>Computer एक अलमारी की तरह है। <b>Folder</b> = दराज़, <b>File</b> = उसमें रखा कागज़।</p><ul><li><b>नया folder:</b> Desktop पर right-click → New → Folder → नाम लिखें → Enter</li><li><b>नाम बदलना:</b> folder चुनें → F2 दबाएँ → नया नाम</li><li><b>Copy / Paste:</b> Ctrl + C (copy), Ctrl + V (paste)</li><li><b>ग़लती से मिटा दिया?</b> Recycle Bin खोलें → right-click → Restore</li></ul><p><b>सुझाव:</b> हर काम का अलग folder बनाइए — "पढ़ाई", "Photos", "Bills"। ढूँढने में समय बचेगा।</p>`],
    ["अध्याय 3 — Internet और Email — सुरक्षित तरीके से",`<h2>अध्याय 3 — Internet और Email — सुरक्षित तरीके से</h2><p>Internet ज्ञान का समंदर है — पर हर लहर सुरक्षित नहीं। ये नियम हमेशा याद रखें:</p><ul><li>Website का पता <b>https://</b> से शुरू हो और ताले 🔒 का निशान दिखे</li><li><b>OTP, PIN, password</b> किसी को न बताएँ — bank कभी नहीं माँगता</li><li>"इनाम जीता है", "KYC update करो" जैसे अनजान link न खोलें</li><li>Email का password मज़बूत रखें और <b>2-Step Verification</b> चालू करें</li></ul><h3>आज का काम</h3><p>अपनी Gmail खोलिए, Settings → Security में जाकर 2-Step Verification देखिए। पूरा Basic Computer course HITARTHI पर — पहले Free Counselling।</p>`]]}
 ];
-DEMO_BOOKS.forEach(d=>{d.item="Demo Book: "+d.book.t+" (₹1 E-book)";});
+DEMO_BOOKS.forEach(d=>{d.item="Demo Book: "+d.book.t+" (₹9 E-book)";});
 const DBK="hitarthi_demobooks";
 const dbGet=()=>{try{return JSON.parse(localStorage.getItem(DBK)||"{}")||{};}catch(e){return {};}};
 const dbSet=o=>{try{localStorage.setItem(DBK,JSON.stringify(o));}catch(e){}};
@@ -2099,18 +2099,18 @@ function dbOpen(id){const d=DEMO_BOOKS.find(x=>x.id===id);if(!d||!window.mlOpenL
   it.total=it.open=it.chapters.length;mlOpenLocal(it,tx);track("demo_book_read",{book:d.id});}
 function dbRender(){const own=dbGet();
   $$("[data-dbgrid]").forEach(g=>{g.innerHTML=DEMO_BOOKS.map(d=>`<div class="dbk-i"><div class="dbk-cv"><span class="dbk-tag">DEMO</span><div class="b3wrap" data-${own[d.id]?"dbread":"dbbuy"}="${d.id}">${book3d(d.book,"md")}</div></div>
-    <div><h3>${esc(d.book.t)} <span class="dbk-p">₹1</span></h3><ul class="ticks">${d.pts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
-    ${own[d.id]?`<button class="btn btn-primary" type="button" data-dbread="${d.id}">📖 पढ़ें / 🔊 सुनें</button> <span class="small" style="color:var(--green);font-weight:800">✓ आपकी book</span>`:`<button class="btn btn-orange" type="button" data-dbbuy="${d.id}">₹1 में ख़रीदें और पढ़ें →</button>`}</div></div>`).join("");});
-  const L=$("#mlDemoOwn");if(L){const ids=DEMO_BOOKS.filter(d=>own[d.id]);L.hidden=!ids.length;L.innerHTML=ids.length?`<b>📖 आपकी ₹1 Demo Books</b>${ids.map(d=>`<button type="button" class="btn btn-primary btn-sm" data-dbread="${d.id}">${esc(d.book.t)} — पढ़ें</button>`).join("")}`:"";}}
+    <div><h3>${esc(d.book.t)} <span class="dbk-p">₹9</span></h3><ul class="ticks">${d.pts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    ${own[d.id]?`<button class="btn btn-primary" type="button" data-dbread="${d.id}">📖 पढ़ें / 🔊 सुनें</button> <span class="small" style="color:var(--green);font-weight:800">✓ आपकी book</span>`:`<button class="btn btn-orange" type="button" data-dbbuy="${d.id}">₹9 में ख़रीदें और पढ़ें →</button>`}</div></div>`).join("");});
+  const L=$("#mlDemoOwn");if(L){const ids=DEMO_BOOKS.filter(d=>own[d.id]);L.hidden=!ids.length;L.innerHTML=ids.length?`<b>📖 आपकी ₹9 Demo Books</b>${ids.map(d=>`<button type="button" class="btn btn-primary btn-sm" data-dbread="${d.id}">${esc(d.book.t)} — पढ़ें</button>`).join("")}`:"";}}
 window.demoPaid=function(){const id=PAY.demoBook;if(!id)return;const o=dbGet();o[id]={t:Date.now(),ref:PAY.ref};dbSet(o);dbRender();
   const ok=$("#payOk");let b=$("#payDbRead");if(!b){b=document.createElement("button");b.type="button";b.id="payDbRead";b.className="btn btn-orange btn-block";ok.after(b);}
-  b.hidden=false;b.textContent="📖 अभी पढ़ें — "+(DEMO_BOOKS.find(d=>d.id===id)||{book:{t:""}}).book.t;b.onclick=()=>{closePay();dbOpen(id);};track("purchase",{item:PAY.item,value:1,transaction_id:PAY.ref});};
+  b.hidden=false;b.textContent="📖 अभी पढ़ें — "+(DEMO_BOOKS.find(d=>d.id===id)||{book:{t:""}}).book.t;b.onclick=()=>{closePay();dbOpen(id);};track("purchase",{item:PAY.item,value:9,transaction_id:PAY.ref});};
 document.addEventListener("click",e=>{const r=e.target.closest("[data-dbread]");if(r){e.preventDefault();dbOpen(r.dataset.dbread);return;}
   const b=e.target.closest("[data-dbbuy]");if(!b)return;e.preventDefault();const d=DEMO_BOOKS.find(x=>x.id===b.dataset.dbbuy);if(!d)return;
-  openPay({amt:1,item:d.item,lines:[{item:d.item,amount:1,cat:"Digital"}],extra:"₹1 Demo Book",demoBook:d.id});});
-/* UPI QR से ₹1 देने वाले के लिए (जब तक Google Sheet नहीं जुड़ी): UTR डालते ही पढ़ना शुरू */
+  openPay({amt:9,item:d.item,lines:[{item:d.item,amount:9,cat:"Digital"}],extra:"₹9 Demo Book",demoBook:d.id});});
+/* UPI QR से ₹9 देने वाले के लिए (जब तक Google Sheet नहीं जुड़ी): UTR डालते ही पढ़ना शुरू */
 $("#payDemo").addEventListener("click",()=>{const utr=$("#payUTR").value.replace(/\s+/g,"").toUpperCase(),mob=$("#payMob").value.replace(/\D/g,"");
-  if(!/^[A-Z0-9]{8,30}$/.test(utr)){toast("₹1 pay करने के बाद UPI app में मिला UTR / Transaction ID नीचे डालें");$("#payUTR").focus();return;}
+  if(!/^[A-Z0-9]{8,30}$/.test(utr)){toast("₹9 pay करने के बाद UPI app में मिला UTR / Transaction ID नीचे डालें");$("#payUTR").focus();return;}
   if(mob.length!==10){toast("10 अंकों का mobile नंबर लिखें");$("#payMob").focus();return;}
   PAY.done=true;demoPaid();$("#payDemo").hidden=true;const o=$("#payOk");o.hidden=false;o.className="paym-ok";o.textContent="✅ धन्यवाद! आपकी Demo Book खुल गई। (Order ID: "+PAY.ref+")";});
 dbRender();
