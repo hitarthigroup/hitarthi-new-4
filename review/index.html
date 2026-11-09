@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>अपना अनुभव लिखें | HITARTHI</title><meta name="description" content="HITARTHI की book या course कैसी लगी? अपना सच्चा अनुभव 1 मिनट में लिखें।">
+<meta name="theme-color" content="#0B1A4A"><link rel="icon" href="/favicon.ico"><meta name="robots" content="noindex">
+<meta property="og:title" content="HITARTHI — अपना अनुभव लिखें ⭐"><meta property="og:description" content="Book या course कैसा लगा? 1 मिनट में बताइए।"><meta property="og:image" content="https://www.hitarthi.com/img/og-share.jpg">
+<style>:root{--n:#0B1A4A;--g:#F5B301;--line:#E3E7F0;--mut:#5B6478}*{box-sizing:border-box}body{margin:0;background:#F5F7FC;color:#14213D;font-family:"Mukta","Noto Sans Devanagari","Segoe UI",system-ui,sans-serif;font-size:16px}
+.top{background:var(--n);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px}.top img{width:36px;height:36px;border-radius:50%;background:#fff}.top a{color:#fff;text-decoration:none;font-weight:800}
+.w{max-width:520px;margin:0 auto;padding:16px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+h1{font-size:1.4rem;margin:0 0 4px;color:var(--n)}p.m{color:var(--mut);margin:0 0 12px}label{display:block;font-weight:700;font-size:.85rem;color:var(--mut);margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}textarea{min-height:110px}
+.st{display:flex;gap:6px}.st button{flex:1;font-size:1.6rem;padding:6px 0;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;filter:grayscale(1);opacity:.5}.st button.on{filter:none;opacity:1;border-color:var(--g)}
+.ck{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:.9rem}.ck input{width:20px;height:20px;flex:none;margin-top:2px}
+.btn{display:block;width:100%;margin-top:16px;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,#F5B301,#FFD34D);color:var(--n);font-weight:800;font-size:1.1rem;cursor:pointer}
+.msg{margin-top:10px;font-weight:700}.ok{color:#15803D}.err{color:#C62828}.sm{font-size:.8rem;color:var(--mut)}</style></head><body>
+<div class="top"><img src="/img/logo.webp" alt=""><a href="/">HITARTHI</a></div>
+<div class="w"><div class="card" id="box">
+<h1>⭐ अपना अनुभव लिखें</h1><p class="m">HITARTHI की book या course कैसी लगी? आपका सच्चा अनुभव दूसरों को सही चुनाव करने में मदद करेगा। 🙏</p>
+<label for="n">आपका नाम *</label><input id="n" maxlength="40" autocomplete="name">
+<label for="c">शहर</label><input id="c" maxlength="30">
+<label for="mb">Mobile * <span class="sm">(website पर नहीं दिखेगा — सिर्फ़ जाँच के लिए)</span></label><input id="mb" inputmode="numeric" maxlength="13">
+<label for="co">कौन सी book / course</label><input id="co" maxlength="60" placeholder="जैसे: Computer Combo, CCC Course, MS Excel">
+<label>कितने ⭐</label><div class="st" id="st"></div>
+<label for="t">आपका अनुभव * <span class="sm">(अपने शब्दों में, 2–4 लाइन)</span></label><textarea id="t" maxlength="500" placeholder="क्या अच्छा लगा? क्या सीखा? किसे सलाह देंगे?"></textarea>
+<label class="ck"><input type="checkbox" id="ok"> मैं अनुमति देता/देती हूँ कि मेरा नाम, शहर और यह अनुभव HITARTHI की website पर दिखाया जाए।</label>
+<button class="btn" id="go">भेजें</button><div class="msg" id="msg"></div></div></div>
+<script>
+const API="https://script.google.com/macros/s/AKfycbz_lNguiwN0VTpMo4BEQDJefj2mET8QyPeteS_CqOloLivlgxdcAKl5xzoo0KlswlHOkg/exec";
+const $=s=>document.querySelector(s);let stars=5;
+$("#st").innerHTML=[1,2,3,4,5].map(i=>`<button type="button" data-s="${i}" aria-label="${i} star">⭐</button>`).join("");
+const paint=()=>document.querySelectorAll("#st button").forEach(b=>b.classList.toggle("on",+b.dataset.s<=stars));paint();
+document.querySelectorAll("#st button").forEach(b=>b.onclick=()=>{stars=+b.dataset.s;paint();});
+try{const q=new URLSearchParams(location.search);if(q.get("n"))$("#n").value=q.get("n");if(q.get("m"))$("#mb").value=q.get("m");if(q.get("b"))$("#co").value=q.get("b");}catch(e){}
+$("#go").onclick=async()=>{const d={action:"reviewadd",name:$("#n").value.trim(),city:$("#c").value.trim(),mobile:$("#mb").value.replace(/\D/g,"").slice(-10),course:$("#co").value.trim(),text:$("#t").value.trim(),stars,consent:$("#ok").checked?1:0};
+ const m=$("#msg");m.className="msg";m.textContent="भेज रहे हैं…";$("#go").disabled=true;
+ try{const r=await (await fetch(API,{method:"POST",body:JSON.stringify(d)})).json();if(r.ok){$("#box").innerHTML='<h1>🙏 धन्यवाद!</h1><p class="m">'+(r.msg||"आपका अनुभव मिल गया।")+'</p><a class="btn" style="text-align:center;text-decoration:none" href="/">HITARTHI पर वापस जाएँ</a>';}else{m.className="msg err";m.textContent=r.err||"नहीं गया";}}
+ catch(e){m.className="msg err";m.textContent="इंटरनेट धीमा है — फिर से कोशिश करें";}finally{$("#go").disabled=false;}};
+</script></body></html>

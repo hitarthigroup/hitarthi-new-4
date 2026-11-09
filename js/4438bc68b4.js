@@ -141,7 +141,7 @@ const BOOKS=[
 const HB_BCOV={"Financial Literacy":"img/8abc3b0e70cb.jpg","डिग्री से आगे":"img/eed269e4e665.jpg","Gmail & Email Management":"img/7fee335946ff.jpg","TIME MANAGEMENT":"img/834c8d3d4b62.jpg","SMART SELLING":"img/3d7a6ec735c8.jpg","SALES WARRIOR":"img/50468d8c54ba.jpg","GOAL SETTING & LIFE PLANNING":"img/db7dbc4258c7.jpg","The Personality Blueprint":"img/506a5c24af0b.jpg","THE TIME BLUEPRINT":"img/f0d6a6adbbe9.jpg"};
 Object.keys(HB_BCOV).forEach(t=>{const b=BOOKS.find(x=>x.t===t);if(b)b.img=b.img0=HB_BCOV[t];});
 /* नई books (1–2 Nov 2026 upload) → "Buy Now"; पुरानी → "Cart में जोड़ें" */
-const HB_NEW=["Basic Computer — खेल-खेल में","MS Word Made Easy","MS Excel Mastery","MS PowerPoint Made Easy","DCA — Diploma in Computer Applications","ADCA — Advanced Diploma in Computer Applications","MS Access और Database Management","Financial Literacy","GOAL SETTING & LIFE PLANNING","डिग्री से आगे","Gmail & Email Management","TIME MANAGEMENT","The Personality Blueprint","SMART SELLING","SALES WARRIOR","THE TIME BLUEPRINT","C++ Programming","Tally Prime with GST","CCC Course","Complete Keyboard Guide","The Magic of Compounding","The Money Making Blueprint"];
+const HB_NEW=["Basic Computer — खेल-खेल में","MS Word Made Easy","MS Excel Mastery","MS PowerPoint Made Easy","DCA — Diploma in Computer Applications","ADCA — Advanced Diploma in Computer Applications","MS Access और Database Management","Financial Literacy","GOAL SETTING & LIFE PLANNING","डिग्री से आगे","Gmail & Email Management","TIME MANAGEMENT","The Personality Blueprint","SMART SELLING","SALES WARRIOR","THE TIME BLUEPRINT","C++ Programming","Tally Prime with GST","CCC Course","Complete Keyboard Guide","The Magic of Compounding","The Money Making Blueprint","Computer Combo — 5 Books","पैसे की समझ Combo — 3 Books","CCC Exam Combo — 3 Books"];
 BOOKS.forEach(b=>{b.nw=HB_NEW.includes(b.t);});
 const bookBtn=(b,i,cls,lbl)=>b.nw?`<button class="btn btn-orange ${cls} bb-buy" data-buy="${i}">⚡ Buy Now${lbl||""}</button>`:`<button class="btn btn-orange ${cls}" data-add="${i}">Cart में जोड़ें${lbl||""}</button>`;
 const BOOK_PAL={finance:["#0E5A34","#1FA85A","#073A21","#FFD34D"],business:["#7C2D12","#EA580C","#4A1A0B","#FFE066"],self:["#831843","#DB2777","#500724","#FFD34D"],english:["#312E81","#4F46E5","#1E1B4B","#FFC247"],student:["#0A2A73","#0057D9","#061A4A","#FFC247"],kids:["#9D174D","#F472B6","#500724","#FFE066"]};
@@ -2936,6 +2936,14 @@ window.__hsUI=function(){window.__hsUI=null;/* ---------- HITARTHI HEALTH STORE 
     const sc=e.target.closest("[data-hscroll]");if(sc){const el=document.getElementById(sc.dataset.hscroll);el&&el.scrollIntoView({behavior:"smooth",block:"start"});}
   });
 })();};
+/* ---------- 🔗 Ad landing page से सीधे खरीद: hitarthi.com/?buy=<Book का नाम> → payment खुल जाए ---------- */
+(function(){let t="";try{t=(new URLSearchParams(location.search).get("buy")||"").trim();}catch(e){}if(!t)return;
+  const norm=x=>String(x||"").toLowerCase().replace(/[^a-z0-9\u0900-\u097f]+/g," ").trim();let n=0;
+  const go=()=>{const i=BOOKS.findIndex(b=>!b.hide&&norm(b.t)===norm(t));if(i<0){if(++n<45)setTimeout(go,300);return;}
+    const b=BOOKS[i],it=b.t+" (E-book)",amt=priceOf(b,"e");if(!(amt>0))return;
+    try{track("buy_now",{item:it,value:amt});}catch(e){}openPay({amt,item:it,lines:[{item:it,amount:amt,cat:"Digital"}]});
+    try{const u=new URL(location.href);u.searchParams.delete("buy");history.replaceState(null,"",u.pathname+u.search+u.hash);}catch(e){}};
+  if(document.readyState==="complete")setTimeout(go,300);else addEventListener("load",()=>setTimeout(go,300));})();
 /* ---------- OFFER अपने-आप: दिवाली (1 अक्टूबर – 15 नवंबर) → Winter (16 नवंबर – 31 जनवरी) → फिर बंद ----------
    तारीख़ें / नाम यहीं बदलें। Preview: ?offer=winter या ?offer=diwali */
 (function(){
@@ -2946,7 +2954,7 @@ window.__hsUI=function(){window.__hsUI=null;/* ---------- HITARTHI HEALTH STORE 
   const d=new Date(),md=(d.getMonth()+1)*100+d.getDate();
   const inR=o=>{const f=o.from[0]*100+o.from[1],t=o.to[0]*100+o.to[1];return f<=t?(md>=f&&md<=t):(md>=f||md<=t);};
   let q="";try{q=new URLSearchParams(location.search).get("offer")||(new URLSearchParams(location.search).get("diwali")==="1"?"diwali":"");}catch(e){}
-  const O=OFFERS.find(o=>o.id===q)||OFFERS.find(inR)||null;
+  const O=null; /* Offer बंद (9 Nov 2026). फिर चालू करना हो तो: OFFERS.find(o=>o.id===q)||OFFERS.find(inR)||null */
   const K="hitarthi_offer_off_"+(O?O.id:"");let off=false;try{off=localStorage.getItem(K)==="1";}catch(e){}
   window.OFFER=O; /* openPay इसी से "+ 1 E-book free" जोड़ता है */
   function apply(v){const w=O&&O.id==="winter";document.documentElement.classList.toggle("diwali",!!(v&&!w));document.documentElement.classList.toggle("winter",!!(v&&w));
